@@ -211,6 +211,7 @@ services:
       resources:
         limits:
           memory: 8G
+          cpus: 2.0
         reservations:
           memory: 4G
     labels:
