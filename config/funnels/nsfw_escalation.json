@@ -1,0 +1,539 @@
+{
+    "version": "1.0.0",
+    "last_updated": "2026-01-22",
+    "strategy_name": "NSFW Content Escalation Strategy",
+    "description": "Gradual NSFW content escalation ladder for safe-to-explicit progression across platforms",
+    "escalation_levels": {
+        "level_0": {
+            "nsfw_rating": 0,
+            "category": "SFW (Safe For Work)",
+            "description": "Completely safe, public-friendly content",
+            "allowed_platforms": [
+                "tiktok",
+                "instagram",
+                "instagram_reels",
+                "youtube",
+                "youtube_shorts",
+                "facebook",
+                "twitter"
+            ],
+            "content_types": [
+                "karaoke_videos",
+                "dance_challenges",
+                "lifestyle_vlogs",
+                "cooking_content",
+                "educational_content",
+                "comedy_skits",
+                "music_covers"
+            ],
+            "visual_restrictions": {
+                "clothing": "fully_clothed",
+                "poses": "casual_natural",
+                "settings": "public_appropriate",
+                "camera_angles": "face_upper_body"
+            },
+            "compliance_rules": [
+                "no_suggestive_content",
+                "no_revealing_clothing",
+                "no_bedroom_settings",
+                "no_sexual_innuendo",
+                "family_friendly_captions"
+            ],
+            "a2e_prompt_keywords": [
+                "cute",
+                "wholesome",
+                "friendly",
+                "smiling",
+                "casual outfit",
+                "bright lighting"
+            ]
+        },
+        "level_2": {
+            "nsfw_rating": 2,
+            "category": "Suggestive (Teasing)",
+            "description": "Mildly suggestive content, still platform-compliant",
+            "allowed_platforms": [
+                "discord",
+                "twitter",
+                "reddit",
+                "telegram"
+            ],
+            "content_types": [
+                "cosplay_photos",
+                "bikini_poolside",
+                "workout_content",
+                "fashion_modeling",
+                "grwm_content",
+                "teasing_previews"
+            ],
+            "visual_restrictions": {
+                "clothing": "revealing_but_covered",
+                "poses": "flirty_teasing",
+                "settings": "bedroom_bathroom_acceptable",
+                "camera_angles": "strategic_angles"
+            },
+            "compliance_rules": [
+                "suggestive_allowed",
+                "no_nudity",
+                "innuendo_acceptable",
+                "teasing_captions_ok",
+                "link_to_paid_platforms"
+            ],
+            "a2e_prompt_keywords": [
+                "flirty smile",
+                "tight clothing",
+                "bedroom setting",
+                "soft lighting",
+                "posed"
+            ],
+            "funnel_position": "discord_nurture",
+            "conversion_goal": "onlyfans_preview"
+        },
+        "level_4": {
+            "nsfw_rating": 4,
+            "category": "Softcore (Lingerie/Implied)",
+            "description": "Softcore NSFW content, lingerie and implied nudity",
+            "allowed_platforms": [
+                "onlyfans_basic",
+                "fanmart_basic",
+                "fansly_basic",
+                "patreon_nsfw"
+            ],
+            "restricted_platforms": [
+                "tiktok",
+                "instagram",
+                "youtube",
+                "facebook"
+            ],
+            "content_types": [
+                "lingerie_photosets",
+                "boudoir_photography",
+                "implied_nudity",
+                "shower_content_implied",
+                "bedroom_content",
+                "artistic_nude_covered"
+            ],
+            "visual_restrictions": {
+                "clothing": "lingerie_underwear",
+                "poses": "provocative_covered",
+                "settings": "bedroom_bathroom_hotel",
+                "camera_angles": "full_body_strategic"
+            },
+            "compliance_rules": [
+                "lingerie_acceptable",
+                "covered_intimate_areas",
+                "artistic_implied_nudity_ok",
+                "age_verification_required",
+                "paywall_required"
+            ],
+            "a2e_prompt_keywords": [
+                "lingerie",
+                "intimate setting",
+                "seductive pose",
+                "dim lighting",
+                "bedroom atmosphere"
+            ],
+            "funnel_position": "onlyfans_basic_tier",
+            "pricing": {
+                "tier": "basic",
+                "monthly_price": 9.99
+            }
+        },
+        "level_6": {
+            "nsfw_rating": 6,
+            "category": "Mid-tier NSFW (Topless/Partial)",
+            "description": "Mid-level explicit content, partial nudity",
+            "allowed_platforms": [
+                "onlyfans_premium",
+                "fanmart_premium",
+                "fansly_premium"
+            ],
+            "restricted_platforms": [
+                "all_sfw_platforms"
+            ],
+            "content_types": [
+                "topless_content",
+                "partial_nudity",
+                "shower_bath_content",
+                "sensual_videos",
+                "stripteases",
+                "intimate_photosets"
+            ],
+            "visual_restrictions": {
+                "clothing": "minimal_or_topless",
+                "poses": "explicit_artistic",
+                "settings": "intimate_private",
+                "camera_angles": "revealing_tasteful"
+            },
+            "compliance_rules": [
+                "topless_acceptable",
+                "partial_nudity_ok",
+                "explicit_but_tasteful",
+                "age_verification_strict",
+                "premium_tier_required"
+            ],
+            "a2e_prompt_keywords": [
+                "topless",
+                "sensual",
+                "intimate moment",
+                "artistic nudity",
+                "private setting"
+            ],
+            "funnel_position": "onlyfans_premium_tier",
+            "pricing": {
+                "tier": "premium",
+                "monthly_price": 24.99
+            }
+        },
+        "level_8": {
+            "nsfw_rating": 8,
+            "category": "Explicit (Full Nudity)",
+            "description": "Explicit content with full nudity",
+            "allowed_platforms": [
+                "onlyfans_vip",
+                "xvideos_premium",
+                "pornhub_premium",
+                "fanmart_vip"
+            ],
+            "restricted_platforms": [
+                "all_sfw_platforms",
+                "basic_tiers"
+            ],
+            "content_types": [
+                "full_nudity",
+                "explicit_photosets",
+                "explicit_videos",
+                "solo_content",
+                "intimate_content",
+                "fantasy_content"
+            ],
+            "visual_restrictions": {
+                "clothing": "nude",
+                "poses": "explicit",
+                "settings": "intimate_private",
+                "camera_angles": "full_explicit"
+            },
+            "compliance_rules": [
+                "full_nudity_acceptable",
+                "explicit_content_ok",
+                "age_verification_mandatory",
+                "vip_tier_required",
+                "platform_tos_compliance"
+            ],
+            "a2e_prompt_keywords": [
+                "nude",
+                "explicit",
+                "intimate",
+                "full body",
+                "sensual lighting"
+            ],
+            "funnel_position": "onlyfans_vip_tier",
+            "pricing": {
+                "tier": "vip",
+                "monthly_price": 49.99
+            }
+        },
+        "level_10": {
+            "nsfw_rating": 10,
+            "category": "Hardcore (Explicit + Custom)",
+            "description": "Maximum explicit content including custom requests",
+            "allowed_platforms": [
+                "onlyfans_vip_ppv",
+                "xvideos_premium",
+                "pornhub_premium",
+                "custom_platforms"
+            ],
+            "restricted_platforms": [
+                "all_public_platforms"
+            ],
+            "content_types": [
+                "hardcore_explicit",
+                "custom_requests",
+                "fetish_content",
+                "extreme_explicit",
+                "personalized_content",
+                "ppv_exclusive"
+            ],
+            "visual_restrictions": {
+                "clothing": "none_or_custom",
+                "poses": "custom_requests",
+                "settings": "custom_scenarios",
+                "camera_angles": "custom_explicit"
+            },
+            "compliance_rules": [
+                "all_explicit_acceptable",
+                "custom_content_ok",
+                "strict_age_verification",
+                "ppv_pricing_required",
+                "platform_legal_compliance",
+                "no_illegal_content"
+            },
+            "a2e_prompt_keywords": [
+                "custom request",
+                "explicit scenario",
+                "personalized",
+                "fantasy fulfillment"
+            ],
+            "funnel_position": "ppv_custom_content",
+            "pricing": {
+                "tier": "ppv",
+                "base_price": 49.99,
+                "custom_price_range": [
+                    50,
+                    500
+                ]
+            }
+        }
+    },
+    "platform_restrictions": {
+        "sfw_platforms": {
+            "platforms": [
+                "tiktok",
+                "instagram",
+                "youtube",
+                "facebook"
+            ],
+            "max_nsfw_level": 0,
+            "strict_enforcement": true,
+            "ban_risk": "high",
+            "compliance_priority": "critical"
+        },
+        "bridge_platforms": {
+            "platforms": [
+                "discord",
+                "twitter",
+                "reddit",
+                "telegram"
+            ],
+            "max_nsfw_level": 2,
+            "enforcement": "moderate",
+            "ban_risk": "medium",
+            "compliance_priority": "high"
+        },
+        "adult_platforms": {
+            "platforms": [
+                "onlyfans",
+                "fanmart",
+                "fansly",
+                "xvideos",
+                "pornhub"
+            ],
+            "max_nsfw_level": 10,
+            "enforcement": "tos_based",
+            "ban_risk": "low",
+            "compliance_priority": "medium"
+        }
+    },
+    "character_suitability": {
+        "aurelia_viral": {
+            "recommended_levels": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10
+            ],
+            "primary_strategy": "viral_to_hardcore",
+            "escalation_speed": "fast",
+            "content_focus": "provocative_trending"
+        },
+        "miyuki_sakura": {
+            "recommended_levels": [
+                0,
+                2,
+                4,
+                6
+            ],
+            "primary_strategy": "cute_to_sensual",
+            "escalation_speed": "moderate",
+            "content_focus": "girlfriend_experience"
+        },
+        "airi_neo": {
+            "recommended_levels": [
+                0,
+                2,
+                4,
+                6,
+                8
+            ],
+            "primary_strategy": "cyber_to_futuristic_nsfw",
+            "escalation_speed": "moderate",
+            "content_focus": "artistic_cyber_explicit"
+        },
+        "hana_nakamura": {
+            "recommended_levels": [
+                0,
+                2,
+                4,
+                6
+            ],
+            "primary_strategy": "gentle_to_intimate",
+            "escalation_speed": "slow",
+            "content_focus": "nurturing_sensual"
+        },
+        "aiko_hayashi": {
+            "recommended_levels": [
+                0,
+                2,
+                4,
+                6,
+                8
+            ],
+            "primary_strategy": "traditional_to_elegant_nsfw",
+            "escalation_speed": "slow",
+            "content_focus": "artistic_traditional_beauty"
+        },
+        "rio_mizuno": {
+            "recommended_levels": [
+                0,
+                2,
+                4,
+                6,
+                8
+            ],
+            "primary_strategy": "athletic_to_fit_nsfw",
+            "escalation_speed": "fast",
+            "content_focus": "fitness_body_confidence"
+        },
+        "jin_kawasaki": {
+            "recommended_levels": [
+                0,
+                2,
+                4,
+                6
+            ],
+            "primary_strategy": "cool_to_confident_nsfw",
+            "escalation_speed": "moderate",
+            "content_focus": "male_model_aesthetic"
+        },
+        "chiyo_sasaki": {
+            "recommended_levels": [
+                0,
+                2,
+                4,
+                6,
+                8
+            ],
+            "primary_strategy": "mature_to_sophisticated_nsfw",
+            "escalation_speed": "slow",
+            "content_focus": "elegant_mature_content"
+        }
+    },
+    "escalation_timeline": {
+        "week_1": {
+            "level": 0,
+            "focus": "SFW viral content",
+            "goal": "awareness_and_growth"
+        },
+        "week_2-3": {
+            "level": 2,
+            "focus": "Suggestive teasers",
+            "goal": "discord_community_building"
+        },
+        "week_4-6": {
+            "level": 4,
+            "focus": "Softcore content",
+            "goal": "onlyfans_basic_conversions"
+        },
+        "week_7-10": {
+            "level": 6,
+            "focus": "Mid-tier NSFW",
+            "goal": "premium_tier_upsells"
+        },
+        "week_11+": {
+            "level": 8-10,
+            "focus": "Explicit + custom",
+            "goal": "vip_tier_and_ppv"
+        }
+    },
+    "compliance_framework": {
+        "age_verification": {
+            "required_at_level": 4,
+            "methods": [
+                "platform_native",
+                "id_verification",
+                "payment_confirmation"
+            ],
+            "strict_enforcement": true
+        },
+        "content_warnings": {
+            "required_at_level": 2,
+            "warning_types": [
+                "nsfw",
+                "explicit",
+                "adult_content"
+            ],
+            "placement": "content_preview"
+        },
+        "platform_tos": {
+            "monitoring": "continuous",
+            "updates": "monthly",
+            "compliance_checks": "pre_publish"
+        },
+        "legal_compliance": {
+            "prohibited_content": [
+                "underage_content",
+                "non_consensual_content",
+                "illegal_activities",
+                "extreme_violence",
+                "hate_speech"
+            ],
+            "required_disclaimers": [
+                "18+",
+                "fictional_character",
+                "adult_entertainment"
+            ]
+        }
+    },
+    "content_generation_guidelines": {
+        "a2e_api_prompts": {
+            "level_0": {
+                "style": "wholesome, bright, cheerful",
+                "negative_prompts": [
+                    "nsfw",
+                    "suggestive",
+                    "revealing",
+                    "intimate"
+                ]
+            },
+            "level_2": {
+                "style": "flirty, teasing, playful",
+                "negative_prompts": [
+                    "nude",
+                    "explicit",
+                    "pornographic"
+                ]
+            },
+            "level_4": {
+                "style": "sensual, intimate, artistic",
+                "negative_prompts": [
+                    "explicit genitals",
+                    "hardcore",
+                    "pornographic acts"
+                ]
+            },
+            "level_6": {
+                "style": "explicit, sensual, artistic nudity",
+                "negative_prompts": [
+                    "extreme acts",
+                    "hardcore pornography"
+                ]
+            },
+            "level_8": {
+                "style": "explicit, full nudity, adult content",
+                "negative_prompts": [
+                    "illegal content",
+                    "extreme fetishes"
+                ]
+            },
+            "level_10": {
+                "style": "custom explicit, personalized adult content",
+                "negative_prompts": [
+                    "illegal activities",
+                    "prohibited content"
+                ]
+            }
+        }
+    }
+}

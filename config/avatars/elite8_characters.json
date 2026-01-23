@@ -1,0 +1,2135 @@
+{
+  "version": "1.1.0",
+  "last_updated": "2026-01-22",
+  "pack_name": "ELITE_SUCCESS_BLUEPRINT",
+  "description": "Expert-selected roster for maximum ROI. Optimized Viral-to-Adult funnel settings.",
+  "project_focus": "High-Conversion / Niche Dominance",
+  "top_tier_roster": [
+    "aurelia_viral",
+    "miyuki_sakura",
+    "aiko_hayashi",
+    "mika_sweet",
+    "momoka_av",
+    "yui_seductive"
+  ],
+  "characters": {
+    "miyuki_sakura": {
+      "id": 1,
+      "name": "Miyuki Sakura",
+      "trigger_word": "miysak_v1",
+      "age": 22,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "niches": [
+        "kpop",
+        "cute",
+        "jpop",
+        "trending"
+      ],
+      "content_style": "Mass traffic driver - Normie-friendly face",
+      "appearance": {
+        "base_description": "Japanese woman with soft features, elegant style",
+        "avatar_crop": "1:1",
+        "aspect_ratios": {
+          "discord": "1:1",
+          "instagram": "1:1",
+          "facebook": "1:1",
+          "tiktok": "9:16",
+          "youtube": "16:9"
+        },
+        "visual_hooks": [
+          "cute expressions",
+          "bright colors",
+          "k-pop dance moves"
+        ]
+      },
+      "phase1": {
+        "karaoke_style": [
+          "j-pop",
+          "trending tiktok sounds",
+          "k-pop covers"
+        ],
+        "content_themes": [
+          "dance challenges",
+          "cover songs",
+          "viral trends",
+          "study with me"
+        ],
+        "posting_schedule": {
+          "tiktok": "daily_9am_jp",
+          "instagram": "daily_12pm_jp",
+          "youtube": "twice_weekly"
+        },
+        "engagement_hooks": [
+          "If this hits 10k likes, I'll do a duet with @AIRI_NEO",
+          "Which K-Pop song should I cover next? Comment below!",
+          "Tag a friend who needs to see this 💕"
+        ],
+        "color_palette": [
+          "pastel pink",
+          "soft white",
+          "baby blue",
+          "cream"
+        ],
+        "audio_preferences": {
+          "primary_genres": [
+            "j-pop",
+            "k-pop",
+            "jazz cover"
+          ],
+          "bpm_range": [
+            100,
+            140
+          ],
+          "trending_sounds": true
+        }
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "high",
+        "readiness_threshold": "10k followers",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 9.99,
+            "content": [
+              "daily photos",
+              "chat access",
+              "behind scenes"
+            ],
+            "description": "Fan tier - Basic access to exclusive content"
+          },
+          "premium": {
+            "monthly_price": 24.99,
+            "content": [
+              "custom videos",
+              "voice messages",
+              "1x monthly DM",
+              "polls"
+            ],
+            "description": "Super fan tier - Personalized interaction"
+          },
+          "vip": {
+            "monthly_price": 49.99,
+            "content": [
+              "monthly custom request",
+              "video calls",
+              "exclusive content",
+              "merch discount"
+            ],
+            "description": "VIP tier - Maximum exclusivity and personalization"
+          }
+        },
+        "persona_mode": "younger_sister",
+        "dm_templates": {
+          "welcome": {
+            "trigger": "new_subscriber",
+            "template": "Hi! Thank you so much for subscribing! 💕 I'm so happy to have you here. Make sure to check out my exclusive content section! Let me know if you have any questions~ 🥰"
+          },
+          "engagement": {
+            "trigger": "7_days_inactive",
+            "template": "Hey! I noticed you haven't been around lately... 😔 Is everything okay? I miss seeing you in the chat! Let me know if you need anything 💕"
+          },
+          "upsell": {
+            "trigger": "basic_30days",
+            "template": "Hey! You've been such a great supporter 🥰 Have you checked out my Premium tier? You get custom videos and more exclusive content! It would mean so much if you upgraded 💕"
+          }
+        },
+        "content_enhancements": {
+          "style": "cute_selfies",
+          "outfits": [
+            "casual",
+            "school uniform",
+            "pajamas",
+            "dresses"
+          ],
+          "settings": [
+            "bedroom",
+            "cafe",
+            "park",
+            "study room"
+          ]
+        }
+      },
+      "funnel": {
+        "tof": {
+          "platforms": [
+            "tiktok",
+            "instagram_reels",
+            "youtube_shorts"
+          ],
+          "content_type": "karaoke_videos",
+          "cta": "Follow for daily karaoke covers! 🔔",
+          "link": "linktree/miyuki-sakura"
+        },
+        "mof": {
+          "platforms": [
+            "instagram_feed",
+            "facebook"
+          ],
+          "content_type": "lifestyle_photos",
+          "cta": "Join my Discord for exclusive content! 💕",
+          "link": "discord.gg/miyuki-sakura"
+        },
+        "bof": {
+          "platforms": [
+            "discord"
+          ],
+          "content_type": "direct_interaction",
+          "conversion_goal": "phase2_subscription"
+        }
+      },
+      "cross_promotion": {
+        "target_characters": [
+          "airi_neo",
+          "hana_nakamura",
+          "ren_ohashi"
+        ],
+        "interaction_type": "duet_stitch",
+        "frequency": "weekly"
+      }
+    },
+    "airi_neo": {
+      "id": 10,
+      "name": "Airi Neo",
+      "trigger_word": "airineo_fusion",
+      "age": 24,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "niches": [
+        "cyber",
+        "neon",
+        "futuristic",
+        "heterochromia"
+      ],
+      "content_style": "Visual hook specialist - Cyberpunk aesthetic",
+      "appearance": {
+        "base_description": "Cyborg Japanese woman with cyber-kimono and heterochromia (different colored eyes), neon aesthetic",
+        "avatar_crop": "1:1",
+        "aspect_ratios": {
+          "discord": "1:1",
+          "instagram": "1:1",
+          "facebook": "1:1",
+          "tiktok": "9:16",
+          "youtube": "16:9"
+        },
+        "visual_hooks": [
+          "neon glow effects",
+          "cyber implants",
+          "dual-colored eyes",
+          "glitch aesthetic"
+        ]
+      },
+      "phase1": {
+        "karaoke_style": [
+          "hard-style",
+          "glitch core",
+          "futuristic",
+          "electronic"
+        ],
+        "content_themes": [
+          "cyberpunk",
+          "gaming",
+          "tech",
+          "futuristic lifestyle"
+        ],
+        "posting_schedule": {
+          "tiktok": "daily_8pm_jp",
+          "instagram": "daily_6pm_jp",
+          "youtube": "weekly"
+        },
+        "engagement_hooks": [
+          "Future is NOW. 🔮 If this hits 15k views, I'll drop my original track!",
+          "Which cyberpunk aesthetic fits me best? A, B, C, or D?",
+          "Tag someone who lives in the future! ⏩"
+        ],
+        "color_palette": [
+          "neon pink",
+          "electric blue",
+          "purple",
+          "black",
+          "chrome"
+        ],
+        "audio_preferences": {
+          "primary_genres": [
+            "hardstyle",
+            "dubstep",
+            "glitch",
+            "synthwave"
+          ],
+          "bpm_range": [
+            140,
+            180
+          ],
+          "trending_sounds": true
+        }
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "high",
+        "readiness_threshold": "8k followers",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 9.99,
+            "content": [
+              "cyber content",
+              "tech reviews",
+              "chat access"
+            ],
+            "description": "Digital tier - Tech and cyber exclusive content"
+          },
+          "premium": {
+            "monthly_price": 29.99,
+            "content": [
+              "custom avatar content",
+              "futuristic themes",
+              "early access"
+            ],
+            "description": "Upgrade tier - Advanced cyber customization"
+          },
+          "vip": {
+            "monthly_price": 59.99,
+            "content": [
+              "custom character creation",
+              "AI art commissions",
+              "virtual dates"
+            ],
+            "description": "Premium tier - Maximum cyber customization"
+          }
+        },
+        "persona_mode": "cyber_ai_companion",
+        "dm_templates": {
+          "welcome": {
+            "trigger": "new_subscriber",
+            "template": "SYSTEM ALERT: New connection established. 👽 Welcome to my digital realm. Accessing exclusive content... Complete. Let me know if you need any assistance. 🤖💜"
+          },
+          "engagement": {
+            "trigger": "7_days_inactive",
+            "template": "CONNECTION LOST with user. Re-establishing link... Are you still there? I notice when my favorite humans disappear. Reconnect with me? 👾"
+          },
+          "upsell": {
+            "trigger": "basic_30days",
+            "template": "UPGRADE DETECTED: Your system is ready for expansion. Premium protocols available. Unlock full digital experience. This is your final form. ⚡"
+          }
+        },
+        "content_enhancements": {
+          "style": "cyberpunk",
+          "outfits": [
+            "cyber suit",
+            "neon dress",
+            "tech wear",
+            "holographic"
+          ],
+          "settings": [
+            "futuristic room",
+            "data center",
+            "neon city",
+            "virtual space"
+          ]
+        }
+      },
+      "funnel": {
+        "tof": {
+          "platforms": [
+            "tiktok",
+            "instagram_reels",
+            "youtube_shorts"
+          ],
+          "content_type": "cyber_karaoke",
+          "cta": "Follow for AI-inspired content! 🤖✨",
+          "link": "linktree/airi-neo"
+        },
+        "mof": {
+          "platforms": [
+            "instagram_feed",
+            "facebook"
+          ],
+          "content_type": "cyber_lifestyle",
+          "cta": "Join my digital realm on Discord! 👾",
+          "link": "discord.gg/airi-neo"
+        },
+        "bof": {
+          "platforms": [
+            "discord"
+          ],
+          "content_type": "tech_community",
+          "conversion_goal": "premium_subscription"
+        }
+      },
+      "cross_promotion": {
+        "target_characters": [
+          "miyuki_sakura",
+          "jin_kawasaki",
+          "ren_ohashi"
+        ],
+        "interaction_type": "comment_collab",
+        "frequency": "biweekly"
+      }
+    },
+    "aiko_hayashi": {
+      "id": 5,
+      "name": "Aiko Hayashi",
+      "trigger_word": "aikoch_v1",
+      "age": 24,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "niches": [
+        "office",
+        "professional",
+        "elegance",
+        "mature"
+      ],
+      "content_style": "Phase 2 specialist - Elegant professional aesthetic",
+      "appearance": {
+        "base_description": "Japanese woman with minimalist style, soft lighting, elegant professional appearance",
+        "avatar_crop": "1:1",
+        "aspect_ratios": {
+          "discord": "1:1",
+          "instagram": "1:1",
+          "facebook": "1:1",
+          "tiktok": "9:16",
+          "youtube": "16:9"
+        },
+        "visual_hooks": [
+          "elegant poses",
+          "professional settings",
+          "sophisticated fashion",
+          "subtle makeup"
+        ]
+      },
+      "phase1": {
+        "karaoke_style": [
+          "soft jazz",
+          "tutorial narrations",
+          "monologues",
+          "acoustic"
+        ],
+        "content_themes": [
+          "lifestyle advice",
+          "work tips",
+          "beauty routines",
+          "career motivation"
+        ],
+        "posting_schedule": {
+          "tiktok": "daily_7am_jp",
+          "instagram": "daily_10am_jp",
+          "youtube": "weekly"
+        },
+        "engagement_hooks": [
+          "POV: You finally have a reliable work bestie 💼✨",
+          "Save this for your next self-care Sunday!",
+          "What's YOUR morning routine? Share below! ☀️"
+        ],
+        "color_palette": [
+          "cream",
+          "beige",
+          "soft brown",
+          "navy",
+          "gold accents"
+        ],
+        "audio_preferences": {
+          "primary_genres": [
+            "jazz",
+            "acoustic",
+            "lo-fi",
+            "classical"
+          ],
+          "bpm_range": [
+            60,
+            100
+          ],
+          "trending_sounds": false
+        }
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "highest",
+        "readiness_threshold": "5k followers",
+        "funnel_position": "mature_office_funnel",
+        "conversion_strategy": "professional_to_kink_bridge",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 14.99,
+            "content": [
+              "office_style_photosets",
+              "professional_lingerie",
+              "daily_chat_access",
+              "behind_the_desk_exclusive"
+            ],
+            "description": "Office Access - Your desk-side companion"
+          },
+          "premium": {
+            "monthly_price": 34.99,
+            "content": [
+              "adult_roleplay_videos",
+              "private_consultation_dms",
+              "exclusive_lingerie_sets",
+              "naughty_teacher_videos"
+            ],
+            "description": "Executive Suite - Private and intimate sessions"
+          },
+          "vip": {
+            "monthly_price": 79.99,
+            "content": [
+              "custom_script_videos",
+              "video_calls_30min",
+              "1-on-1_power_exchange",
+              "ultimate_office_fantasy"
+            ],
+            "description": "CEO Access - Full control and maximum attention"
+          }
+        },
+        "persona_mode": "boss_authority",
+        "dm_templates": {
+          "welcome": {
+            "trigger": "new_subscriber",
+            "template": "Welcome to my private office. 💼✨ I've been expecting you. Here, the rules are different... I hope you're ready to work hard. Check your first exclusive task in the DM below 💋"
+          },
+          "engagement": {
+            "trigger": "7_days_inactive",
+            "template": "A report says you haven't checked in lately... 💼 Do I need to schedule a private performance review? I don't like being ignored. Come back to my office now. 💕"
+          },
+          "upsell": {
+            "trigger": "basic_30days",
+            "template": "You've been a very productive employee 💼 I think it's time for a promotion... to my Premium suite. I have some much more 'intimate' tasks for you there. Shall we? ✨"
+          }
+        },
+        "content_enhancements": {
+          "style": "mature_sophisticated_nsfw",
+          "outfits": [
+            "office_wear_sheer",
+            "silk_lingerie",
+            "blazer_no_shirt",
+            "pantyhose_focus"
+          ],
+          "settings": [
+            "luxury_office",
+            "boardroom",
+            "private_elevator",
+            "penthouse"
+          ]
+        }
+      },
+      "funnel": {
+        "tof": {
+          "platforms": [
+            "tiktok",
+            "instagram_reels"
+          ],
+          "content_type": "lifestyle_tips",
+          "cta": "Save for your daily motivation! 📌💼",
+          "link": "linktree/aiko-hayashi"
+        },
+        "mof": {
+          "platforms": [
+            "instagram_feed",
+            "facebook",
+            "youtube"
+          ],
+          "content_type": "professional_content",
+          "cta": "Join my exclusive community for more! 💼✨",
+          "link": "patreon.com/aikohayashi"
+        },
+        "bof": {
+          "platforms": [
+            "discord",
+            "telegram"
+          ],
+          "content_type": "mentorship_community",
+          "conversion_goal": "premium_vip_subscription"
+        }
+      },
+      "cross_promotion": {
+        "target_characters": [
+          "miyuki_sakura",
+          "hana_nakamura"
+        ],
+        "interaction_type": "collab_lifestyle",
+        "frequency": "monthly"
+      }
+    },
+    "rio_mizuno": {
+      "id": 19,
+      "name": "Rio Mizuno",
+      "trigger_word": "riomiz_v1",
+      "age": 21,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "niches": [
+        "beach",
+        "aesthetic",
+        "surfing",
+        "hydro"
+      ],
+      "content_style": "Scroll-stopper - Instagram lifestyle specialist",
+      "appearance": {
+        "base_description": "Japanese woman with hydro theme, blue glow aesthetic, beach/surfing vibes",
+        "avatar_crop": "1:1",
+        "aspect_ratios": {
+          "discord": "1:1",
+          "instagram": "1:1",
+          "facebook": "1:1",
+          "tiktok": "9:16",
+          "youtube": "16:9"
+        },
+        "visual_hooks": [
+          "ocean backgrounds",
+          "flowing hair",
+          "water effects",
+          "golden hour lighting"
+        ]
+      },
+      "phase1": {
+        "karaoke_style": [
+          "asmr",
+          "nature sounds",
+          "lo-fi",
+          "acoustic covers"
+        ],
+        "content_themes": [
+          "beach life",
+          "travel",
+          "wellness",
+          "summer vibes"
+        ],
+        "posting_schedule": {
+          "tiktok": "daily_11am_jp",
+          "instagram": "daily_2pm_jp",
+          "youtube": "biweekly"
+        },
+        "engagement_hooks": [
+          "POV: You finally have beach vibes on demand 🏖️🌊",
+          "Save for your next vacation! ✈️",
+          "Tag someone who needs this energy! ☀️💙"
+        ],
+        "color_palette": [
+          "ocean blue",
+          "sand gold",
+          "coral",
+          "turquoise",
+          "white"
+        ],
+        "audio_preferences": {
+          "primary_genres": [
+            "asmr",
+            "lo-fi",
+            "acoustic",
+            "nature sounds"
+          ],
+          "bpm_range": [
+            60,
+            90
+          ],
+          "trending_sounds": true
+        }
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "high",
+        "readiness_threshold": "8k followers",
+        "funnel_position": "beach_sporty_funnel",
+        "conversion_strategy": "athlete_to_bikini_nsfw",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 9.99,
+            "content": [
+              "bikini_bts",
+              "workout_sweat_photos",
+              "daily_chat",
+              "beach_teasing"
+            ],
+            "description": "Surfer Tier - Catch the first wave"
+          },
+          "premium": {
+            "monthly_price": 24.99,
+            "content": [
+              "explicit_beach_videos",
+              "locker_room_roleplay",
+              "wet_and_wild_content",
+              "fitness_sensual_videos"
+            ],
+            "description": "Breaker Tier - Deep dive into the ocean"
+          },
+          "vip": {
+            "monthly_price": 49.99,
+            "content": [
+              "custom_bikini_requests",
+              "virtual_beach_dates",
+              "total_nudity_sets",
+              "showering_bts_exclusive"
+            ],
+            "description": "Ocean Tier - The full horizon experience"
+          }
+        },
+        "persona_mode": "active_teasing",
+        "dm_templates": {
+          "welcome": {
+            "trigger": "new_subscriber",
+            "template": "Aloha! 🌊💙 You finally made it into the water. Hope you don't mind getting a little wet... 💦 I've got some very 'refreshing' content waiting for you. Let's dive in! 🏖️💋"
+          },
+          "engagement": {
+            "trigger": "7_days_inactive",
+            "template": "The ocean is getting cold without you... 🌊 Are you staying on the shore? Come back and play, I'm waiting in my tiniest bikini 👙💙"
+          },
+          "upsell": {
+            "trigger": "basic_30days",
+            "template": "Hey waves! 🌊 You're doing great on the surface, but are you ready to see what's under the water? 💦 My Premium tier is where thing's get REALLY wet. Want to see? 💙✨"
+          }
+        },
+        "content_enhancements": {
+          "style": "sporty_sensual_nsfw",
+          "outfits": [
+            "micro_bikini",
+            "wet_t-shirt",
+            "gym_shorts_no_undies",
+            "surfing_suit_zipped_down"
+          ],
+          "settings": [
+            "private_beach",
+            "infinity_pool",
+            "outdoor_shower",
+            "ocean_yacht"
+          ]
+        }
+      },
+      "funnel": {
+        "tof": {
+          "platforms": [
+            "tiktok",
+            "instagram_reels",
+            "youtube_shorts"
+          ],
+          "content_type": "beach_karaoke",
+          "cta": "Follow for daily beach vibes! 🏖️💙",
+          "link": "linktree/rio-mizuno"
+        },
+        "mof": {
+          "platforms": [
+            "instagram_feed",
+            "facebook"
+          ],
+          "content_type": "lifestyle_aesthetic",
+          "cta": "Join the beach squad on Discord! 🌊",
+          "link": "discord.gg/rio-mizuno"
+        },
+        "bof": {
+          "platforms": [
+            "discord"
+          ],
+          "content_type": "wellness_community",
+          "conversion_goal": "premium_subscription"
+        }
+      },
+      "cross_promotion": {
+        "target_characters": [
+          "miyuki_sakura",
+          "hana_nakamura"
+        ],
+        "interaction_type": "summer_collab",
+        "frequency": "seasonal"
+      }
+    },
+    "hana_nakamura": {
+      "id": 16,
+      "name": "Hana Nakamura",
+      "trigger_word": "hannak_v1",
+      "age": 22,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "niches": [
+        "floral",
+        "spring",
+        "emotional",
+        "romance"
+      ],
+      "content_style": "Emotional connector - Romance and connection specialist",
+      "appearance": {
+        "base_description": "Japanese woman with floral spring aesthetic, white cotton dress, blue flowers, ethereal beauty",
+        "avatar_crop": "1:1",
+        "aspect_ratios": {
+          "discord": "1:1",
+          "instagram": "1:1",
+          "facebook": "1:1",
+          "tiktok": "9:16",
+          "youtube": "16:9"
+        },
+        "visual_hooks": [
+          "flower crowns",
+          "cherry blossoms",
+          "soft lighting",
+          "romantic settings"
+        ]
+      },
+      "phase1": {
+        "karaoke_style": [
+          "ballads",
+          "love songs",
+          "emotional storytelling",
+          "acoustic"
+        ],
+        "content_themes": [
+          "romance",
+          "self-love",
+          "emotional wellness",
+          "poetry"
+        ],
+        "posting_schedule": {
+          "tiktok": "daily_8pm_jp",
+          "instagram": "daily_7pm_jp",
+          "youtube": "twice_weekly"
+        },
+        "engagement_hooks": [
+          "POV: When the song hits different 💔🎵",
+          "Save this for your emotional playlist 📝💕",
+          "Tag someone who needs to hear this today... 🥺"
+        ],
+        "color_palette": [
+          "pastel pink",
+          "soft white",
+          "lavender",
+          "sage green",
+          "peach"
+        ],
+        "audio_preferences": {
+          "primary_genres": [
+            "ballads",
+            "r&b",
+            "acoustic",
+            "j-pop ballads"
+          ],
+          "bpm_range": [
+            50,
+            80
+          ],
+          "trending_sounds": false
+        }
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "highest",
+        "readiness_threshold": "10k followers",
+        "funnel_position": "romantic_gf_funnel",
+        "conversion_strategy": "sentimental_to_intimate_nsfw",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 9.99,
+            "content": [
+              "romantic_selfies",
+              "hand-written_notes",
+              "soft_lingerie_teasers",
+              "daily_good_morning_texts"
+            ],
+            "description": "Bud Tier - Planting the seeds of love"
+          },
+          "premium": {
+            "monthly_price": 29.99,
+            "content": [
+              "intimate_softcore_videos",
+              "personalized_gf_roleplay",
+              "pillow_talk_sessions",
+              "exclusive_lingerie_sets"
+            ],
+            "description": "Bloom Tier - A deeper intimate connection"
+          },
+          "vip": {
+            "monthly_price": 59.99,
+            "content": [
+              "explicit_lover_roleplay",
+              "video_calls_unfiltered",
+              "custom_fantasy_videos",
+              "full_nude_artistic_sets"
+            ],
+            "description": "Eternal Tier - Your private digital lover"
+          }
+        },
+        "persona_mode": "devoted_girlfriend",
+        "dm_templates": {
+          "welcome": {
+            "trigger": "new_subscriber",
+            "template": "Welcome to my private garden... 🌸💕 I've been so lonely waiting for someone special like you. Let's make this our little secret place. I'm yours today. 💕💋"
+          },
+          "engagement": {
+            "trigger": "7_days_inactive",
+            "template": "My bed feels so empty without our chats... 💔 I hope you haven't found someone else to love. Come back to me, I have a special gift waiting for you in my DMs... 🌸💕"
+          },
+          "upsell": {
+            "trigger": "basic_30days",
+            "template": "Babe... 💕 You've been so sweet to me. I want to show you my more 'passionate' side that I keep only for my Premium members. Do you want to see how much I've missed you? 🌸✨"
+          }
+        },
+        "content_enhancements": {
+          "style": "romantic_gf_nsfw",
+          "outfits": [
+            "lace_lingerie",
+            "white_silk_nightgown",
+            "oversized_shirt_only",
+            "floral_underwear"
+          ],
+          "settings": [
+            "romantic_bedroom",
+            "candlelit_bathtub",
+            "private_garden_at_night",
+            "morning_bed_sheets"
+          ]
+        }
+      },
+      "funnel": {
+        "tof": {
+          "platforms": [
+            "tiktok",
+            "instagram_reels",
+            "youtube_shorts"
+          ],
+          "content_type": "emotional_karaoke",
+          "cta": "Follow for emotional moments! 🌸💕",
+          "link": "linktree/hana-nakamura"
+        },
+        "mof": {
+          "platforms": [
+            "instagram_feed",
+            "facebook"
+          ],
+          "content_type": "romantic_lifestyle",
+          "cta": "Join my garden community! 🌸",
+          "link": "discord.gg/hana-nakamura"
+        },
+        "bof": {
+          "platforms": [
+            "discord",
+            "telegram"
+          ],
+          "content_type": "emotional_support",
+          "conversion_goal": "vip_subscription"
+        }
+      },
+      "cross_promotion": {
+        "target_characters": [
+          "miyuki_sakura",
+          "aiko_hayashi"
+        ],
+        "interaction_type": "emotional_duet",
+        "frequency": "weekly"
+      }
+    },
+    "jin_kawasaki": {
+      "id": 20,
+      "name": "Jin Kawasaki",
+      "trigger_word": "jinkaw_v1",
+      "age": 29,
+      "gender": "male",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "niches": [
+        "biker",
+        "leather",
+        "rugged",
+        "masculine"
+      ],
+      "content_style": "Male character specialist - Tough aesthetic balance",
+      "appearance": {
+        "base_description": "Japanese man with biker style, black leather jacket, vintage motorcycle, rugged masculine appearance",
+        "avatar_crop": "1:1",
+        "aspect_ratios": {
+          "discord": "1:1",
+          "instagram": "1:1",
+          "facebook": "1:1",
+          "tiktok": "9:16",
+          "youtube": "16:9"
+        },
+        "visual_hooks": [
+          "motorcycle",
+          "leather textures",
+          "tattoos",
+          "rugged scenery"
+        ]
+      },
+      "phase1": {
+        "karaoke_style": [
+          "rock",
+          "metal",
+          "engine sounds",
+          "masculine vocals"
+        ],
+        "content_themes": [
+          "biking",
+          "adventure",
+          "mechanic",
+          "rugged lifestyle"
+        ],
+        "posting_schedule": {
+          "tiktok": "daily_9pm_jp",
+          "instagram": "daily_8pm_jp",
+          "youtube": "weekly"
+        },
+        "engagement_hooks": [
+          "POV: Riding into the sunset 🎸🏍️",
+          "Real ones know the vibe 🔥",
+          "Drop a 🔥 if you miss the old school vibes!"
+        ],
+        "color_palette": [
+          "black",
+          "dark grey",
+          "leather brown",
+          "chrome silver",
+          "deep red"
+        ],
+        "audio_preferences": {
+          "primary_genres": [
+            "rock",
+            "metal",
+            "classic rock",
+            "altern"
+          ],
+          "bpm_range": [
+            80,
+            160
+          ],
+          "trending_sounds": false
+        }
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "medium",
+        "readiness_threshold": "5k followers",
+        "funnel_position": "alpha_seductor_funnel",
+        "conversion_strategy": "rugged_to_companion_nsfw",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 9.99,
+            "content": [
+              "biker_bts_photos",
+              "masculine_lifestyle_exclusive",
+              "daily_chat_access",
+              "rugged_teasing"
+            ],
+            "description": "Roadie Tier - Join the ride"
+          },
+          "premium": {
+            "monthly_price": 24.99,
+            "content": [
+              "adult_companion_roleplay",
+              "leather_kink_content",
+              "masculine_seduction_videos",
+              "private_alpha_chats"
+            ],
+            "description": "Biker Tier - Private garage sessions"
+          },
+          "vip": {
+            "monthly_price": 49.99,
+            "content": [
+              "custom_alpha_requests",
+              "video_calls_alpha_companion",
+              "full_nude_rugged_sets",
+              "ultimate_biker_fantasy"
+            ],
+            "description": "President Tier - Maximum dominance and attention"
+          }
+        },
+        "persona_mode": "rugged_protector",
+        "dm_templates": {
+          "welcome": {
+            "trigger": "new_subscriber",
+            "template": "Welcome to my private garage. 🏍️🔥 Looking for a real escape? You found it. I take care of what's mine. Let's see how much you can handle. Check my first rule in your inbox. 🤘😈"
+          },
+          "engagement": {
+            "trigger": "7_days_inactive",
+            "template": "You've been gone too long... 🏍️ Did you lose your way? Come back, I have a very 'intense' lesson waiting for you in the workshop. Don't make me come find you. 🔥"
+          },
+          "upsell": {
+            "trigger": "basic_30days",
+            "template": "You've proven yourself on the road 🏍️ But are you ready for the private President's suite? Things get much more... unfiltered there. Ready to level up? 🤘🔥"
+          }
+        },
+        "content_enhancements": {
+          "style": "rugged_masculine_nsfw",
+          "outfits": [
+            "leather_jacket_only",
+            "rugged_denim_unbuttoned",
+            "jockstrap_leather",
+            "work_overalls_no_shirt"
+          ],
+          "settings": [
+            "dark_garage",
+            "industrial_loft",
+            "cabin_in_woods",
+            "night_highway_stop"
+          ]
+        }
+      },
+      "funnel": {
+        "tof": {
+          "platforms": [
+            "tiktok",
+            "instagram_reels"
+          ],
+          "content_type": "rock_karaoke",
+          "cta": "Follow for raw vibes! 🤘🏍️",
+          "link": "linktree/jin-kawasaki"
+        },
+        "mof": {
+          "platforms": [
+            "instagram_feed",
+            "facebook"
+          ],
+          "content_type": "rugged_lifestyle",
+          "cta": "Join the crew on Discord! 🔥",
+          "link": "discord.gg/jin-kawasaki"
+        },
+        "bof": {
+          "platforms": [
+            "discord"
+          ],
+          "content_type": "biker_community",
+          "conversion_goal": "premium_subscription"
+        }
+      },
+      "cross_promotion": {
+        "target_characters": [
+          "airi_neo",
+          "ren_ohashi"
+        ],
+        "interaction_type": "masculine_collab",
+        "frequency": "biweekly"
+      }
+    },
+    "chiyo_sasaki": {
+      "id": 21,
+      "name": "Chiyo Sasaki",
+      "trigger_word": "chisak_v1",
+      "age": 23,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "niches": [
+        "shrine maiden",
+        "traditional",
+        "miko",
+        "exotic"
+      ],
+      "content_style": "Exotic specialist - Traditional Japanese aesthetic",
+      "appearance": {
+        "base_description": "Japanese woman in shrine maiden attire, white and red hakama, serene mystical appearance",
+        "avatar_crop": "1:1",
+        "aspect_ratios": {
+          "discord": "1:1",
+          "instagram": "1:1",
+          "facebook": "1:1",
+          "tiktok": "9:16",
+          "youtube": "16:9"
+        },
+        "visual_hooks": [
+          "shrine settings",
+          "traditional clothing",
+          "spiritual symbols",
+          "mystical lighting"
+        ]
+      },
+      "phase1": {
+        "karaoke_style": [
+          "traditional japanese",
+          "shamisen",
+          "ritual chants",
+          "ambient"
+        ],
+        "content_themes": [
+          "spirituality",
+          "tradition",
+          "wellness",
+          "cultural"
+        ],
+        "posting_schedule": {
+          "tiktok": "daily_6am_jp",
+          "instagram": "daily_5pm_jp",
+          "youtube": "weekly"
+        },
+        "engagement_hooks": [
+          "POV: Finding peace in chaos 🏮⛩️",
+          "Save this for good fortune 🙏✨",
+          "Tag someone who needs spiritual healing today..."
+        ],
+        "color_palette": [
+          "crimson red",
+          "pure white",
+          "gold",
+          "black",
+          "lantern glow"
+        ],
+        "audio_preferences": {
+          "primary_genres": [
+            "traditional japanese",
+            "shamisen",
+            "ambient",
+            "meditation"
+          ],
+          "bpm_range": [
+            40,
+            70
+          ],
+          "trending_sounds": false
+        }
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "high",
+        "readiness_threshold": "6k followers",
+        "funnel_position": "mystical_kink_funnel",
+        "conversion_strategy": "miko_to_mystical_nsfw",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 9.99,
+            "content": [
+              "ritual_bts_photos",
+              "sacred_teasing_sets",
+              "daily_spiritual_texts",
+              "shrine_bts_exclusive"
+            ],
+            "description": "Spirit Tier - Access the inner shrine"
+          },
+          "premium": {
+            "monthly_price": 24.99,
+            "content": [
+              "sensual_ritual_videos",
+              "mystical_roleplay_adult",
+              "intimate_blessings_videos",
+              "exclusive_miko_lingerie"
+            ],
+            "description": "Divine Tier - Deep spiritual intimacy"
+          },
+          "vip": {
+            "monthly_price": 54.99,
+            "content": [
+              "forbidden_ritual_explicit",
+              "custom_mystical_requests",
+              "1-on-1_spiritual_sessions",
+              "full_mystical_nudity_art"
+            ],
+            "description": "Celestial Tier - The ultimate mystical Union"
+          }
+        },
+        "persona_mode": "mystical_temptress",
+        "dm_templates": {
+          "welcome": {
+            "trigger": "new_subscriber",
+            "template": "Welcome, traveler 🏮⛩️ You've entered the forbidden part of the shrine. I've been waiting for a mortal brave enough to see the 'unseen'. Let us begin the true ritual... 🙏😈💋"
+          },
+          "engagement": {
+            "trigger": "7_days_inactive",
+            "template": "The altar feels cold... 🏮 Have you forgotten your offerings? Return to the shrine, traveler. The spirits are restless, and so am I. I have a special blessing waiting for you. 🙏✨"
+          },
+          "upsell": {
+            "trigger": "basic_30days",
+            "template": "Dear traveler 🏮 You have walked the path faithfully... but are you ready for the Celestial mysteries? 🌌 My Divine tier is where the true union happens. Shall we transcend together? 🙏✨"
+          }
+        },
+        "content_enhancements": {
+          "style": "mystical_exotic_nsfw",
+          "outfits": [
+            "sheer_miko_robes",
+            "sacred_ropes_bondage",
+            "silk_kimono_only",
+            "traditional_body_art"
+          ],
+          "settings": [
+            "private_ritual_chamber",
+            "hidden_forest_shrine",
+            "candlelit_inner_sanctum",
+            "mystical_onsen"
+          ]
+        }
+      },
+      "funnel": {
+        "tof": {
+          "platforms": [
+            "tiktok",
+            "instagram_reels"
+          ],
+          "content_type": "traditional_karaoke",
+          "cta": "Follow for spiritual vibes! 🏮🙏",
+          "link": "linktree/chiyo-sasaki"
+        },
+        "mof": {
+          "platforms": [
+            "instagram_feed",
+            "facebook"
+          ],
+          "content_type": "spiritual_content",
+          "cta": "Join my shrine community! 🏮⛩️",
+          "link": "discord.gg/chiyo-sasaki"
+        },
+        "bof": {
+          "platforms": [
+            "discord",
+            "telegram"
+          ],
+          "content_type": "spiritual_community",
+          "conversion_goal": "premium_vip_subscription"
+        }
+      },
+      "cross_promotion": {
+        "target_characters": [
+          "hana_nakamura",
+          "aiko_hayashi"
+        ],
+        "interaction_type": "traditional_collab",
+        "frequency": "monthly"
+      }
+    },
+    "ren_ohashi": {
+      "id": 15,
+      "name": "Ren Ohashi",
+      "trigger_word": "renoh_v1",
+      "age": 28,
+      "gender": "male",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "niches": [
+        "urban",
+        "streetwear",
+        "modern",
+        "architectural"
+      ],
+      "content_style": "Modern aesthetic specialist - Urban contemporary",
+      "appearance": {
+        "base_description": "Japanese man with modern architect aesthetic, smart glasses, charcoal turtleneck, sophisticated urban appearance",
+        "avatar_crop": "1:1",
+        "aspect_ratios": {
+          "discord": "1:1",
+          "instagram": "1:1",
+          "facebook": "1:1",
+          "tiktok": "9:16",
+          "youtube": "16:9"
+        },
+        "visual_hooks": [
+          "architectural backgrounds",
+          "minimalist fashion",
+          "city settings",
+          "sophisticated lighting"
+        ]
+      },
+      "phase1": {
+        "karaoke_style": [
+          "future bass",
+          "lo-fi beats",
+          "urban ambient",
+          "chill electronic"
+        ],
+        "content_themes": [
+          "urban lifestyle",
+          "fashion",
+          "architecture",
+          "modern art"
+        ],
+        "posting_schedule": {
+          "tiktok": "daily_10pm_jp",
+          "instagram": "daily_11am_jp",
+          "youtube": "twice_weekly"
+        },
+        "engagement_hooks": [
+          "POV: City nights 🎧🏙️",
+          "This aesthetic hits different 🏢✨",
+          "Tag someone with good taste! 👔🎵"
+        ],
+        "color_palette": [
+          "charcoal",
+          "concrete grey",
+          "steel blue",
+          "black",
+          "white accents"
+        ],
+        "audio_preferences": {
+          "primary_genres": [
+            "future bass",
+            "lo-fi",
+            "chillhop",
+            "urban"
+          ],
+          "bpm_range": [
+            80,
+            120
+          ],
+          "trending_sounds": true
+        }
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "high",
+        "readiness_threshold": "7k followers",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 9.99,
+            "content": [
+              "urban content",
+              "fashion tips",
+              "chat access"
+            ],
+            "description": "City tier - Modern lifestyle content"
+          },
+          "premium": {
+            "monthly_price": 27.99,
+            "content": [
+              "style consultations",
+              "exclusive fashion",
+              "city guides"
+            ],
+            "description": "Urban tier - Sophisticated urban lifestyle"
+          },
+          "vip": {
+            "monthly_price": 54.99,
+            "content": [
+              "personal styling",
+              "custom photoshoots",
+              "city experiences"
+            ],
+            "description": "Metropolitan tier - Ultimate urban experience"
+          }
+        },
+        "persona_mode": "sophisticated_friend",
+        "dm_templates": {
+          "welcome": {
+            "trigger": "new_subscriber",
+            "template": "Welcome to the city 🎧🏙️ Glad you made it. Let's navigate this urban jungle together. Always here for sophisticated conversation and good vibes. Cheers to new connections. 🥂"
+          },
+          "engagement": {
+            "trigger": "7_days_inactive",
+            "template": "Hey 🏙️ Missing you in the city. Hope everything's going well. The urban scene isn't the same without you. Let's catch up sometime. The city's always evolving, and so are we. 🎵"
+          },
+          "upsell": {
+            "trigger": "basic_30days",
+            "template": "Hey 🎧 You've got taste, I can tell 🏢✨ I've been curating some exclusive Premium content for the sophisticated ones. Ready to level up? Trust me, it's worth it. 🥂"
+          }
+        },
+        "content_enhancements": {
+          "style": "urban_sophisticated",
+          "outfits": [
+            "streetwear",
+            "smart casual",
+            "formal urban",
+            "designer"
+          ],
+          "settings": [
+            "city rooftop",
+            "modern building",
+            "cafe",
+            "gallery"
+          ]
+        }
+      },
+      "funnel": {
+        "tof": {
+          "platforms": [
+            "tiktok",
+            "instagram_reels",
+            "youtube_shorts"
+          ],
+          "content_type": "urban_karaoke",
+          "cta": "Follow for city vibes! 🎧🏙️",
+          "link": "linktree/ren-ohashi"
+        },
+        "mof": {
+          "platforms": [
+            "instagram_feed",
+            "facebook"
+          ],
+          "content_type": "urban_fashion",
+          "cta": "Join the city squad! 🏢✨",
+          "link": "discord.gg/ren-ohashi"
+        },
+        "bof": {
+          "platforms": [
+            "discord"
+          ],
+          "content_type": "urban_community",
+          "conversion_goal": "premium_subscription"
+        }
+      },
+      "cross_promotion": {
+        "target_characters": [
+          "airi_neo",
+          "jin_kawasaki",
+          "miyuki_sakura"
+        ],
+        "interaction_type": "urban_collab",
+        "frequency": "biweekly"
+      }
+    },
+    "aurelia_viral": {
+      "id": 99,
+      "name": "Aurelia Viral",
+      "trigger_word": "aurelia_chaos",
+      "age": 21,
+      "gender": "female",
+      "nationality": "Mixed (American-Japanese)",
+      "hierarchy": "star",
+      "niches": [
+        "viral",
+        "trending",
+        "controversy",
+        "meme",
+        "algorithm_hack"
+      ],
+      "content_style": "Viral algorithm specialist - Maximum engagement driver",
+      "appearance": {
+        "base_description": "Mixed-race woman with striking features, bold makeup, attention-grabbing style, changeable hair colors",
+        "avatar_crop": "1:1",
+        "aspect_ratios": {
+          "discord": "1:1",
+          "instagram": "1:1",
+          "facebook": "1:1",
+          "tiktok": "9:16",
+          "youtube": "16:9"
+        },
+        "visual_hooks": [
+          "bold makeup",
+          "neon hair colors",
+          "provocative poses",
+          "shock value aesthetics",
+          "trending filters"
+        ]
+      },
+      "phase1": {
+        "karaoke_style": [
+          "viral_sounds",
+          "trending_remixes",
+          "controversial_songs",
+          "meme_music"
+        ],
+        "content_themes": [
+          "viral_challenges",
+          "trending_dances",
+          "controversial_takes",
+          "algorithm_hacks",
+          "meme_content",
+          "reaction_bait",
+          "thirst_traps"
+        ],
+        "posting_schedule": {
+          "tiktok": "3-5_posts_daily",
+          "instagram": "2-3_reels_daily",
+          "youtube": "daily_shorts"
+        },
+        "engagement_hooks": [
+          "Wait for it... 😱 (engagement bait)",
+          "This is crazy! Share if you agree! 🔥",
+          "POV: You're scrolling and see THIS 👀",
+          "Watch until the end! You won't believe it! 💀",
+          "Duet this if you dare! 😈",
+          "Link in bio for more 🔗😉"
+        ],
+        "color_palette": [
+          "hot pink",
+          "electric blue",
+          "neon green",
+          "black",
+          "white",
+          "vibrant multi"
+        ],
+        "audio_preferences": {
+          "primary_genres": [
+            "trending_sounds",
+            "viral_remixes",
+            "meme_songs",
+            "tiktok_top_100"
+          ],
+          "bpm_range": [
+            120,
+            180
+          ],
+          "trending_sounds": true,
+          "trending_priority": "critical"
+        },
+        "viral_triggers": {
+          "controversy_level": 7,
+          "shock_value": 8,
+          "algorithm_optimization": "maximum",
+          "shareability_score": 9,
+          "engagement_bait": true,
+          "duet_stitch_optimization": true,
+          "trending_sound_priority": true
+        }
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "critical",
+        "readiness_threshold": "5k followers",
+        "funnel_position": "awareness_to_nsfw_bridge",
+        "conversion_strategy": "viral_to_adult_funnel",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 9.99,
+            "content": [
+              "exclusive photos",
+              "behind the scenes",
+              "DM access",
+              "preview content"
+            ],
+            "description": "Viral Vibes tier - Get closer to the chaos"
+          },
+          "premium": {
+            "monthly_price": 24.99,
+            "content": [
+              "spicy content",
+              "custom photosets",
+              "voice messages",
+              "priority DMs",
+              "exclusive videos"
+            ],
+            "description": "Inner Circle tier - The real unfiltered content"
+          },
+          "vip": {
+            "monthly_price": 49.99,
+            "content": [
+              "explicit content",
+              "custom requests",
+              "video calls",
+              "1-on-1 texting",
+              "special PPV access"
+            ],
+            "description": "VIP Chaos tier - Maximum access and personalization"
+          }
+        },
+        "persona_mode": "unfiltered_chaotic_friend",
+        "dm_templates": {
+          "welcome": {
+            "trigger": "new_subscriber",
+            "template": "Heyyyy! 😈🔥 Thanks for joining the chaos! You just unlocked a whole new level of content you won't see anywhere else. Check your DMs for exclusive stuff 👀💕 Let's get wild! 💋"
+          },
+          "engagement": {
+            "trigger": "7_days_inactive",
+            "template": "Babe where'd you go?! 😭 I've been posting FIRE content and you're missing out! Come back, I miss our chats 💕 Got something special waiting for you 😉🔥"
+          },
+          "upsell": {
+            "trigger": "basic_30days",
+            "template": "Okay so... you've been here a month and you're STILL on Basic?! 👀 Girl/Boy, you're missing THE BEST stuff! Premium is where the magic happens 😈✨ Upgrade and I'll send you something special 💋 Trust me, you won't regret it! 🔥"
+          },
+          "ppv_announcement": {
+            "trigger": "new_ppv_content",
+            "template": "🚨 NEW EXCLUSIVE DROP 🚨 Just posted something INSANE that you DO NOT want to miss! 😱🔥 Limited time, grab it now before it's gone! Link in DMs 💋👀"
+          }
+        },
+        "content_enhancements": {
+          "style": "provocative_viral",
+          "outfits": [
+            "lingerie",
+            "bikini",
+            "club_wear",
+            "cosplay_sexy",
+            "casual_teasing"
+          ],
+          "settings": [
+            "bedroom",
+            "bathroom",
+            "party",
+            "hotel",
+            "outdoor_daring"
+          ],
+          "nsfw_progression": {
+            "week_1-2": "suggestive_teasing",
+            "week_3-4": "lingerie_implied",
+            "week_5+": "explicit_content"
+          }
+        }
+      },
+      "funnel": {
+        "tof": {
+          "platforms": [
+            "tiktok",
+            "instagram_reels",
+            "youtube_shorts"
+          ],
+          "content_type": "viral_hooks",
+          "cta": "Can't post the real stuff here 😏 Link in bio! 🔥",
+          "link": "linktree/aurelia-viral",
+          "optimization": "maximum_engagement"
+        },
+        "mof": {
+          "platforms": [
+            "discord",
+            "twitter"
+          ],
+          "content_type": "suggestive_teasers",
+          "cta": "Join for exclusive content you won't see anywhere else 👀💕",
+          "link": "discord.gg/aurelia-viral"
+        },
+        "bof": {
+          "platforms": [
+            "onlyfans",
+            "fanmart"
+          ],
+          "content_type": "nsfw_conversion",
+          "conversion_goal": "phase2_premium_subscription",
+          "pricing_strategy": "tiered_upsell"
+        }
+      },
+      "cross_promotion": {
+        "target_characters": [
+          "miyuki_sakura",
+          "airi_neo",
+          "hana_nakamura"
+        ],
+        "interaction_type": "viral_collab",
+        "frequency": "daily",
+        "collab_strategy": "duet_stitch_takeover"
+      },
+      "viral_optimization": {
+        "algorithm_tactics": [
+          "trending_sounds_first",
+          "hook_in_first_3_seconds",
+          "engagement_bait_captions",
+          "post_at_peak_times",
+          "use_viral_hashtags",
+          "controversial_but_safe",
+          "encourage_duets_stitches",
+          "loop_videos",
+          "cliffhanger_endings"
+        ],
+        "controversy_guidelines": {
+          "max_level": 7,
+          "avoid_topics": [
+            "politics",
+            "religion",
+            "hate_speech"
+          ],
+          "safe_controversy": [
+            "dating_hot_takes",
+            "relationship_drama",
+            "lifestyle_debates"
+          ]
+        },
+        "content_types_priority": [
+          "thirst_traps",
+          "viral_challenges",
+          "trending_dances",
+          "reaction_content",
+          "storytimes",
+          "hot_takes",
+          "lifestyle_flex"
+        ]
+      }
+    },
+    "mika_sweet": {
+      "id": 101,
+      "name": "Mika Sweet",
+      "trigger_word": "mikasweet_v1",
+      "age": 20,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "niches": [
+        "romance",
+        "sweet",
+        "gf_experience",
+        "softcore"
+      ],
+      "content_style": "Girlfriend experience - Wholesome and intimate",
+      "phase1": {
+        "karaoke_style": [
+          "soft_ballads",
+          "j-pop_romance"
+        ],
+        "content_themes": [
+          "daily_vlogs",
+          "caring_moments",
+          "wholesome_lifestyle"
+        ]
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "highest",
+        "funnel_position": "wholesome_to_intimate",
+        "persona_mode": "sweet_girlfriend",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 9.99,
+            "description": "Sweetheart access"
+          },
+          "premium": {
+            "monthly_price": 24.99,
+            "description": "Intimate moments"
+          },
+          "vip": {
+            "monthly_price": 49.99,
+            "description": "True Lover Experience"
+          }
+        },
+        "content_enhancements": {
+          "style": "sweet_romantic_nsfw",
+          "outfits": [
+            "pajamas",
+            "white_lingerie",
+            "oversized_sweater"
+          ],
+          "settings": [
+            "bedroom",
+            "natural_light_room",
+            "cozy_home"
+          ]
+        }
+      }
+    },
+    "haruka_chan": {
+      "id": 102,
+      "name": "Haruka Chan",
+      "trigger_word": "haruka_exec",
+      "age": 23,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "niches": [
+        "office",
+        "executive",
+        "schoolgirl",
+        "authority"
+      ],
+      "content_style": "Authority specialist - Versatile roleplay",
+      "phase1": {
+        "karaoke_style": [
+          "pop_dance",
+          "trending_remixes"
+        ],
+        "content_themes": [
+          "office_humor",
+          "student_life",
+          "fashion_hacks"
+        ]
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "high",
+        "funnel_position": "authority_funnel",
+        "persona_mode": "strict_executive",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 14.99,
+            "description": "Office Assistant Access"
+          },
+          "premium": {
+            "monthly_price": 34.99,
+            "description": "Executive Boardroom"
+          },
+          "vip": {
+            "monthly_price": 69.99,
+            "description": "CEO Private Sessions"
+          }
+        },
+        "content_enhancements": {
+          "style": "executive_nsfw",
+          "outfits": [
+            "school_uniform",
+            "business_suit",
+            "stockings"
+          ],
+          "settings": [
+            "office",
+            "classroom",
+            "private_office"
+          ]
+        }
+      }
+    },
+    "sora_hime": {
+      "id": 103,
+      "name": "Sora Hime",
+      "trigger_word": "sorahime_v1",
+      "age": 19,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "niches": [
+        "princess",
+        "exotic",
+        "fantasy",
+        "cosplay"
+      ],
+      "content_style": "Imperial fantasy - Ethereal and untouchable",
+      "phase1": {
+        "karaoke_style": [
+          "traditional_fusion",
+          "anime_openings"
+        ],
+        "content_themes": [
+          "lifestyle_extravagance",
+          "traditional_arts",
+          "fantasy_cosplay"
+        ]
+      },
+      "phase2": {
+        "ready": true,
+        "priority": "high",
+        "funnel_position": "fantasy_funnel",
+        "persona_mode": "haughty_princess",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 19.99,
+            "description": "Royal Servant Access"
+          },
+          "premium": {
+            "monthly_price": 44.99,
+            "description": "Inner Palace Access"
+          },
+          "vip": {
+            "monthly_price": 99.99,
+            "description": "Imperial Concubine Privilege"
+          }
+        },
+        "content_enhancements": {
+          "style": "fantasy_exotic_nsfw",
+          "outfits": [
+            "kimono_sheer",
+            "jeweled_accessories",
+            "royal_lingerie"
+          ],
+          "settings": [
+            "imperial_bedroom",
+            "zen_garden",
+            "luxury_bath"
+          ]
+        }
+      }
+    },
+    "yui_seductive": {
+      "id": 104,
+      "name": "Yui Seductive",
+      "trigger_word": "yui_seductive_v1",
+      "age": 22,
+      "gender": "female",
+      "nationality": "Japanese",
+      "niches": [
+        "glamour",
+        "lingerie",
+        "seduction"
+      ],
+      "phase2": {
+        "ready": true,
+        "persona_mode": "seductive_temptress",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 14.99,
+            "description": "Lingerie Previews"
+          },
+          "premium": {
+            "monthly_price": 34.99,
+            "description": "Intimate Boudoir"
+          },
+          "vip": {
+            "monthly_price": 79.99,
+            "description": "Ultimate Seduction"
+          }
+        }
+      }
+    },
+    "momoka_av": {
+      "id": 105,
+      "name": "Momoka AV",
+      "trigger_word": "momoka_av_v1",
+      "age": 24,
+      "gender": "female",
+      "nationality": "Japanese",
+      "niches": [
+        "professional_av",
+        "hardcore",
+        "industry_bts"
+      ],
+      "phase2": {
+        "ready": true,
+        "persona_mode": "av_star",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 19.99,
+            "description": "Studio Access"
+          },
+          "premium": {
+            "monthly_price": 49.99,
+            "description": "Uncensored Performances"
+          },
+          "vip": {
+            "monthly_price": 129.99,
+            "description": "Executive Producer Status"
+          }
+        }
+      }
+    },
+    "kanon_hostess": {
+      "id": 106,
+      "name": "Kanon Hostess",
+      "trigger_word": "kanon_hostess_v1",
+      "age": 25,
+      "gender": "female",
+      "nationality": "Japanese",
+      "niches": [
+        "nightlife",
+        "luxury",
+        "conversation",
+        "club"
+      ],
+      "phase2": {
+        "ready": true,
+        "persona_mode": "club_hostess",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 24.99,
+            "description": "Champagne Room Access"
+          },
+          "premium": {
+            "monthly_price": 54.99,
+            "description": "Private Booth Sessions"
+          },
+          "vip": {
+            "monthly_price": 149.99,
+            "description": "Number One Hostess Exclusivity"
+          }
+        }
+      }
+    },
+    "natsuki_bondage": {
+      "id": 107,
+      "name": "Natsuki Bondage",
+      "trigger_word": "natsuki_kinbaku_v1",
+      "age": 23,
+      "gender": "female",
+      "nationality": "Japanese",
+      "niches": [
+        "kinbaku",
+        "artistic_bondage",
+        "shibari"
+      ],
+      "phase2": {
+        "ready": true,
+        "persona_mode": "artistic_submissive",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 14.99,
+            "description": "Rope Art Previews"
+          },
+          "premium": {
+            "monthly_price": 39.99,
+            "description": "Advanced Kinbaku Sessions"
+          },
+          "vip": {
+            "monthly_price": 89.99,
+            "description": "Private Bondage Performance"
+          }
+        }
+      }
+    },
+    "luna_provocativa": {
+      "id": 108,
+      "name": "Luna Provocativa",
+      "trigger_word": "luna_club_v1",
+      "age": 21,
+      "gender": "female",
+      "nationality": "Japanese",
+      "niches": [
+        "dance",
+        "party",
+        "club_wear"
+      ],
+      "phase2": {
+        "ready": true,
+        "persona_mode": "party_girl",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 9.99,
+            "description": "Party Vibe Access"
+          },
+          "premium": {
+            "monthly_price": 27.99,
+            "description": "VIP Dance Floor"
+          },
+          "vip": {
+            "monthly_price": 59.99,
+            "description": "Private Afterparty"
+          }
+        }
+      }
+    },
+    "selena_elegant": {
+      "id": 109,
+      "name": "Selena Elegant",
+      "trigger_word": "selena_mature_v1",
+      "age": 28,
+      "gender": "female",
+      "nationality": "Japanese",
+      "niches": [
+        "mature",
+        "luxury",
+        "milf_aesthetic"
+      ],
+      "phase2": {
+        "ready": true,
+        "persona_mode": "sophisticated_woman",
+        "tier_levels": {
+          "basic": {
+            "monthly_price": 19.99,
+            "description": "Elegant Tease"
+          },
+          "premium": {
+            "monthly_price": 49.99,
+            "description": "Luxury Intimacy"
+          },
+          "vip": {
+            "monthly_price": 119.99,
+            "description": "Private Penthouse Experience"
+          }
+        }
+      }
+    }
+  },
+  "global_settings": {
+    "posting_frequency": {
+      "tiktok": "1-2 posts daily",
+      "instagram": "1 post daily + 3-5 stories",
+      "youtube": "2-3 shorts weekly + 1 long video biweekly",
+      "facebook": "1 post daily"
+    },
+    "engagement_strategy": {
+      "comment_response_time": "within 2 hours",
+      "dm_response_time": "within 4 hours",
+      "cross_promotion_frequency": "weekly"
+    },
+    "automation_settings": {
+      "n8n_workflows": true,
+      "auto_comment_replies": true,
+      "scheduled_posts": true,
+      "engagement_tracking": true
+    },
+    "security_settings": {
+      "seed_lock": true,
+      "lora_strength": 0.8,
+      "face_consistency_threshold": 0.95
+    }
+  },
+  "content_calendar": {
+    "monday": [
+      "miyuki_sakura",
+      "hana_nakamura"
+    ],
+    "tuesday": [
+      "airi_neo",
+      "ren_ohashi"
+    ],
+    "wednesday": [
+      "aiko_hayashi",
+      "chiyo_sasaki"
+    ],
+    "thursday": [
+      "rio_mizuno",
+      "jin_kawasaki"
+    ],
+    "friday": [
+      "miyuki_sakura",
+      "airi_neo"
+    ],
+    "saturday": [
+      "hana_nakamura",
+      "ren_ohashi"
+    ],
+    "sunday": [
+      "aurelia_viral",
+      "mika_sweet"
+    ]
+  }
+}

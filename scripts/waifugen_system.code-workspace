@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../user_input_files"
+		},
+		{
+			"path": "../../proyecto_waifugen"
+		},
+		{
+			"path": "../../resources"
+		},
+		{
+			"path": "../../extracted_pack"
+		},
+		{
+			"path": "../../proyecto_analisis"
+		}
+	]
+}

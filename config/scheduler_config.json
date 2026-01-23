@@ -1,0 +1,88 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-01-22",
+  "scheduler": {
+    "enabled": true,
+    "check_interval_seconds": 60,
+    "max_concurrent_tasks": 5,
+    "timezone": "Asia/Tokyo"
+  },
+  "posting_slots": {
+    "slot_1": {
+      "name": "Morning",
+      "time": "08:00",
+      "platforms": ["tiktok", "instagram"],
+      "priority": 1
+    },
+    "slot_2": {
+      "name": "Afternoon",
+      "time": "12:00",
+      "platforms": ["instagram", "youtube"],
+      "priority": 2
+    },
+    "slot_3": {
+      "name": "Evening",
+      "time": "18:00",
+      "platforms": ["tiktok", "youtube"],
+      "priority": 3
+    },
+    "slot_4": {
+      "name": "Night",
+      "time": "21:00",
+      "platforms": ["instagram", "tiktok", "youtube"],
+      "priority": 4
+    }
+  },
+  "character_rotation": {
+    "enabled": true,
+    "strategy": "round_robin",
+    "characters_per_slot": 2,
+    "restart_day": "monday"
+  },
+  "tasks": {
+    "credit_check": {
+      "enabled": true,
+      "schedule": "0 * * * *",
+      "description": "Check A2E credits and send alerts"
+    },
+    "daily_report": {
+      "enabled": true,
+      "schedule": "0 0 * * *",
+      "description": "Generate daily metrics report"
+    },
+    "character_rotation": {
+      "enabled": true,
+      "schedule": "0 * * * *",
+      "description": "Rotate character usage"
+    },
+    "video_generation": {
+      "enabled": true,
+      "schedule": "*/5 * * * *",
+      "description": "Process scheduled video generations"
+    },
+    "social_posting": {
+      "enabled": true,
+      "schedule": "*/5 * * * *",
+      "description": "Process scheduled social posts"
+    }
+  },
+  "alerts": {
+    "credit_warning_threshold": 80,
+    "credit_critical_threshold": 95,
+    "job_failure_alert": true,
+    "posting_failure_alert": true,
+    "notification_channels": ["telegram", "email"]
+  },
+  "limits": {
+    "max_daily_jobs_per_platform": 5,
+    "max_weekly_jobs_per_character": 7,
+    "max_retry_attempts": 3,
+    "retry_delay_minutes": 5
+  },
+  "automation": {
+    "auto_generate": true,
+    "auto_post": true,
+    "auto_retry_failed": true,
+    "stagger_minutes_between_platforms": 5
+  }
+}

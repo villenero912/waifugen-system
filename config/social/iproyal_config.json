@@ -1,0 +1,94 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-01-22",
+  "provider": {
+    "name": "IPRoyal",
+    "website": "https://iproyal.com",
+    "discount_code": "IPR50",
+    "pricing": {
+      "regular_price_per_gb": 7.00,
+      "discounted_price_per_gb": 1.75,
+      "currency": "USD",
+      "monthly_budget_eur": 15.00,
+      "estimated_monthly_gb": 9
+    },
+    "features": {
+      "residential_ips": true,
+      "isp_proxies": true,
+      "datacenter_proxies": true,
+      "pool_size": "32M+",
+      "traffic_expiry": false,
+      "city_targeting": true,
+      "country_targeting": true
+    }
+  },
+  "proxy_settings": {
+    "enabled": true,
+    "rotation_type": "rotating",
+    "rotation_interval_seconds": 300,
+    "sticky_sessions": {
+      "enabled": false,
+      "duration_minutes": 30
+    },
+    "authentication": {
+      "type": "username_password"
+    },
+    "protocols": ["http", "https", "socks5"],
+    "connection": {
+      "timeout_seconds": 30,
+      "max_retries": 3,
+      "retry_delay_seconds": 5
+    }
+  },
+  "budget_allocation": {
+    "monthly_gb_limit": 9,
+    "daily_gb_limit": 0.5,
+    "per_platform_allocation": {
+      "tiktok": {
+        "percentage": 40,
+        "estimated_gb_per_month": 3.6
+      },
+      "instagram": {
+        "percentage": 35,
+        "estimated_gb_per_month": 3.15
+      },
+      "youtube": {
+        "percentage": 25,
+        "estimated_gb_per_month": 2.25
+      }
+    },
+    "alert_threshold_percent": 80,
+    "fail_safe_mode": {
+      "enabled": true,
+      "when_gb_remaining": 1,
+      "action": "switch_to_direct_connection"
+    }
+  },
+  "usage_optimization": {
+    "compress_requests": true,
+    "cache_enabled": true,
+    "cache_ttl_seconds": 300,
+    "batch_api_calls": true,
+    "parallel_connections_limit": 5,
+    "connection_pool_size": 10
+  },
+  "target_locations": {
+    "primary": ["JP", "US", "KR"],
+    "fallback": ["GB", "DE", "AU"],
+    "rotation_strategy": "round_robin"
+  },
+  "environments": {
+    "development": {
+      "use_proxy": false,
+      "direct_connection": true
+    },
+    "staging": {
+      "use_proxy": true,
+      "test_mode": true
+    },
+    "production": {
+      "use_proxy": true,
+      "test_mode": false
+    }
+  }
+}

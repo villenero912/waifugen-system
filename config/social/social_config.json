@@ -1,0 +1,253 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-01-22",
+  "platforms": {
+    "tiktok": {
+      "enabled": true,
+      "credentials": {
+        "env_vars": ["TIKTOK_CLIENT_KEY", "TIKTOK_CLIENT_SECRET"],
+        "oauth_url": "https://www.tiktok.com/v2/auth/authorize/"
+      },
+      "config": {
+        "rate_limit_rpm": 100,
+        "burst_limit": 20,
+        "max_video_size_mb": 287.6,
+        "max_duration_seconds": 180,
+        "optimal_resolution": "1080x1920",
+        "default_visibility": "public",
+        "auto_add_music": true
+      },
+      "posting": {
+        "optimal_times": ["08:00", "12:00", "18:00", "21:00"],
+        "timezone": "Asia/Tokyo",
+        "hashtag_strategy": {
+          "max_tags": 10,
+          "include_trending": true,
+          "trending_refresh_hours": 6
+        }
+      }
+    },
+    "instagram": {
+      "enabled": true,
+      "credentials": {
+        "env_vars": ["INSTAGRAM_APP_ID", "INSTAGRAM_APP_SECRET", "INSTAGRAM_ACCESS_TOKEN"],
+        "oauth_url": "https://api.instagram.com/oauth/authorize/"
+      },
+      "config": {
+        "rate_limit_rpm": 50,
+        "burst_limit": 10,
+        "max_video_size_mb": 650,
+        "max_duration_seconds": 90,
+        "optimal_resolution": "1080x1920",
+        "default_visibility": "public",
+        "default_category": "22"
+      },
+      "posting": {
+        "optimal_times": ["08:00", "12:00", "18:00", "21:00"],
+        "timezone": "Asia/Tokyo",
+        "hashtag_strategy": {
+          "max_tags": 30,
+          "include_niche": true,
+          "niche_tags": ["AI", "VTuber", "Anime", "Japan", "Tech"]
+        }
+      }
+    },
+    "youtube": {
+      "enabled": true,
+      "credentials": {
+        "env_vars": ["YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET", "YOUTUBE_REFRESH_TOKEN", "YOUTUBE_API_KEY"],
+        "oauth_url": "https://accounts.google.com/o/oauth2/v2/auth"
+      },
+      "config": {
+        "rate_limit_rpm": 50,
+        "burst_limit": 10,
+        "max_video_size_mb": 256,
+        "max_duration_seconds": 60,
+        "optimal_resolution": "1080x1920",
+        "default_visibility": "public",
+        "default_category": "22",
+        "shorts_focus": true
+      },
+      "posting": {
+        "optimal_times": ["08:00", "12:00", "18:00", "21:00"],
+        "timezone": "Asia/Tokyo",
+        "hashtag_strategy": {
+          "max_tags": 15,
+          "include_generic": true,
+          "generic_tags": ["Shorts", "AI", "VTuber"]
+        }
+      }
+    }
+  },
+  "cross_platform": {
+    "unified_posting": {
+      "enabled": true,
+      "parallel_upload": true,
+      "retry_failed_platforms": true,
+      "max_retries": 2
+    },
+    "scheduling": {
+      "timezone": "Asia/Tokyo",
+      "stagger_minutes": 5,
+      "buffer_hours": 4
+    },
+    "content_adaptation": {
+      "tiktok_caption_length": 2200,
+      "instagram_caption_length": 2200,
+      "youtube_title_length": 100,
+      "youtube_description_length": 5000,
+      "auto_truncate": true
+    }
+  },
+  "character_branding": {
+    "miyuki_sakura": {
+      "tiktok": {
+        "bio": "AI VTuber | K-pop dancer | Day 1-4 posts",
+        "style_tags": ["Kpop", "Dance", "Cute", "Energetic"]
+      },
+      "instagram": {
+        "bio": "AI VTuber | K-pop enthusiast | Daily content",
+        "style_tags": ["DanceChallenge", "KpopCover", "Cute"]
+      },
+      "youtube": {
+        "channel_name": "Miyuki Sakura Shorts",
+        "style_tags": ["Kpop", "Dance", "Cute"]
+      }
+    },
+    "airi_neo": {
+      "tiktok": {
+        "bio": "AI VTuber | Cyber aesthetic | Day 2-5 posts",
+        "style_tags": ["Cyber", "Neon", "Futuristic"]
+      },
+      "instagram": {
+        "bio": "AI VTuber | Cyberpunk vibes | Tech & lifestyle",
+        "style_tags": ["Cyberpunk", "NeonGlow", "Tech"]
+      },
+      "youtube": {
+        "channel_name": "Airi Neo Shorts",
+        "style_tags": ["Cyber", "Futuristic", "Tech"]
+      }
+    },
+    "hana_nakamura": {
+      "tiktok": {
+        "bio": "AI VTuber | Soft aesthetics | Day 3-6 posts",
+        "style_tags": ["Romantic", "Soft", "Emotional"]
+      },
+      "instagram": {
+        "bio": "AI VTuber | Soft & romantic | Emotional content",
+        "style_tags": ["RomanticBallad", "Floral", "SoftAesthetics"]
+      },
+      "youtube": {
+        "channel_name": "Hana Nakamura Shorts",
+        "style_tags": ["Romantic", "Emotional", "Soft"]
+      }
+    },
+    "aiko_hayashi": {
+      "tiktok": {
+        "bio": "AI VTuber | Professional vibes | Day 4-7 posts",
+        "style_tags": ["Professional", "Career", "Lifestyle"]
+      },
+      "instagram": {
+        "bio": "AI VTuber | Professional & warm | Career tips",
+        "style_tags": ["ProfessionalLifestyle", "Career", "Mentor"]
+      },
+      "youtube": {
+        "channel_name": "Aiko Hayashi Shorts",
+        "style_tags": ["Professional", "Career", "Lifestyle"]
+      }
+    },
+    "rio_mizuno": {
+      "tiktok": {
+        "bio": "AI VTuber | Chill vibes | Day 5-1 posts",
+        "style_tags": ["Chill", "Relaxed", "Lifestyle"]
+      },
+      "instagram": {
+        "bio": "AI VTuber | Relaxed & authentic | Daily life",
+        "style_tags": ["ChillVibes", "WeekendRelax", "Authentic"]
+      },
+      "youtube": {
+        "channel_name": "Rio Mizuno Shorts",
+        "style_tags": ["Chill", "Lifestyle", "Relaxed"]
+      }
+    },
+    "ren_ohashi": {
+      "tiktok": {
+        "bio": "AI VTuber | Creative content | Day 6-2 posts",
+        "style_tags": ["Creative", "Artistic", "Unique"]
+      },
+      "instagram": {
+        "bio": "AI VTuber | Creative & artistic | Behind scenes",
+        "style_tags": ["CreativeProcess", "Artistic", "BehindScenes"]
+      },
+      "youtube": {
+        "channel_name": "Ren Ohashi Shorts",
+        "style_tags": ["Creative", "Artistic", "Unique"]
+      }
+    },
+    "chiyo_sasaki": {
+      "tiktok": {
+        "bio": "AI VTuber | New perspectives | Day 7-3 posts",
+        "style_tags": ["Fresh", "Perspective", "Insight"]
+      },
+      "instagram": {
+        "bio": "AI VTuber | Fresh & insightful | New angles",
+        "style_tags": ["FreshPerspective", "Insight", "NewAngles"]
+      },
+      "youtube": {
+        "channel_name": "Chiyo Sasaki Shorts",
+        "style_tags": ["Fresh", "Perspective", "Insight"]
+      }
+    },
+    "jin_kawasaki": {
+      "tiktok": {
+        "bio": "AI VTuber | Bold content | Day 1-4 posts",
+        "style_tags": ["Bold", "Confident", "Dynamic"]
+      },
+      "instagram": {
+        "bio": "AI VTuber | Bold & confident | Dynamic content",
+        "style_tags": ["BoldMove", "Confident", "Dynamic"]
+      },
+      "youtube": {
+        "channel_name": "Jin Kawasaki Shorts",
+        "style_tags": ["Bold", "Confident", "Dynamic"]
+      }
+    }
+  },
+  "posting_schedule": {
+    "daily_pattern": {
+      "slot_1": {
+        "time": "08:00",
+        "platforms": ["tiktok", "instagram"],
+        "character_rotation": ["miyuki_sakura", "airi_neo"]
+      },
+      "slot_2": {
+        "time": "12:00",
+        "platforms": ["instagram", "youtube"],
+        "character_rotation": ["hana_nakamura", "aiko_hayashi"]
+      },
+      "slot_3": {
+        "time": "18:00",
+        "platforms": ["tiktok", "youtube"],
+        "character_rotation": ["rio_mizuno", "ren_ohashi"]
+      },
+      "slot_4": {
+        "time": "21:00",
+        "platforms": ["instagram", "tiktok", "youtube"],
+        "character_rotation": ["chiyo_sasaki", "jin_kawasaki"]
+      }
+    },
+    "timezone": "Asia/Tokyo"
+  },
+  "analytics": {
+    "metrics_to_track": ["views", "likes", "comments", "shares", "saves", "engagement_rate"],
+    "report_frequency": "daily",
+    "platforms_for_aggregated": ["tiktok", "instagram", "youtube"]
+  },
+  "automation": {
+    "auto_post": true,
+    "check_credits_before_post": true,
+    "notify_on_failure": true,
+    "retry_failed_posts": true,
+    "max_daily_posts_per_platform": 5
+  }
+}

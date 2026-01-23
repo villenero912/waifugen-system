@@ -1,0 +1,141 @@
+#!/usr/bin/env python3
+"""
+Dockerfile - Karaoke System
+===========================
+
+This Dockerfile builds the complete karaoke generation system with:
+- Real-time A2E API integration for lip-sync
+- Dynamic avatar animation with breathing effects
+- High-quality video encoding
+- Music generation with MusicGen
+- TTS voice synthesis
+
+Features:
+- Python 3.12 slim base image
+- GPU support (optional) for ML operations
+- FFmpeg for video processing
+- Comprehensive audio processing libraries
+
+Usage:
+    docker build -f Dockerfile.karaoke -t jav-karaoke .
+    docker run -v /path/to/assets:/app/assets jav-karaoke
+
+Author: JAV Automation System
+Version: 1.0.0
+Created: 2026-01-18
+"""
+
+# =============================================================================
+# BUILD STAGE - Dependencies installation
+# =============================================================================
+FROM python:3.12-slim AS builder
+
+# Environment variables for optimized pip installation
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PIP_NO_CACHE_DIR=1
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Install system build dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    pkg-config \
+    cmake \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create application directory
+WORKDIR /app
+
+# Copy requirements file
+COPY requirements.txt .
+
+# Install Python dependencies with prefix for better caching
+RUN pip install --prefix=/install -r requirements.txt
+
+# =============================================================================
+# RUNTIME STAGE - Final production image
+# =============================================================================
+FROM python:3.12-slim AS runtime
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Install runtime system dependencies
+# FFmpeg: Video processing and encoding
+# libsndfile: Audio file I/O
+# Other libraries for audio/video processing
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg \
+    libsndfile1 \
+    libasound2 \
+    portaudio19-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user for security
+RUN groupadd --gid 1000 appgroup && \
+    useradd --uid 1000 --gid appgroup --shell /bin/bash --create-home appuser
+
+# Copy installed packages from builder
+COPY --from=builder /install /usr/local
+
+# Copy application code
+COPY --chown=appuser:appgroup . /app
+
+# Create directories for output with proper permissions
+RUN mkdir -p /app/karaoke_lyrics \
+             /app/karaoke_voices \
+             /app/karaoke_mixed \
+             /app/karaoke_videos \
+             /app/karaoke_lipsync \
+             /app/music_library \
+             /app/assets/output/phase1 \
+             /app/assets/output/phase2 \
+    && chown -R appuser:appgroup /app
+
+# Set working directory
+WORKDIR /app
+
+# Switch to non-root user
+USER appuser
+
+# Expose port (if running as API service)
+EXPOSE 8001
+
+# Health check - verify karaoke system can initialize
+HEALTHCHECK --interval=60s --timeout=30s --start-period=10s --retries=3 \
+    CMD python -c "from scripts.karaoke_generator import CompleteKaraokePipeline; print('Karaoke system ready')" 2>/dev/null || exit 1
+
+# Entry point for karaoke generation
+# Can be used as standalone processor or API service
+CMD ["python", "-c", "
+import asyncio
+from scripts.karaoke_generator import CompleteKaraokePipeline
+
+async def demo():
+    pipeline = CompleteKaraokePipeline()
+    print('Karaoke system initialized successfully')
+    await pipeline.close()
+
+asyncio.run(demo())
+"]
+
+# Alternative: Run as simple CLI tool for testing
+# CMD ["python", "scripts/karaoke_generator.py"]
+
+# =============================================================================
+# GPU RUNTIME STAGE (Optional - for ML operations)
+# =============================================================================
+# Uncomment this section and use multi-platform build for GPU support:
+#
+# FROM nvidia/cuda:12.1-cudnn8-devel-ubuntu22.04 AS runtime-gpu
+#
+# Install PyTorch with CUDA support:
+# RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+#
+# Set environment variable for GPU memory management:
+# ENV PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512
+
+# =============================================================================
+# END OF Dockerfile.karaoke
+# =============================================================================

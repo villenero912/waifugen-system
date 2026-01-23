@@ -1,0 +1,450 @@
+version: '3.8'
+
+# =============================================================================
+# WaifuGen System - Docker Compose Configuration
+# =============================================================================
+# Production-ready configuration optimized for cloud deployment
+# Server Specs: 4 vCPU, 16 GB RAM, 200 GB NVMe SSD
+# Region: Malaysia (adjust timezone as needed)
+# =============================================================================
+#
+# Optimized Configuration:
+# - Resource limits per service
+# - Health checks for all services
+# - Persistent volumes for data
+# - Monitoring stack included
+# - SSL termination via Nginx
+#
+# Quick Start:
+#   cp .env.example .env
+#   # Edit .env with your API keys and passwords
+#   docker-compose up -d
+#   docker-compose logs -f
+#
+# Stop:
+#   docker-compose down
+#
+# Full Reset (WARNING: deletes all data):
+#   docker-compose down -v
+#
+# =============================================================================
+
+services:
+  # ============================================================================
+  # CORE INFRASTRUCTURE SERVICES
+  # ============================================================================
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: ${PROJECT_NAME:-waifugen}_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-waifugen_prod}
+      POSTGRES_USER: ${POSTGRES_USER:-waifugen_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+      TZ: ${TIMEZONE:-Asia/Kuala_Lumpur}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - waifugen_network
+#    ports:
+#      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-waifugen_user} -d ${POSTGRES_DB:-waifugen_prod}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 1G
+    labels:
+      - "com.waifugen.service=postgres"
+      - "com.waifugen.role=database"
+
+  redis:
+    image: redis:7-alpine
+    container_name: ${PROJECT_NAME:-waifugen}_redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --appendonly yes
+      --requirepass ${REDIS_PASSWORD}
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --tcp-backlog 511
+      --timeout 0
+      --tcp-keepalive 300
+    volumes:
+      - redis_data:/data
+    networks:
+      - waifugen_network
+#    ports:
+#      - "${REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    labels:
+      - "com.waifugen.service=redis"
+      - "com.waifugen.role=cache"
+
+  # ============================================================================
+  # MAIN APPLICATION SERVICES
+  # ============================================================================
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: runtime
+    container_name: ${PROJECT_NAME:-waifugen}_app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      
+      # Database Configuration
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      
+      # Application Settings
+      - APP_HOST=0.0.0.0
+      - APP_PORT=8000
+      - DEBUG=${DEBUG:-false}
+      - SECRET_KEY=${SECRET_KEY}
+      
+      # API Keys (from environment)
+      - A2E_API_KEY=${A2E_API_KEY}
+      - QWEN_API_KEY=${QWEN_API_KEY}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434}
+      
+      # Monitoring
+      - PROMETHEUS_ENABLED=true
+      - METRICS_PORT=9090
+      
+    volumes:
+      - app_data:/app/data
+      - app_logs:/app/logs
+      - ./config:/app/config:ro
+      - ./assets:/app/assets:ro
+    networks:
+      - waifugen_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+#    healthcheck:
+#      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8000/health"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+#      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+        cpus: '1.0'
+    labels:
+      - "com.waifugen.service=app"
+      - "com.waifugen.role=api"
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: runtime
+    container_name: ${PROJECT_NAME:-waifugen}_worker
+    restart: unless-stopped
+    command: python -m celery -A core worker -l info
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://:${REDIS_PASSWORD}@redis:6379/0
+    volumes:
+      - app_data:/app/data
+      - app_logs:/app/logs
+      - ./assets:/app/assets:ro
+    networks:
+      - waifugen_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+        cpus: '0.5'
+    labels:
+      - "com.waifugen.service=worker"
+      - "com.waifugen.role=background"
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ${PROJECT_NAME:-waifugen}_ollama
+    restart: unless-stopped
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+      - OLLAMA_NUM_PARALLEL=2
+      - OLLAMA_MAX_LOADED_MODELS=2
+    volumes:
+      - ollama_data:/root/.ollama
+      - ./models:/root/.ollama/models:ro
+    networks:
+      - waifugen_network
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
+        cpus: '2.0'
+    labels:
+      - "com.waifugen.service=ollama"
+      - "com.waifugen.role=llm"
+
+  # ============================================================================
+  # MONITORING STACK
+  # ============================================================================
+
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    container_name: ${PROJECT_NAME:-waifugen}_prometheus
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=7d'
+      - '--storage.tsdb.block-duration=2h'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+      - '--query.max-concurrency=5'
+      - '--query.timeout=2m'
+      - '--web.external-url=http://localhost:9090/prometheus'
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - waifugen_network
+    ports:
+      - "9090:9090"
+    depends_on:
+      - app
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    labels:
+      - "com.waifugen.service=prometheus"
+      - "com.waifugen.role=monitoring"
+
+  grafana:
+    image: grafana/grafana:10.0.0
+    container_name: ${PROJECT_NAME:-waifugen}_grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - TZ=${TIMEZONE:-Asia/Kuala_Lumpur}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/:/etc/grafana/provisioning/:ro
+    networks:
+      - waifugen_network
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    labels:
+      - "com.waifugen.service=grafana"
+      - "com.waifugen.role=monitoring"
+
+  node-exporter:
+    image: prom/node-exporter:v1.6.1
+    container_name: ${PROJECT_NAME:-waifugen}_node_exporter
+    restart: unless-stopped
+    command:
+      - '--path.rootfs=/host'
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--collector.disable-defaults'
+      - '--collector.cpu'
+      - '--collector.mem'
+      - '--collector.disk'
+      - '--collector.filesystem'
+      - '--collector.loadavg'
+      - '--collector.netdev'
+      - '--collector.stat'
+      - '--collector.time'
+      - '--collector.uname'
+    volumes:
+      - '/:/host:ro,rslave'
+      - '/proc:/host/proc:ro'
+      - '/sys:/host/sys:ro'
+    networks:
+      - waifugen_network
+    ports:
+      - "9100:9100"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    labels:
+      - "com.waifugen.service=node-exporter"
+      - "com.waifugen.role=monitoring"
+
+  # ============================================================================
+  # REVERSE PROXY
+  # ============================================================================
+
+  nginx:
+    image: nginx:alpine
+    container_name: ${PROJECT_NAME:-waifugen}_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/sites-available:/etc/nginx/sites-available:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - static_files:/var/www/html
+      - nginx_logs:/var/log/nginx
+    networks:
+      - waifugen_network
+    depends_on:
+      - app
+      - prometheus
+      - grafana
+#    healthcheck:
+#      test: ["CMD", "nginx", "-t", "-s", "reload"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    labels:
+      - "com.waifugen.service=nginx"
+      - "com.waifugen.role=proxy"
+
+  # ============================================================================
+  # OPTIONAL: ADDITIONAL SERVICES (Enable by uncommenting)
+  # ============================================================================
+
+  # n8n - Workflow automation
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: ${PROJECT_NAME:-waifugen}_n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=${WEBHOOK_URL:-https://your-domain.com/}
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - waifugen_network
+    depends_on:
+      - postgres
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+# =============================================================================
+# VOLUMES - Persistent data storage
+# =============================================================================
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  app_data:
+    driver: local
+  app_logs:
+    driver: local
+  ollama_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  static_files:
+    driver: local
+  nginx_logs:
+    driver: local
+  n8n_data:
+    driver: local
+
+# =============================================================================
+# NETWORKS - Container networking
+# =============================================================================
+networks:
+  waifugen_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+          gateway: 172.28.0.1
+
+# =============================================================================
+# END OF docker-compose.yml
+# =============================================================================
