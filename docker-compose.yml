@@ -204,7 +204,7 @@ services:
       - OLLAMA_MAX_LOADED_MODELS=2
     volumes:
       - ollama_data:/root/.ollama
-      - ./models:/root/.ollama/models:ro
+      - ./models:/root/.ollama/models
     networks:
       - waifugen_network
     deploy:
