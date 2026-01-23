@@ -1,0 +1,376 @@
+# ============================================
+# COSPLAY & ANIME PROMPTS - Organized by Platform
+# Characters: Luna Tsukino, Kaito Shirakawa, Jin Kawasaki
+# Categories: Anime, Cosplay, VTuber, Fantasy, Gaming
+# ============================================
+
+# --- FANTAIA (High Production, Detailed Costumes) ---
+
+Luna_Tsukino_Fantia_Fantasy:
+  platform: Fantia
+  category: fantasy
+  prompt: |
+    masterpiece, best quality, luna tsukino ethereal fantasy character, 21 years old,
+    long flowing silver hair with purple shimmer, large luminous purple eyes with star sparkle,
+    wearing flowing white fantasy gown with silver embroidery and crystal accents,
+    mystical enchanted forest background with fireflies and glowing mushrooms,
+    magical creature aesthetic, 8k resolution, fantasy elf fairy aesthetic
+  seed: 2211001
+
+Luna_Tsukino_Fantia_VTuber:
+  platform: Fantia
+  category: vtuber
+  prompt: |
+    professional VTuber avatar, luna tsukino, 21 years old, virtual streaming setup,
+    fairy wings visible, magical girl aesthetic, high quality avatar rendering,
+    streaming studio with ring light, virtual background, 8k resolution,
+    popular VTuber character design, magical streaming content
+  seed: 2211002
+
+Luna_Tsukino_Fantia_Magical:
+  platform: Fantia
+  category: magical_girl
+  prompt: |
+    magical girl transformation, luna tsukino, 21 years old, elaborate fantasy costume,
+    large white wings, detailed prosthetic ears, flower crown with glowing elements,
+    magical particle effects around, dramatic fantasy lighting, 8k resolution,
+    immersive fantasy world aesthetic, professional cosplay photography
+  seed: 2211003
+
+Kaito_Shirakawa_Fantia_Anime:
+  platform: Fantia
+  category: anime
+  prompt: |
+    masterpiece, best quality, kaito shirakawa anime protagonist style, 25 years old,
+    spiky dramatic anime character hair dyed bright red with black roots, sharp intense eyes,
+    wearing high school anime protagonist uniform with loosened tie, dynamic action pose,
+    anime poster aesthetic, bold dramatic lighting with rim light, 8k resolution,
+    shonen anime aesthetic, heroic confident expression, iconic anime character photography
+  seed: 2212001
+
+Kaito_Shirakawa_Fantia_Shonen:
+  platform: Fantia
+  category: shonen
+  prompt: |
+    shonen anime hero photo, kaito shirakawa, 25 years old, dramatic anime battle pose,
+    energy effects surrounding, anime action scene aesthetic with speed lines,
+    epic fantasy anime landscape background, dramatic lighting with sunset sky,
+    8k resolution, bold saturated anime colors, heroic shonen anime aesthetic
+  seed: 2212002
+
+Jin_Kawasaki_Fantia_Cyberpunk:
+  platform: Fantia
+  category: cyberpunk
+  prompt: |
+    masterpiece, best quality, jin kawasaki cyberpunk aesthetic, 26 years old,
+    shaved sides with silver slicked hair, visible LED tattoo strips glowing blue on neck,
+    wearing high-tech tactical jacket with glowing circuit patterns, cyberpunk city background,
+    dramatic neon pink and blue lighting, futuristic dystopian aesthetic, 8k resolution,
+    detailed cybernetic arm prosthetic, sci-fi warrior aesthetic
+  seed: 2204001
+
+Jin_Kawasaki_Fantia_Gaming:
+  platform: Fantia
+  category: gaming
+  prompt: |
+    professional gaming setup photo, jin kawasaki, 26 years old,
+    rgb lighting in green and blue, triple monitor setup, gaming headset,
+    intense gaming concentration, streaming setup aesthetic, professional content,
+    gaming influencer style, high end PC setup visible
+  seed: 2204002
+
+Jin_Kawasaki_Fantia_Cosplay:
+  platform: Fantia
+  category: cosplay
+  prompt: |
+    detailed cosplay photoshoot, jin kawasaki as cyberpunk character,
+    full cyberpunk costume with LED accessories, elaborate makeup with cybernetic details,
+    studio lighting emphasizing neon elements, convention center background,
+    detailed cosplay craftsmanship, 8k resolution, professional cosplay photography
+  seed: 2204003
+
+# --- TWITTER/X (Amateur, Candid, Convention) ---
+
+Luna_Tsukino_Twitter_VTuber:
+  platform: Twitter
+  category: vtuber
+  prompt: |
+    VTuber live moment, luna tsukino, 21 years old, streaming screenshot,
+    virtual avatar visible, chat visible, reaction expression,
+    amateur screenshot quality, authentic VTuber content, anime community sharing
+  seed: 2211004
+
+Luna_Tsukino_Twitter_Cosplay:
+  platform: Twitter
+  category: cosplay
+  prompt: |
+    cosplay post, luna tsukino, 21 years old, fantasy or magical girl costume,
+    convention selfie or photos, amateur phone camera, authentic cosplay content,
+    anime community, relatable cosplayer aesthetic
+  seed: 2211005
+
+Kaito_Shirakawa_Twitter_Anime:
+  platform: Twitter
+  category: anime
+  prompt: |
+    anime fan moment, kaito shirakawa, 25 years old, anime merchandise visible,
+    watching anime or reading manga, excited expression, amateur phone camera,
+    authentic otaku content, anime community sharing, relatable anime fan aesthetic
+  seed: 2212004
+
+Kaito_Shirakawa_Twitter_Reaction:
+  platform: Twitter
+  category: anime
+  prompt: |
+    anime reaction post, kaito shirakawa, watching exciting anime scene,
+    intense reaction expression, amateur screenshot or photo, authentic anime reaction,
+    relatable otaku content, anime enthusiast aesthetic
+  seed: 2212005
+
+Jin_Kawasaki_Twitter_Stream:
+  platform: Twitter
+  category: gaming
+  prompt: |
+    streaming snapshot, jin kawasaki during gaming stream,
+    face cam visible, reaction expression, messy gaming room background,
+    phone camera quality, authentic streamer moment, gaming influencer content,
+    live stream screenshot aesthetic, realistic streaming context
+  seed: 2204004
+
+Jin_Kawasaki_Twitter_Cosplay:
+  platform: Twitter
+  category: cosplay
+  prompt: |
+    convention photo, jin kawasaki cosplay, casual convention selfie,
+    partial cosplay visible, anime convention background, happy convention attendee,
+    amateur phone camera, authentic cosplay community content
+  seed: 2204006
+
+# --- XHAMSTER (Thumbnail Style, Provocative Anime) ---
+
+Luna_Tsukino_Xhamster_VTuber:
+  platform: Xhamster
+  category: vtuber
+  prompt: |
+    VTuber adult fantasy thumbnail, luna tsukino, virtual character with selective exposure,
+    magical girl aesthetic, provocative virtual content, professional thumbnail quality,
+    anime adult content category, virtual character presentation
+  seed: 2211007
+
+Luna_Tsukino_Xhamster_Fantasy:
+  platform: Xhamster
+  category: fantasy
+  prompt: |
+    fantasy adult thumbnail, luna tsukino in intimate magical scenario,
+    suggestive fantasy content, adult magical girl aesthetic,
+    professional thumbnail, virtual character adult presentation
+  seed: 2211008
+
+Kaito_Shirakawa_Xhamster_Anime:
+  platform: Xhamster
+  category: anime
+  prompt: |
+    anime male thumbnail, kaito shirakawa, 25 years old, shonen hero aesthetic,
+    provocative anime male pose, adult anime male content, professional thumbnail,
+    masculine anime power fantasy, anime adult category
+  seed: 2212007
+
+Jin_Kawasaki_Xhamster_Cyberpunk:
+  platform: Xhamster
+  category: cyberpunk
+  prompt: |
+    cyberpunk adult fantasy thumbnail, jin kawasaki as futuristic warrior,
+    neon glow effects, tactical gear with selective exposure, dramatic lighting,
+    sci-fi power fantasy, optimized thumbnail with neon colors,
+    adult cyberpunk aesthetic, professional composition
+  seed: 2204007
+
+Jin_Kawasaki_Xhamster_Gaming:
+  platform: Xhamster
+  category: gaming
+  prompt: |
+    gaming fantasy thumbnail, jin kawasaki in intense gaming scenario,
+    dramatic gaming setup lighting, action gaming pose, masculine power fantasy,
+    gaming enthusiast adult content, optimized thumbnail format
+  seed: 2204008
+
+# --- PORNHUB (Professional Studio, Roleplay Scenarios) ---
+
+Luna_Tsukino_Pornhub_VTuber:
+  platform: Pornhub
+  category: vtuber
+  prompt: |
+    VTuber adult content, luna tsukino as virtual character, fantasy scenario,
+    virtual intimate moment, high production virtual adult content,
+    tasteful adult virtual fantasy, professional studio quality
+  seed: 2211010
+
+Luna_Tsukino_Pornhub_Fantasy:
+  platform: Pornhub
+  category: fantasy
+  prompt: |
+    fantasy adult content, luna tsukino in romantic magical scenario,
+    tasteful erotic fantasy, high production quality, professional studio,
+    magical girl adult aesthetic, virtual character presentation
+  seed: 2211011
+
+Kaito_Shirakawa_Pornhub_Anime:
+  platform: Pornhub
+  category: anime
+  prompt: |
+    anime adult content, kaito shirakawa as anime character, fantasy scenario,
+    high production anime adult content, tasteful adult anime fantasy,
+    professional studio quality, masculine anime hero aesthetic
+  seed: 2212010
+
+Jin_Kawasaki_Pornhub_Cyberpunk:
+  platform: Pornhub
+  category: cyberpunk
+  prompt: |
+    cyberpunk scenario adult content, jin kawasaki as futuristic character,
+    neon lit futuristic setting, tactical uniform with selective exposure,
+    high production sci-fi adult content, tasteful futuristic roleplay,
+    professional studio quality, masculine power fantasy
+  seed: 2204010
+
+# --- XVIDEOS (European Style, Artistic) ---
+
+Luna_Tsukino_XVideos_VTuber:
+  platform: XVideos
+  category: vtuber
+  prompt: |
+    european VTuber adult content, luna tsukino, artistic virtual scenario,
+    tasteful erotic virtual content, professional production quality,
+    european film style, virtual character adult presentation
+  seed: 2211013
+
+Kaito_Shirakawa_XVideos_Anime:
+  platform: XVideos
+  category: anime
+  prompt: |
+    european anime adult content, kaito shirakawa, artistic anime scenario,
+    tasteful erotic anime content, professional production quality,
+    european film style, anime male adult aesthetic
+  seed: 2212013
+
+Jin_Kawasaki_XVideos_Cyberpunk:
+  platform: XVideos
+  category: cyberpunk
+  prompt: |
+    european cyberpunk adult content, jin kawasaki, artistic futuristic setting,
+    tasteful neon aesthetic, professional production quality, dramatic lighting,
+    sci-fi romantic scenario, high quality adult content, european film aesthetic
+  seed: 2204013
+
+# --- LINE (Stickers, Chat Companions) ---
+
+Luna_Tsukino_LINE_VTuber:
+  platform: LINE
+  category: vtuber
+  prompt: |
+    VTuber sticker pack, luna tsukino, various magical girl expressions,
+    transformation pose, spell casting, happy excited, chat sticker format,
+    magical virtual character, anime sticker aesthetic
+  seed: 2211016
+
+Luna_Tsukino_LINE_Chat:
+  platform: LINE
+  category: vtuber
+  prompt: |
+    magical chat companion, luna tsukino as VTuber friend character,
+    virtual aesthetic clothes, friendly magical expression, chat integration area,
+    virtual companion vibe, magical conversational style
+  seed: 2211017
+
+Kaito_Shirakawa_LINE_Anime:
+  platform: LINE
+  category: anime
+  prompt: |
+    anime sticker pack, kaito shirakawa, various anime expressions,
+    action pose, excited, serious, victory, chat sticker format,
+    anime protagonist character, shonen aesthetic stickers
+  seed: 2212016
+
+Kaito_Shirakawa_LINE_Chat:
+  platform: LINE
+  category: anime
+  prompt: |
+    anime chat companion, kaito shirakawa as anime otaku friend character,
+    casual anime clothes, excited anime fan expression, chat integration area,
+    otaku companion vibe, anime conversational style
+  seed: 2212017
+
+Jin_Kawasaki_LINE_Gaming:
+  platform: LINE
+  category: gaming
+  prompt: |
+    gaming companion sticker, jin kawasaki, various gaming expressions,
+    victory pose, rage face, level up celebration, chat sticker format,
+    gaming aesthetic stickers, masculine gamer character
+  seed: 2204016
+
+Jin_Kawasaki_LINE_Chat:
+  platform: LINE
+  category: gaming
+  prompt: |
+    gaming chat companion, jin kawasaki as online gaming friend,
+    casual gaming clothes, relaxed expression, chat integration area,
+    gaming buddy aesthetic, conversational companion style
+  seed: 2204017
+
+# --- ONLYFANS (Exclusive Content, Behind Scenes) ---
+
+Luna_Tsukino_OnlyFans_VTuber:
+  platform: OnlyFans
+  category: vtuber
+  prompt: |
+    exclusive VTuber content, luna tsukino, stream preview or virtual performance,
+    premium virtual content, high production quality, exclusive subscriber content,
+    popular VTuber aesthetic, magical character presentation
+  seed: 2211019
+
+Luna_Tsukino_OnlyFans_Fantasy:
+  platform: OnlyFans
+  category: fantasy
+  prompt: |
+    exclusive fantasy content, luna tsukino, magical scenario preview,
+    premium fantasy content, high production quality, exclusive subscriber content,
+    elaborate fantasy costume teaser
+  seed: 2211020
+
+Kaito_Shirakawa_OnlyFans_Anime:
+  platform: OnlyFans
+  category: anime
+  prompt: |
+    exclusive anime content, kaito shirakawa, anime review or reaction preview,
+    premium anime content, high production quality, exclusive subscriber content,
+    anime otaku aesthetic, passionate anime presentation
+  seed: 2212019
+
+Kaito_Shirakawa_OnlyFans_Shonen:
+  platform: OnlyFans
+  category: shonen
+  prompt: |
+    exclusive shonen content, kaito shirakawa, anime fantasy preview,
+    premium anime content, high production quality, exclusive subscriber content,
+    shonen hero aesthetic teaser
+  seed: 2212020
+
+Jin_Kawasaki_OnlyFans_Gaming:
+  platform: OnlyFans
+  category: gaming
+  prompt: |
+    exclusive gaming content, jin kawasaki, stream preview or gaming footage,
+    personal gaming room setting, premium subscriber exclusive,
+    authentic gaming aesthetic, high production gaming content,
+    personal gaming moment teaser
+  seed: 2204019
+
+Jin_Kawasaki_OnlyFans_Cosplay:
+  platform: OnlyFans
+  category: cosplay
+  prompt: |
+    exclusive cosplay content, jin kawasaki in detailed cyberpunk costume,
+    premium studio photoshoot, selective exposure teaser,
+    high production cosplay content, exclusive subscriber costume preview
+  seed: 2204020

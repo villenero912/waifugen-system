@@ -1,0 +1,215 @@
+# Archivo de Configuración para Generación LoRA
+# ===============================================
+# Formato: JSON para uso con scripts automatizados
+# 32 Personajes × 5 Plataformas = 160 Imágenes
+
+{
+  "metadata": {
+    "generated_at": "2026-01-20",
+    "total_characters": 32,
+    "total_platforms": 5,
+    "total_images": 160,
+    "purpose": "LoRA Training Dataset - Realistic Portraits"
+  },
+  
+  "platforms": {
+    "Instagram": {
+      "aspect_ratio": "1:1",
+      "resolution": "1024x1024",
+      "keywords": ["Instagram lifestyle photography", "aesthetic feed", "high-end filters", "trendy outfit", "bokeh background", "soft natural lighting"]
+    },
+    "Facebook": {
+      "aspect_ratio": "4:5",
+      "resolution": "1080x1350",
+      "keywords": ["Facebook profile style", "friendly and approachable", "family-friendly setting", "clear lighting", "casual everyday look"]
+    },
+    "TikTok": {
+      "aspect_ratio": "9:16",
+      "resolution": "1080x1920",
+      "keywords": ["TikTok vertical video frame 9:16", "ring light illumination", "high energy", "content creator aesthetic", "trendy streetwear", "motion blur"]
+    },
+    "YouTube": {
+      "aspect_ratio": "16:9",
+      "resolution": "1920x1080",
+      "keywords": ["YouTube thumbnail style", "expressive face", "high contrast", "vibrant colors", "professional studio lighting", "16:9 cinematic frame"]
+    },
+    "Discord": {
+      "aspect_ratio": "1:1",
+      "resolution": "1024x1024",
+      "keywords": ["Discord avatar PFP style", "close-up headshot", "gaming setup background", "RGB neon accents", "expressive personality", "sharp focus"]
+    }
+  },
+  
+  "global_settings": {
+    "steps": 50,
+    "cfg_scale": 8,
+    "sampler": "DPM++ 2M Karras",
+    "clip_skip": 2,
+    "model_recommendation": "realisticVision_v51.safetensors"
+  },
+  
+  "negative_prompt": "blurry, low quality, distorted features, bad anatomy, extra limbs, deformed face, ugly, disfigured, poorly drawn face, mutation, mutated, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, artist name, text, watermark",
+  
+  "characters": {
+    "Miyuki_Sakura": {
+      "seed": 1001,
+      "description": "Portrait photography of a young Japanese woman, 23 years old, with long flowing black hair with subtle purple highlights, soft natural makeup with pink blush, warm brown eyes looking directly at camera with gentle smile, wearing a cream-colored oversized knit sweater",
+      "style_tags": ["kawaii", "soft aesthetic", "natural beauty"]
+    },
+    "Haruto_Tanaka": {
+      "seed": 1002,
+      "description": "Professional headshot of Japanese man, 28 years old, short neatly styled black hair with natural shine, sharp defined jawline, confident yet approachable expression, dark brown eyes with slight hint of amber, wearing a tailored navy blue suit with white dress shirt open collar",
+      "style_tags": ["corporate", "professional", "executive"]
+    },
+    "Yuki_Watanabe": {
+      "seed": 1003,
+      "description": "Cute portrait of Japanese woman, 21 years old, shoulder-length pastel pink hair with natural highlights, large expressive hazel eyes with long black lashes, small button nose, chubby cute face shape with high round cheeks, wearing a oversized white graphic t-shirt with cute anime character",
+      "style_tags": ["kawaii", "cute", "idol aesthetic"]
+    },
+    "Kenji_Morimoto": {
+      "seed": 1004,
+      "description": "Intense professional portrait of Japanese man, 30 years old, short buzz cut military style black hair, strong athletic jawline, piercing dark eyes with serious focus, wearing black tactical military uniform with patches",
+      "style_tags": ["military", "tactical", "action"]
+    },
+    "Aiko_Hayashi": {
+      "seed": 1005,
+      "description": "Elegant professional portrait of Japanese woman, 26 years old, long straight black hair with center part, sharp sophisticated features, cat-eye makeup with winged liner, deep brown eyes with golden flecks, wearing a black silk blazer with pearl earrings",
+      "style_tags": ["elegant", "corporate", "fashion editorial"]
+    },
+    "Takeshi_Oda": {
+      "seed": 1006,
+      "description": "Energetic and charismatic portrait of Japanese man, 25 years old, trendy messy dyed blonde highlights on dark hair, sharp angular face with strong cheekbones, playful mischievous expression, wearing a casual black hoodie with gold chain",
+      "style_tags": ["streetwear", "influencer", "trendy"]
+    },
+    "Sakura_Ito": {
+      "seed": 1007,
+      "description": "Dreamy ethereal portrait of Japanese woman, 24 years old, long wavy cherry blossom pink hair with soft gradients, large sparkling violet eyes with sparkles, wearing a white lace floral dress with pearl accents, floral crown with real cherry blossoms",
+      "style_tags": ["fantasy", "ethereal", "fairy"]
+    },
+    "Ryo_Nakamura": {
+      "seed": 1008,
+      "description": "Cool edgy portrait of Japanese man, 27 years old, short undercut hairstyle one side shaved, several visible ear piercings, sharp intense dark eyes, wearing a black leather jacket over white t-shirt",
+      "style_tags": ["edgy", "alternative", "rock star"]
+    },
+    "Mei_Fujiwara": {
+      "seed": 1009,
+      "description": "Adorable kawaii portrait of Japanese woman, 22 years old, short bob cut hair with blunt bangs, round chubby cheeks, large sparkly black eyes with sparkles, wearing a cute pink oversized sweater with bear design, pearly white braces visible when smiling",
+      "style_tags": ["ultra kawaii", "idol", "cute"]
+    },
+    "Hiroshi_Yamamoto": {
+      "seed": 1010,
+      "description": "Warm friendly portrait of Japanese man, 35 years old, short salt and pepper hair with slight wave, kind gentle eyes with laugh lines, light stubble giving distinguished look, wearing a cozy light gray wool sweater over collared shirt",
+      "style_tags": ["family man", "approachable", "distinguished"]
+    },
+    "Yuna_Shimizu": {
+      "seed": 1011,
+      "description": "Elegant sophisticated portrait of Japanese woman, 27 years old, long straight black hair with sharp center part, sharp winged eyeliner, intense focused dark brown eyes, wearing a tailored black blazer with white silk blouse, diamond stud earrings",
+      "style_tags": ["executive", "powerful", "CEO ready"]
+    },
+    "Kenta_Fukuda": {
+      "seed": 1012,
+      "description": "Athletic energetic portrait of Japanese man, 24 years old, short spiky black hair, bright energetic smile showing white teeth, wearing a tight fitted athletic tank top showing defined muscles",
+      "style_tags": ["fitness", "athletic", "sports"]
+    },
+    "Akira_Kojima": {
+      "seed": 1013,
+      "description": "Mysterious edgy portrait of Japanese woman, 29 years old, short asymmetric bob cut dyed silver grey, sharp intense dark eyes with heavy black eyeliner, pale porcelain skin, wearing a black leather biker jacket with silver studs, choker necklace with spikes",
+      "style_tags": ["gothic", "alternative", "rebellious"]
+    },
+    "Ren_Ohashi": {
+      "seed": 1014,
+      "description": "Intellectual sophisticated portrait of Japanese man, 32 years old, medium length black hair neatly combed back, thin round glasses with black frames, thoughtful intelligent expression, wearing a cream colored turtleneck sweater",
+      "style_tags": ["scholarly", "artistic", "intellectual"]
+    },
+    "Hana_Nakamura": {
+      "seed": 1015,
+      "description": "Pure innocent portrait of Japanese woman, 20 years old, long natural black hair with soft waves, large innocent brown eyes with natural sparkle, fresh clear skin with light freckles across nose, wearing a simple white cotton dress with small blue flowers",
+      "style_tags": ["wholesome", "pure", "innocent"]
+    },
+    "Daiki_Sato": {
+      "seed": 1016,
+      "description": "High energy sports portrait of Japanese man, 23 years old, short spiky bleached blonde hair, bright confident smirk, wearing a high school basketball jersey number 23",
+      "style_tags": ["sports", "basketball", "youthful"]
+    },
+    "Mika_Kobayashi": {
+      "seed": 1017,
+      "description": "Glamorous beauty portrait of Japanese woman, 25 years old, long silky straight hair with honey blonde highlights, flawless porcelain skin with subtle glow, large elegant brown eyes, wearing a luxurious white satin slip dress",
+      "style_tags": ["high fashion", "beauty", "glamorous"]
+    },
+    "Takumi_Endou": {
+      "seed": 1018,
+      "description": "Intense focused portrait of Japanese man, 31 years old, short military crew cut, sharp angular face with strong jaw, piercing intense dark eyes, wearing a black tactical vest over olive green shirt",
+      "style_tags": ["military", "special forces", "warrior"]
+    },
+    "Rio_Mizuno": {
+      "seed": 1019,
+      "description": "Tropical vibrant portrait of Japanese woman, 23 years old, sun-bleached beach wavy hair with natural highlights, glowing golden tan skin, large bright friendly eyes, wearing a colorful tropical patterned bikini top with sarong tied at waist",
+      "style_tags": ["beach", "tropical", "summer vacation"]
+    },
+    "Jin_Kawasaki": {
+      "seed": 1020,
+      "description": "Cyberpunk futuristic portrait of Japanese man, 26 years old, shaved sides with long slicked back dyed silver hair, visible LED tattoo strips glowing blue on neck, cybernetic arm prosthetic, intense yellow eyes with slight glow, wearing a high-tech tactical jacket with glowing circuit patterns",
+      "style_tags": ["cyberpunk", "sci-fi", "futuristic"]
+    },
+    "Chiyo_Sasaki": {
+      "seed": 1021,
+      "description": "Traditional elegant portrait of Japanese woman, 65 years old, styled in traditional updo with ornamental hair pins, gentle wise kind eyes with fine lines, wearing a formal navy blue silk kimono with subtle pattern, delicate pearl earrings",
+      "style_tags": ["traditional", "cultural", "elderly beauty"]
+    },
+    "Kai_Morita": {
+      "seed": 1022,
+      "description": "Intense rugged portrait of Japanese man, 33 years old, long tangled black hair tied back in messy bun, thick unkempt beard, deep-set intense brown eyes, wearing a torn white tank top showing scars and muscular build",
+      "style_tags": ["survivalist", "rugged", "raw"]
+    },
+    "Aya_Tomita": {
+      "seed": 1023,
+      "description": "Cute cozy portrait of Japanese woman, 19 years old, messy bedhead brown hair with natural waves, large sleepy droopy eyes with heavy lids, wearing an oversized big bear onesie pajamas",
+      "style_tags": ["cozy", "relatable", "lazy morning"]
+    },
+    "Shota_Hayashi": {
+      "seed": 1024,
+      "description": "Cool confident portrait of Japanese man, 22 years old, trendy two-block haircut with shaved sides and longer top dyed ash brown, small hoop earring visible, relaxed smirk expression, wearing a designer oversized beige trench coat",
+      "style_tags": ["street fashion", "fashion influencer", "stylish"]
+    },
+    "Natsuki_Taniguchi": {
+      "seed": 1025,
+      "description": "Fierce determined portrait of Japanese woman, 28 years old, short sharp bob cut with undercut on one side, intense sharp eyes with dark winged liner, wearing a fitted black leather racing suit with sponsor patches",
+      "style_tags": ["motorsport", "racing", "athlete"]
+    },
+    "Minato_Sakamoto": {
+      "seed": 1026,
+      "description": "Intellectual refined portrait of Japanese man, 34 years old, neat professional short black hair with slight gray at temples, refined handsome features, thoughtful intelligent expression, wearing a tailored navy suit with subtle pinstripe",
+      "style_tags": ["academic", "scholar", "professor"]
+    },
+    "Luna_Tsukino": {
+      "seed": 1027,
+      "description": "Magical ethereal portrait of Japanese woman, 21 years old, long flowing silver hair with subtle purple shimmer, large luminous purple eyes with star-like sparkle, delicate pointed ears visible through hair, wearing a flowing white fantasy gown with silver embroidery and crystal accents",
+      "style_tags": ["fantasy elf", "magical", "mystical"]
+    },
+    "Kaito_Shirakawa": {
+      "seed": 1028,
+      "description": "Stylish portrait of Japanese man, 25 years old, medium-length wavy dark brown hair with natural waves, soft romantic expression, hazel eyes with golden flecks, wearing a crisp white linen shirt with top button undone",
+      "style_tags": ["romantic", "stylish", "artistic"]
+    },
+    "Zara_Chen": {
+      "seed": 1029,
+      "description": "Elegant portrait of young Chinese woman, 22 years old, sleek straight jet black hair falling past shoulders, sharp intense dark eyes with bold winged eyeliner, wearing a luxurious black silk slip dress with delicate lace trim, statement gold hoop earrings",
+      "style_tags": ["fashion influencer", "high fashion", "luxurious"]
+    },
+    "Victor_Williams": {
+      "seed": 1030,
+      "description": "Professional corporate headshot of African American man, 30 years old, short tapered natural black hair with clean edges, warm confident smile showing genuine personality, rich brown eyes, wearing a tailored charcoal three-piece suit with burgundy silk tie",
+      "style_tags": ["corporate executive", "professional", "business"]
+    },
+    "Sofia_Rossi": {
+      "seed": 1031,
+      "description": "Stunning portrait of Italian woman, 24 years old, long flowing auburn hair with natural waves and copper highlights, large expressive green eyes with long dark lashes, flawless olive skin with light freckles across nose, wearing a vintage-inspired white lace crop top with puff sleeves",
+      "style_tags": ["romantic", "vintage", "European"]
+    },
+    "Mateo_Garcia": {
+      "seed": 1032,
+      "description": "Charismatic portrait of Hispanic man, 27 years old, medium-length textured brown hair with natural volume, warm inviting brown eyes with genuine kindness, light stubble along strong jawline, wearing a crisp white t-shirt under a burnt orange casual blazer",
+      "style_tags": ["charismatic", "casual", "approachable"]
+    }
+  }
+}
