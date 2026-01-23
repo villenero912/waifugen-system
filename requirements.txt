@@ -1,0 +1,50 @@
+# Elite 8 System - Python Dependencies
+# Generated for production deployment on VPS
+# =============================================================================
+
+# Core framework and async support
+aiohttp==3.8.5
+asyncio-throttle==1.0.2
+
+# HTTP and API clients
+requests==2.31.0
+httpx==0.24.1
+
+# Data handling and configuration
+pyyaml==6.0.1
+python-dotenv==1.0.0
+pydantic==2.3.0
+
+# Database support
+sqlalchemy==2.0.21
+alembic==1.12.0
+psycopg2-binary>=2.9.0
+
+# Caching and task queues
+redis>=4.5.0
+celery==5.3.2
+
+# Monitoring and metrics
+prometheus-client==0.17.1
+psutil==5.9.5
+
+# Web framework (Chat API)
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Video and audio processing
+moviepy==1.0.3
+Pillow>=10.0.1,<11.0.0
+opencv-python==4.8.0.76
+
+# Data analysis and utilities
+numpy==1.24.3
+pandas==2.0.3
+
+# AI / Generation (Optional but used in src)
+torch>=2.0.0
+diffusers>=0.21.0
+transformers>=4.30.0
+safetensors>=0.3.0
+huggingface-hub>=0.16.0
