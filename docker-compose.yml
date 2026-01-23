@@ -49,10 +49,10 @@ services:
       - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks:
       - waifugen_network
-#    ports:
-#      - "${POSTGRES_PORT:-5432}:5432"
+    #    ports:
+    #      - "${POSTGRES_PORT:-5432}:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-waifugen_user} -d ${POSTGRES_DB:-waifugen_prod}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-waifugen_user} -d ${POSTGRES_DB:-waifugen_prod}" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -72,22 +72,15 @@ services:
     container_name: ${PROJECT_NAME:-waifugen}_redis
     restart: unless-stopped
     command: >
-      redis-server
-      --appendonly yes
-      --requirepass ${REDIS_PASSWORD}
-      --maxmemory 256mb
-      --maxmemory-policy allkeys-lru
-      --tcp-backlog 511
-      --timeout 0
-      --tcp-keepalive 300
+      redis-server --appendonly yes --requirepass ${REDIS_PASSWORD} --maxmemory 256mb --maxmemory-policy allkeys-lru --tcp-backlog 511 --timeout 0 --tcp-keepalive 300
     volumes:
       - redis_data:/data
     networks:
       - waifugen_network
-#    ports:
-#      - "${REDIS_PORT:-6379}:6379"
+    #    ports:
+    #      - "${REDIS_PORT:-6379}:6379"
     healthcheck:
-      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -115,26 +108,26 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
-      
+
       # Database Configuration
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
-      
+
       # Application Settings
       - APP_HOST=0.0.0.0
       - APP_PORT=8000
       - DEBUG=${DEBUG:-false}
       - SECRET_KEY=${SECRET_KEY}
-      
+
       # API Keys (from environment)
       - A2E_API_KEY=${A2E_API_KEY}
       - QWEN_API_KEY=${QWEN_API_KEY}
       - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434}
-      
+
       # Monitoring
       - PROMETHEUS_ENABLED=true
       - METRICS_PORT=9090
-      
+
     volumes:
       - app_data:/app/data
       - app_logs:/app/logs
@@ -147,19 +140,18 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-#    healthcheck:
-#      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8000/health"]
-#      interval: 30s
-#      timeout: 10s
-#      retries: 3
-#      start_period: 20s
+    #    healthcheck:
+    #      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8000/health"]
+    #      interval: 30s
+    #      timeout: 10s
+    #      retries: 3
+    #      start_period: 20s
     deploy:
       resources:
         limits:
           memory: 1G
         reservations:
           memory: 512M
-        cpus: '1.0'
     labels:
       - "com.waifugen.service=app"
       - "com.waifugen.role=api"
@@ -196,7 +188,6 @@ services:
           memory: 512M
         reservations:
           memory: 256M
-        cpus: '0.5'
     labels:
       - "com.waifugen.service=worker"
       - "com.waifugen.role=background"
@@ -222,7 +213,6 @@ services:
           memory: 8G
         reservations:
           memory: 4G
-        cpus: '2.0'
     labels:
       - "com.waifugen.service=ollama"
       - "com.waifugen.role=llm"
@@ -255,7 +245,7 @@ services:
     depends_on:
       - app
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/-/healthy" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -291,7 +281,7 @@ services:
     depends_on:
       - prometheus
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      test: [ "CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -362,11 +352,11 @@ services:
       - app
       - prometheus
       - grafana
-#    healthcheck:
-#      test: ["CMD", "nginx", "-t", "-s", "reload"]
-#      interval: 30s
-#      timeout: 10s
-#      retries: 3
+    #    healthcheck:
+    #      test: ["CMD", "nginx", "-t", "-s", "reload"]
+    #      interval: 30s
+    #      timeout: 10s
+    #      retries: 3
     deploy:
       resources:
         limits:
