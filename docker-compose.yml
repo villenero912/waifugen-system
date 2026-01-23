@@ -381,6 +381,7 @@ services:
       - N8N_PORT=5678
       - N8N_PATH=/n8n/
       - N8N_PROTOCOL=http
+      - N8N_SECURE_COOKIE=false
       - WEBHOOK_URL=${WEBHOOK_URL:-https://your-domain.com/}
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
