@@ -1,0 +1,462 @@
+# ============================================
+# ATHLETIC & FITNESS PROMPTS - Organized by Platform
+# Characters: Takumi Endou, Kai Morita, Natsuki Taniguchi
+# Categories: Military, Survival, Motorsport, Fitness, Wilderness
+# ============================================
+
+# --- FANTAIA (High Quality, Action Poses) ---
+
+Takumi_Endou_Fantia_Military:
+  platform: Fantia
+  category: military
+  prompt: |
+    masterpiece, best quality, takumi endou japanese special forces operator,
+    31 years old, short military crew cut, intense determined eyes, tactical beard,
+    wearing full tactical gear with plate carrier, night vision goggles on helmet,
+    dramatic desert training ground lighting, action military photography,
+    realistic tactical equipment, 8k resolution, shonen military aesthetic
+  seed: 2202001
+
+Takumi_Endou_Fantia_Tactical:
+  platform: Fantia
+  category: military
+  prompt: |
+    masterpiece, takumi endou tactical warrior, 31 years old, in full combat uniform,
+    weapon in hand, serious combat ready expression, dramatic battlefield lighting,
+    smoke and dust atmosphere, action movie poster style, military realism,
+    detailed gear and equipment, cinematic composition, powerful warrior aesthetic
+  seed: 2202002
+
+Takumi_Endou_Fantia_Survival:
+  platform: Fantia
+  category: survival
+  prompt: |
+    survivalist aesthetic, takumi endou, 31 years old, rugged wilderness setting,
+    tactical beard, torn tactical clothing, building shelter in wilderness,
+    harsh natural lighting, survival reality show aesthetic, masculine rugged content,
+    outdoor adventure theme, realistic survival scenario, 8k resolution
+  seed: 2202003
+
+Kai_Morita_Fantia_Survival:
+  platform: Fantia
+  category: survival
+  prompt: |
+    masterpiece, best quality, kai morita survivalist expert, 33 years old,
+    long tangled black hair tied back, thick unkempt beard, intense brown eyes,
+    wearing torn tank top showing muscular build, fire and smoke background,
+    harsh orange firelight, survival reality show aesthetic, 8k resolution,
+    rugged masculine content, intense survival atmosphere
+  seed: 2206001
+
+Kai_Morita_Fantia_Wilderness:
+  platform: Fantia
+  category: wilderness
+  prompt: |
+    wilderness survival photo, kai morita, 33 years old, climbing sheer rock cliff face,
+    tactical climbing gear, chalk dust on hands, intense concentration,
+    mountain wilderness background, dramatic mountain lighting, action survival photography,
+    8k resolution, extreme outdoor aesthetic, rugged adventurer content
+  seed: 2206002
+
+Kai_Morita_Fantia_Bushcraft:
+  platform: Fantia
+  category: survival
+  prompt: |
+    bushcraft survival content, kai morita, 33 years old, building survival shelter,
+    wilderness campsite setting, natural harsh lighting, survival skills documentation,
+    authentic outdoor content, 8k resolution, rugged masculine survival aesthetic
+  seed: 2206003
+
+Natsuki_Taniguchi_Fantia_Motorsport:
+  platform: Fantia
+  category: motorsport
+  prompt: |
+    masterpiece, best quality, natsuki taniguchi japanese race car driver, 28 years old,
+    short sharp bob cut with undercut on one side, intense sharp eyes,
+    wearing fitted black leather racing suit with sponsor patches, race car pit lane background,
+    harsh fluorescent workshop lighting, intense competitive expression,
+    8k resolution, powerful female athlete aesthetic, motorsport photography
+  seed: 2209001
+
+Natsuki_Taniguchi_Fantia_Racing:
+  platform: Fantia
+  category: motorsport
+  prompt: |
+    professional racing photo, natsuki taniguchi, 28 years old, sitting in Formula car on track,
+    helmet in hands, intense focused expression, race track pit lane with team crew blurred,
+    dramatic speed and motorsport atmosphere, action documentary photography,
+    8k resolution, competitive racing aesthetic, high energy motorsport content
+  seed: 2209002
+
+Natsuki_Taniguchi_Fantia_Fitness:
+  platform: Fantia
+  category: fitness
+  prompt: |
+    athletic fitness content, natsuki taniguchi, 28 years old, workout specific to racing fitness,
+    gym setting with racing elements, intense training expression,
+    professional fitness photography, 8k resolution, athletic racing driver aesthetic
+  seed: 2209003
+
+# --- TWITTER/X (Casual Gym, Training) ---
+
+Takumi_Endou_Twitter_Gym:
+  platform: Twitter
+  category: fitness
+  prompt: |
+    gym selfie of takumi endou, 31 years old, tank top showing muscles,
+    chalk dust on hands, intense post workout expression, gym bathroom mirror,
+    harsh fluorescent lighting, raw authentic fitness content, muscle definition visible,
+    fitness influencer style, realistic training documentation
+  seed: 2202004
+
+Takumi_Endou_Twitter_Training:
+  platform: Twitter
+  category: fitness
+  prompt: |
+    training content, takumi endou working out in outdoor gym,
+    pull up bar exercise, intense effort expression, natural daylight,
+    amateur phone camera, authentic military fitness training,
+    rugged masculine aesthetic, real world training context
+  seed: 2202005
+
+Takumi_Endou_Twitter_Camo:
+  platform: Twitter
+  category: military
+  prompt: |
+    military style photo, takumi endou in tactical clothing,
+    camouflage pattern visible, outdoor military surplus store context,
+    candid casual military aesthetic, realistic everyday military life,
+    iphone photo quality, authentic military influencer content
+  seed: 2202006
+
+Kai_Morita_Twitter_Outdoor:
+  platform: Twitter
+  category: wilderness
+  prompt: |
+    outdoor adventure post, kai morita, 33 years old, hiking or camping photo,
+    wilderness background, casual outdoor clothes, authentic adventure moment,
+    amateur phone camera, real outdoor exploration content, rugged lifestyle aesthetic
+  seed: 2206004
+
+Kai_Morita_Twitter_Survival:
+  platform: Twitter
+  category: survival
+  prompt: |
+    survival skills post, kai morita demonstrating bushcraft technique,
+    wilderness setting, natural lighting, authentic survival content,
+    educational outdoor post, amateur survival documentation
+  seed: 2206005
+
+Kai_Morita_Twitter_Camping:
+  platform: Twitter
+  category: wilderness
+  prompt: |
+    camping trip photo, kai morita around campfire, wilderness campsite,
+    night lighting from fire, casual camping aesthetic, authentic outdoor life,
+    amateur photography, real camping experience
+  seed: 2206006
+
+Natsuki_Taniguchi_Twitter_Racing:
+  platform: Twitter
+  category: motorsport
+  prompt: |
+    race day post, natsuki taniguchi, 28 years old, at race track,
+    racing suit partially visible, helmet in hand, casual track side photo,
+    amateur phone camera, authentic motorsport life, racing community content
+  seed: 2209004
+
+Natsuki_Taniguchi_Twitter_Gym:
+  platform: Twitter
+  category: fitness
+  prompt: |
+    training post, natsuki taniguchi, fitness routine specific to racing,
+    gym workout photo, intense training expression, amateur photography,
+    authentic racing driver fitness, relatable athlete content
+  seed: 2209005
+
+# --- XHAMSTER (Action, Power, Provocative) ---
+
+Takumi_Endou_Xhamster_Military:
+  platform: Xhamster
+  category: military
+  prompt: |
+    military fantasy adult thumbnail, takumi endou as tactical warrior character,
+    wearing tactical gear with selective exposure, dramatic combat setting,
+    intense action pose, masculine power fantasy, adult military roleplay scenario,
+    professional thumbnail composition, provocative military aesthetic
+  seed: 2202007
+
+Takumi_Endou_Xhamster_Action:
+  platform: Xhamster
+  category: military
+  prompt: |
+    action scene thumbnail, takumi endou in intense combat scenario,
+    dramatic explosion backdrop, tactical equipment, high contrast lighting,
+    action movie poster style, masculine power content, optimized thumbnail,
+    military action aesthetic
+  seed: 2202008
+
+Takumi_Endou_Xhamster_Fitness:
+  platform: Xhamster
+  category: fitness
+  prompt: |
+    masculine fitness thumbnail, takumi endou, muscular athletic build,
+    intense workout setting, gym environment, sweaty training content,
+    action fitness aesthetic, masculine power presentation
+  seed: 2202009
+
+Kai_Morita_Xhamster_Survival:
+  platform: Xhamster
+  category: survival
+  prompt: |
+    survival fantasy thumbnail, kai morita as rugged wilderness survivor,
+    intense survival scenario, dramatic wilderness setting, masculine power fantasy,
+    adult survival roleplay, professional thumbnail quality, rugged aesthetic
+  seed: 2206007
+
+Kai_Morita_Xhamster_Wilderness:
+  platform: Xhamster
+  category: wilderness
+  prompt: |
+    wilderness action thumbnail, kai morita in intense survival scenario,
+    dramatic outdoor setting, masculine power content, action survival aesthetic,
+    professional thumbnail composition
+  seed: 2206008
+
+Natsuki_Taniguchi_Xhamster_Motorsport:
+  platform: Xhamster
+  category: motorsport
+  prompt: |
+    motorsport female thumbnail, natsuki taniguchi, 28 years old,
+    racing suit with selective exposure, provocative racing pose,
+    adult motorsport fantasy, professional thumbnail quality, athletic power aesthetic
+  seed: 2209007
+
+Natsuki_Taniguchi_Xhamster_Racing:
+  platform: Xhamster
+  category: motorsport
+  prompt: |
+    racing fantasy thumbnail, natsuki taniguchi in intimate racing scenario,
+    pit lane or garage setting, suggestive motorsport content,
+    professional thumbnail composition, provocative racing aesthetic
+  seed: 2209008
+
+# --- PORNHUB (Professional Scenarios) ---
+
+Takumi_Endou_Pornhub_Military:
+  platform: Pornhub
+  category: military
+  prompt: |
+    military scenario adult content, takumi endou as tactical operator character,
+    military uniform with selective exposure, realistic military roleplay,
+    dramatic combat setting, high production military fantasy content,
+    masculine power fantasy, professional studio quality
+  seed: 2202010
+
+Takumi_Endou_Pornhub_Fitness:
+  platform: Pornhub
+  category: fitness
+  prompt: |
+    fitness couple scenario, takumi endou with female partner,
+    gym setting with intimate moment, athletic romantic content,
+    muscular physique on display, high production adult fitness content,
+    tasteful erotic fitness scenario
+  seed: 2202011
+
+Kai_Morita_Pornhub_Survival:
+  platform: Pornhub
+  category: survival
+  prompt: |
+    survival scenario adult content, kai morita in wilderness roleplay,
+    realistic survival fantasy with intimate elements, high production survival content,
+    tasteful adult survival scenario, professional studio quality
+  seed: 2206010
+
+Kai_Morita_Pornhub_Wilderness:
+  platform: Pornhub
+  category: wilderness
+  prompt: |
+    wilderness fantasy adult content, kai morita as rugged survivor character,
+    outdoor intimate scenario, tasteful natural setting adult content,
+    high production wilderness fantasy, professional adult quality
+  seed: 2206011
+
+Natsuki_Taniguchi_Pornhub_Motorsport:
+  platform: Pornhub
+  category: motorsport
+  prompt: |
+    motorsport adult content, natsuki taniguchi as racing driver character,
+    racing scenario with intimate elements, high production quality,
+    tasteful adult motorsport fantasy, professional studio, powerful female athlete aesthetic
+  seed: 2209010
+
+Natsuki_Taniguchi_Pornhub_Racing:
+  platform: Pornhub
+  category: motorsport
+  prompt: |
+    racing fantasy adult content, natsuki taniguchi in romantic racing scenario,
+    garage or track setting, tasteful erotic content, high production,
+    professional adult quality, athletic racing aesthetic
+  seed: 2209011
+
+# --- XVIDEOS (European Style) ---
+
+Takumi_Endou_XVideos_Tactical:
+  platform: XVideos
+  category: military
+  prompt: |
+    european tactical content, takumi endou, realistic military scenario,
+    cinematic combat setting, professional adult production quality,
+    tasteful military roleplay, masculine power aesthetic, dramatic lighting
+  seed: 2202013
+
+Takumi_Endou_XVideos_Solo:
+  platform: XVideos
+  category: fitness
+  prompt: |
+    solo male content, takumi endou, 31 years old, muscular athletic build,
+    confident masculine expression, premium gym or bedroom setting,
+    solo male performance style, high production quality, tasteful execution
+  seed: 2202014
+
+Kai_Morita_XVideos_Survival:
+  platform: XVideos
+  category: survival
+  prompt: |
+    european survival adult content, kai morita, realistic wilderness scenario,
+    tasteful outdoor erotic content, professional production quality,
+    survival fantasy aesthetic, european film style adult content
+  seed: 2206013
+
+Kai_Morita_XVideos_Wilderness:
+  platform: XVideos
+  category: wilderness
+  prompt: |
+    wilderness romance adult content, kai morita in natural setting,
+    outdoor intimate scenario, tasteful natural lighting, professional production,
+    european adult film approach, romantic wilderness aesthetic
+  seed: 2206014
+
+Natsuki_Taniguchi_XVideos_Motorsport:
+  platform: XVideos
+  category: motorsport
+  prompt: |
+    european motorsport adult content, natsuki taniguchi, artistic racing scenario,
+    tasteful erotic motorsport content, professional production quality,
+    european film style, powerful female athlete aesthetic
+  seed: 2209013
+
+# --- LINE (Fitness, Racing Stickers) ---
+
+Takumi_Endou_LINE_Motivation:
+  platform: LINE
+  category: fitness
+  prompt: |
+    motivational fitness message image, takumi endou, gym workout context,
+    inspirational fitness quote overlay, intense workout expression,
+    ring light aesthetic, personal training companion style,
+    athletic masculine aesthetic, motivational content format
+  seed: 2202016
+
+Takumi_Endou_LINE_Chat:
+  platform: LINE
+  category: military
+  prompt: |
+    chat companion style, takumi endou as workout buddy character,
+    casual gym clothes, relaxed friendly expression, chat integration area,
+    conversational aesthetic, fitness friend companion vibe
+  seed: 2202017
+
+Kai_Morita_LINE_Survival:
+  platform: LINE
+  category: survival
+  prompt: |
+    survival sticker pack, kai morita, various outdoor expressions,
+    camping stickers, fire starting, shelter building, chat sticker format,
+    rugged outdoor character, masculine survival companion
+  seed: 2206016
+
+Kai_Morita_LINE_Chat:
+  platform: LINE
+  category: wilderness
+  prompt: |
+    outdoor chat companion, kai morita as wilderness guide character,
+    casual outdoor clothes, rugged friendly expression, chat integration area,
+    adventure buddy aesthetic, survival companion style
+  seed: 2206017
+
+Natsuki_Taniguchi_LINE_Racing:
+  platform: LINE
+  category: motorsport
+  prompt: |
+    racing sticker pack, natsuki taniguchi, various racing expressions,
+    victory pose, concentration, celebration, chat sticker format,
+    competitive racing character, athletic aesthetic
+  seed: 2209016
+
+Natsuki_Taniguchi_LINE_Chat:
+  platform: LINE
+  category: motorsport
+  prompt: |
+    racing chat companion, natsuki taniguchi as racing friend character,
+    casual racing clothes, friendly competitive expression, chat integration area,
+    racing buddy aesthetic, competitive companion style
+  seed: 2209017
+
+# --- ONLYFANS (Exclusive Fitness, Behind Scenes) ---
+
+Takumi_Endou_OnlyFans_Fitness:
+  platform: OnlyFans
+  category: fitness
+  prompt: |
+    premium fitness content, takumi endou, muscular physique on display,
+    gym setting with professional lighting, premium subscriber exclusive,
+    athletic masculine content, high production fitness modeling,
+    workout footage teaser, professional fitness influencer style
+  seed: 2202019
+
+Takumi_Endou_OnlyFans_Military:
+  platform: OnlyFans
+  category: military
+  prompt: |
+    exclusive military fantasy content, takumi endou in tactical gear,
+    selective exposure premium content, bedroom studio with tactical props,
+    premium military roleplay aesthetic, exclusive subscriber content
+  seed: 2202020
+
+Kai_Morita_OnlyFans_Survival:
+  platform: OnlyFans
+  category: survival
+  prompt: |
+    exclusive survival content, kai morita, wilderness adventure preview,
+    personal outdoor content, premium subscriber exclusive,
+    authentic rugged aesthetic, high production survival teaser,
+    exclusive wilderness adventure content
+  seed: 2206019
+
+Kai_Morita_OnlyFans_Fitness:
+  platform: OnlyFans
+  category: fitness
+  prompt: |
+    exclusive outdoor fitness content, kai morita, rugged workout setting,
+    premium outdoor training preview, high production fitness content,
+    exclusive subscriber outdoor fitness content
+  seed: 2206020
+
+Natsuki_Taniguchi_OnlyFans_Motorsport:
+  platform: OnlyFans
+  category: motorsport
+  prompt: |
+    exclusive racing content, natsuki taniguchi, behind the scenes track preview,
+    premium racing content, high production quality, exclusive subscriber content,
+    professional racing driver aesthetic
+  seed: 2209019
+
+Natsuki_Taniguchi_OnlyFans_Fitness:
+  platform: OnlyFans
+  category: fitness
+  prompt: |
+    exclusive fitness content, natsuki taniguchi, racing fitness training preview,
+    premium athletic content, high production quality, exclusive subscriber content,
+    athletic racing driver aesthetic
+  seed: 2209020
