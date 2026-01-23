@@ -22,7 +22,7 @@ psycopg2-binary>=2.9.0
 
 # Caching and task queues
 redis>=4.5.0
-celery==5.3.2
+celery>=5.3.0  # UPDATED: fixed version not found error
 
 # Monitoring and metrics
 prometheus-client==0.17.1
