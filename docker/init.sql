@@ -671,7 +671,7 @@ SELECT
     total_subscriptions,
     new_subscriptions,
     churned_subscriptions,
-    avg_revenue_per_subscriber
+    average_revenue_per_subscriber
 FROM daily_revenue_summary
 ORDER BY platform, summary_date DESC;
 
