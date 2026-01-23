@@ -230,7 +230,6 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
       - '--storage.tsdb.retention.time=7d'
-      - '--storage.tsdb.block-duration=2h'
       - '--web.enable-lifecycle'
       - '--web.enable-admin-api'
       - '--query.max-concurrency=5'
