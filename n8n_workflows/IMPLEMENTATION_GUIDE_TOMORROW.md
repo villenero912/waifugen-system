@@ -57,19 +57,28 @@ ls n8n_workflows/
 
 ---
 
-## PASO 2: CREAR TABLAS EN POSTGRESQL (10 min)
+## PASO 2: VERIFICAR Y COMPLETAR TABLAS EN POSTGRESQL (5 min)
 
-**Aún en SSH del VPS:**
+**El schema principal YA está creado en `docker/init.sql` con:**
+- ✅ 26 tablas (subscribers, revenue, DM automation, analytics, etc.)
+- ✅ Triggers automáticos (update_timestamp)
+- ✅ Funciones (calculate_subscriber_ltv)
+- ✅ Views (engagement_leaderboard, content_ranking)
+- ✅ Índices de performance
+
+**SOLO necesitas añadir 2 tablas de Fase 1:**
+
+**En SSH del VPS:**
 
 ```bash
 # Conectar a PostgreSQL
 docker exec -it waifugen_postgres psql -U waifugen_user -d waifugen_production
 ```
 
-**Ahora estás dentro de PostgreSQL. Ejecuta estos SQL:**
+**Ejecuta este SQL (SOLO falta esto):**
 
 ```sql
--- Tabla de personajes
+-- Tabla de personajes (Fase 1)
 CREATE TABLE IF NOT EXISTS characters (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
@@ -82,7 +91,7 @@ CREATE TABLE IF NOT EXISTS characters (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
--- Tabla de reels
+-- Tabla de reels generados (Fase 1)
 CREATE TABLE IF NOT EXISTS reels (
   id SERIAL PRIMARY KEY,
   character_id INT REFERENCES characters(id),
@@ -103,7 +112,7 @@ CREATE TABLE IF NOT EXISTS reels (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
--- Insertar 4 personajes de ejemplo (Elite)
+-- Insertar 4 personajes Elite de Fase 1
 INSERT INTO characters (id, name, trigger_word, age, style, personality, active) VALUES
 (1, 'Miyuki Sakura', 'miysak_v1', 22, 'elegant, soft features', 'sweet, encouraging, girlfriend experience', true),
 (16, 'Hana Nakamura', 'hannak_v1', 22, 'floral spring aesthetic, ethereal', 'gentle, nurturing, emotional', true),
@@ -111,14 +120,19 @@ INSERT INTO characters (id, name, trigger_word, age, style, personality, active)
 (5, 'Aiko Hayashi', 'aikoch_v1', 24, 'minimalist, professional, elegant', 'professional, warm, sophisticated', true)
 ON CONFLICT (id) DO NOTHING;
 
--- Verificar que se insertaron
+-- Verificar personajes
 SELECT id, name, trigger_word, active FROM characters;
 
--- Salir de PostgreSQL
+-- Verificar todas las tablas del sistema
+\dt
+
+-- Salir
 \q
 ```
 
-✅ **Confirmación:** Deberías ver 4 filas con Miyuki, Hana, Airi, Aiko
+✅ **Confirmación:** 
+- Deberías ver 4 personajes: Miyuki, Hana, Airi, Aiko
+- Deberías ver +28 tablas (26 de Fase 2 + 2 nuevas)
 
 ---
 
