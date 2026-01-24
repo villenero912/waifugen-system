@@ -1,0 +1,606 @@
+{
+    "name": "FASE 1 - Daily Professional Reel Generator",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 0,4,10,13 * * *"
+                        }
+                    ]
+                },
+                "timezone": "Asia/Tokyo"
+            },
+            "id": "trigger-daily-4x",
+            "name": "Trigger 4x Daily (JST)",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.1,
+            "position": [
+                200,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const hour = new Date().getUTCHours();\nconst slots = {\n  0: { time_jst: '08:00', character_id: 1, platform: 'tiktok', theme: 'Morning motivation', style: 'energetic_upbeat', music_genre: 'upbeat', energy: 'high' },\n  4: { time_jst: '12:00', character_id: 16, platform: 'instagram', theme: 'Midday inspiration', style: 'emotional_soft', music_genre: 'lofi', energy: 'medium' },\n  10: { time_jst: '18:00', character_id: 10, platform: 'youtube', theme: 'Evening entertainment', style: 'cyber_energetic', music_genre: 'electronic', energy: 'high' },\n  13: { time_jst: '21:00', character_id: 5, platform: 'tiktok', theme: 'Night reflection', style: 'professional_elegant', music_genre: 'chill', energy: 'low' }\n};\nreturn { slot: slots[hour] || slots[0], timestamp: new Date().toISOString() };"
+            },
+            "id": "determine-slot",
+            "name": "Determine Content Slot",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                400,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "=SELECT id, name, trigger_word, age, style, personality, voice_settings FROM characters WHERE id = {{ $json.slot.character_id }} AND active = true LIMIT 1",
+                "options": {}
+            },
+            "id": "get-character",
+            "name": "Get Character from PostgreSQL",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                600,
+                400
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://waifugen_ollama:11434/api/generate",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "model",
+                            "value": "llama3"
+                        },
+                        {
+                            "name": "prompt",
+                            "value": "=Generate A2E video prompt (max 60 words):\\n\\nCharacter: {{ $('Get Character from PostgreSQL').item.json.name }}, {{ $('Get Character from PostgreSQL').item.json.age }} years old\\nPersonality: {{ $('Get Character from PostgreSQL').item.json.personality }}\\nTrigger word: {{ $('Get Character from PostgreSQL').item.json.trigger_word }}\\nTheme: {{ $('Determine Content Slot').item.json.slot.theme }}\\nStyle: {{ $('Determine Content Slot').item.json.slot.style }}\\nPlatform: {{ $('Determine Content Slot').item.json.slot.platform }} (9:16 vertical)\\nMood: {{ $('Determine Content Slot').item.json.slot.energy }} energy\\n\\nGenerate ONLY visual description: facial expression, clothing, background, lighting. SFW level 0, bright, cheerful, no NSFW."
+                        },
+                        {
+                            "name": "stream",
+                            "value": false
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "gen-video-prompt",
+            "name": "Generate Video Prompt (Ollama)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                800,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://waifugen_ollama:11434/api/generate",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "model",
+                            "value": "llama3"
+                        },
+                        {
+                            "name": "prompt",
+                            "value": "=Generate 10-second voice script (max 25 words):\\n\\nCharacter: {{ $('Get Character from PostgreSQL').item.json.name }}\\nPersonality: {{ $('Get Character from PostgreSQL').item.json.personality }}\\nTheme: {{ $('Determine Content Slot').item.json.slot.theme }}\\nStyle: {{ $('Determine Content Slot').item.json.slot.style }}\\nTime: {{ $('Determine Content Slot').item.json.slot.time_jst }} JST\\n\\nWrite in first person, conversational, 25 words max. Start with greeting for {{ $('Determine Content Slot').item.json.slot.time_jst }} time."
+                        },
+                        {
+                            "name": "stream",
+                            "value": false
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "gen-voice-script",
+            "name": "Generate Voice Script (Ollama)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                800,
+                500
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.A2E_API_URL || 'https://api.a2e.ai/v1/generate' }}",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "prompt",
+                            "value": "={{ $('Generate Video Prompt (Ollama)').item.json.response }}"
+                        },
+                        {
+                            "name": "duration",
+                            "value": 15
+                        },
+                        {
+                            "name": "model",
+                            "value": "seedance_1.5_pro"
+                        },
+                        {
+                            "name": "resolution",
+                            "value": "720p"
+                        },
+                        {
+                            "name": "aspect_ratio",
+                            "value": "9:16"
+                        },
+                        {
+                            "name": "fps",
+                            "value": 30
+                        },
+                        {
+                            "name": "motion_bucket",
+                            "value": 127
+                        },
+                        {
+                            "name": "cfg_scale",
+                            "value": 1.5
+                        }
+                    ]
+                },
+                "options": {
+                    "timeout": 300000
+                }
+            },
+            "id": "gen-video-a2e",
+            "name": "Generate Video (A2E Pro - 15 credits)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1000,
+                300
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "a2e_api_key",
+                    "name": "A2E API Key"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://waifugen_piper:10200/api/tts",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "text",
+                            "value": "={{ $('Generate Voice Script (Ollama)').item.json.response }}"
+                        },
+                        {
+                            "name": "model",
+                            "value": "en_US-amy-medium"
+                        },
+                        {
+                            "name": "speed",
+                            "value": 1.0
+                        }
+                    ]
+                },
+                "options": {
+                    "response": {
+                        "response": {
+                            "responseFormat": "file"
+                        }
+                    }
+                }
+            },
+            "id": "gen-voice-piper",
+            "name": "Generate Voice (Piper TTS)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1000,
+                500
+            ]
+        },
+        {
+            "parameters": {
+                "method": "GET",
+                "url": "=https://pixabay.com/api/?key={{ $env.PIXABAY_API_KEY }}&q={{ $('Determine Content Slot').item.json.slot.music_genre }}+instrumental+music&type=music&per_page=5",
+                "options": {}
+            },
+            "id": "search-music-pixabay",
+            "name": "Search Music (Pixabay Free)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1000,
+                700
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "has-music",
+                            "leftValue": "={{ $json.total }}",
+                            "rightValue": 0,
+                            "operator": {
+                                "type": "number",
+                                "operation": "gt"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "check-music",
+            "name": "Check Pixabay Results",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2,
+            "position": [
+                1200,
+                700
+            ]
+        },
+        {
+            "parameters": {
+                "url": "={{ $('Search Music (Pixabay Free)').item.json.hits[0].audio }}",
+                "options": {
+                    "response": {
+                        "response": {
+                            "responseFormat": "file"
+                        }
+                    }
+                }
+            },
+            "id": "download-music-pixabay",
+            "name": "Download Music (Pixabay)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1400,
+                600
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.replicate.com/v1/predictions",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "version",
+                            "value": "b05b1dff1d8c6dc63d14b0cdb42135378dcb87f6373b0d3d341ede46e59e2b38"
+                        },
+                        {
+                            "name": "input",
+                            "value": "={{ { 'prompt': $('Determine Content Slot').item.json.slot.music_genre + ' instrumental background music, upbeat, 15 seconds, no vocals', 'duration': 15, 'model_version': 'stereo-large', 'output_format': 'mp3' } }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "gen-music-replicate",
+            "name": "Generate Music (Replicate Fallback)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1400,
+                800
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "replicate_api_token",
+                    "name": "Replicate API Token"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "// Security: Sanitize text to prevent command injection\nconst voiceScript = $('Generate Voice Script (Ollama)').item.json.response;\nconst videoPrompt = $('Generate Video Prompt (Ollama)').item.json.response;\nconst characterName = $('Get Character from PostgreSQL').item.json.name;\n\n// Escape single quotes, double quotes, backticks, and special chars\nconst sanitize = (text) => {\n  return text\n    .replace(/'/g, \"'\\\\''\")\n    .replace(/\"/g, '\\\\\"')\n    .replace(/`/g, '\\\\`')\n    .replace(/\\$/g, '\\\\$')\n    .replace(/\\n/g, ' ')\n    .trim();\n};\n\nreturn {\n  subtitle_text_safe: sanitize(voiceScript),\n  video_prompt_safe: sanitize(videoPrompt),\n  character_name_safe: sanitize(characterName),\n  timestamp: $('Determine Content Slot').item.json.timestamp,\n  video_url: $('Generate Video (A2E Pro - 15 credits)').item.json.video_url,\n  voice_file: $('Generate Voice (Piper TTS)').item.binary.fileName,\n  music_file: $('Download Music (Pixabay)').item.binary.fileName || $('Generate Music (Replicate Fallback)').item.json.output,\n  char_id: $('Get Character from PostgreSQL').item.json.id,\n  platform: $('Determine Content Slot').item.json.slot.platform\n};"
+            },
+            "id": "sanitize-text",
+            "name": "Sanitize Text (Security)",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1400,
+                500
+            ],
+            "notes": "Prevents command injection by escaping quotes and special chars"
+        },
+        {
+            "parameters": {
+                "command": "=# Professional Montage with Subtitles, Effects, Transitions (SECURED)\ncd /tmp\n\n# Extract sanitized variables\nVIDEO_URL='{{ $json.video_url }}'\nVOICE_FILE='{{ $json.voice_file }}'\nMUSIC_FILE='{{ $json.music_file }}'\nSUBTITLE_TEXT='{{ $json.subtitle_text_safe }}'\nCHARACTER='{{ $json.character_name_safe }}'\nCHAR_ID='{{ $json.char_id }}'\nPLATFORM='{{ $json.platform }}'\n\n# Download video\nwget -O raw_video.mp4 \"$VIDEO_URL\"\n\n# Create subtitle file (SRT format) - SAFE\ncat > subtitles.srt << EOF\n1\n00:00:01,000 --> 00:00:10,000\n$SUBTITLE_TEXT\nEOF\n\n# Professional FFmpeg montage\nffmpeg -y \\\n  -i raw_video.mp4 \\\n  -i \"$VOICE_FILE\" \\\n  -i \"$MUSIC_FILE\" \\\n  -vf \"\\\n    zoompan=z='min(zoom+0.0005,1.05)':d=450:s=720x1280,\\\n    eq=brightness=0.02:contrast=1.1,\\\n    curves=vintage,\\\n    subtitles=subtitles.srt:force_style='FontName=Arial,FontSize=24,PrimaryColour=&HFFFFFF,OutlineColour=&H000000,Outline=2,Shadow=1,MarginV=40,Alignment=2'\n  \" \\\n  -filter_complex \"\\\n    [1:a]volume=1.0,highpass=f=100,lowpass=f=3000[voice];\\\n    [2:a]volume=0.25,highpass=f=100[music];\\\n    [voice][music]amix=inputs=2:duration=first:dropout_transition=2[audio]\n  \" \\\n  -map 0:v \\\n  -map '[audio]' \\\n  -c:v libx264 \\\n  -preset medium \\\n  -crf 23 \\\n  -profile:v high \\\n  -level 4.2 \\\n  -pix_fmt yuv420p \\\n  -c:a aac \\\n  -b:a 128k \\\n  -ar 44100 \\\n  -movflags +faststart \\\n  -shortest \\\n  \"reel_${CHAR_ID}_${PLATFORM}_$(date +%Y%m%d_%H%M%S).mp4\"\n\necho \"✓ Professional reel generated: reel_${CHAR_ID}_${PLATFORM}_*.mp4\""
+            },
+            "id": "ffmpeg-pro-montage",
+            "name": "FFmpeg Professional Montage (Secured)",
+            "type": "n8n-nodes-base.executeCommand",
+            "typeVersion": 1,
+            "position": [
+                1650,
+                500
+            ],
+            "notes": "Includes: Subtitles, Zoom, Color grading, Audio EQ, Compression - WITH SECURITY FIX"
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "=INSERT INTO reels (\n  character_id, \n  video_prompt, \n  voice_script, \n  theme, \n  mood, \n  platform, \n  duration, \n  video_path, \n  nsfw_level, \n  credits_used, \n  cost_usd, \n  status, \n  has_subtitles, \n  has_music, \n  production_quality,\n  created_at\n) VALUES (\n  {{ $('Get Character from PostgreSQL').item.json.id }},\n  '{{ $('Generate Video Prompt (Ollama)').item.json.response }}',\n  '{{ $('Generate Voice Script (Ollama)').item.json.response }}',\n  '{{ $('Determine Content Slot').item.json.slot.theme }}',\n  '{{ $('Determine Content Slot').item.json.slot.style }}',\n  '{{ $('Determine Content Slot').item.json.slot.platform }}',\n  15,\n  '/tmp/reel_{{ $('Get Character from PostgreSQL').item.json.id }}_{{ $('Determine Content Slot').item.json.slot.platform }}_*.mp4',\n  0,\n  15,\n  0.0825,\n  'ready_to_publish',\n  true,\n  true,\n  'professional',\n  NOW()\n) RETURNING id, video_path",
+                "options": {}
+            },
+            "id": "save-reel-db",
+            "name": "Save Reel to PostgreSQL",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                1800,
+                500
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=✅ *Professional Reel Generated*\\n\\n🎭 *Character:* {{ $('Get Character from PostgreSQL').item.json.name }}\\n🎬 *Theme:* {{ $('Determine Content Slot').item.json.slot.theme }}\\n📱 *Platform:* {{ $('Determine Content Slot').item.json.slot.platform }}\\n⏰ *Time:* {{ $('Determine Content Slot').item.json.slot.time_jst }} JST\\n💰 *Credits:* 15 (Daily budget: 60)\\n\\n📊 *Features:*\\n• Professional subtitles ✓\\n• Background music ✓\\n• Color grading ✓\\n• Zoom effects ✓\\n• Audio EQ ✓\\n\\n📁 *Path:* {{ $('Save Reel to PostgreSQL').item.json.video_path }}\\n🆔 *DB ID:* {{ $('Save Reel to PostgreSQL').item.json.id }}"
+                        },
+                        {
+                            "name": "parse_mode",
+                            "value": "Markdown"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "notify-telegram",
+            "name": "Telegram Notification",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                2000,
+                500
+            ]
+        }
+    ],
+    "connections": {
+        "Trigger 4x Daily (JST)": {
+            "main": [
+                [
+                    {
+                        "node": "Determine Content Slot",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Determine Content Slot": {
+            "main": [
+                [
+                    {
+                        "node": "Get Character from PostgreSQL",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Character from PostgreSQL": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Video Prompt (Ollama)",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Generate Voice Script (Ollama)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Video Prompt (Ollama)": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Video (A2E Pro - 15 credits)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Voice Script (Ollama)": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Voice (Piper TTS)",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Search Music (Pixabay Free)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Search Music (Pixabay Free)": {
+            "main": [
+                [
+                    {
+                        "node": "Check Pixabay Results",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Check Pixabay Results": {
+            "main": [
+                [
+                    {
+                        "node": "Download Music (Pixabay)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Generate Music (Replicate Fallback)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Video (A2E Pro - 15 credits)": {
+            "main": [
+                [
+                    {
+                        "node": "Sanitize Text (Security)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Voice (Piper TTS)": {
+            "main": [
+                [
+                    {
+                        "node": "Sanitize Text (Security)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Download Music (Pixabay)": {
+            "main": [
+                [
+                    {
+                        "node": "Sanitize Text (Security)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Music (Replicate Fallback)": {
+            "main": [
+                [
+                    {
+                        "node": "Sanitize Text (Security)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Sanitize Text (Security)": {
+            "main": [
+                [
+                    {
+                        "node": "FFmpeg Professional Montage (Secured)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "FFmpeg Professional Montage (Secured)": {
+            "main": [
+                [
+                    {
+                        "node": "Save Reel to PostgreSQL",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Save Reel to PostgreSQL": {
+            "main": [
+                [
+                    {
+                        "node": "Telegram Notification",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "createdAt": "2026-01-24T19:48:00.000Z",
+    "updatedAt": "2026-01-24T19:48:00.000Z",
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "tags": [
+        {
+            "name": "Phase 1",
+            "id": "phase1"
+        },
+        {
+            "name": "Production",
+            "id": "production"
+        },
+        {
+            "name": "Professional",
+            "id": "professional"
+        }
+    ],
+    "triggerCount": 1,
+    "versionId": "1",
+    "meta": {
+        "instanceId": "waifugen_production"
+    }
+}
