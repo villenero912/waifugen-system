@@ -1,0 +1,553 @@
+{
+    "name": "Complete Reel Generator - Dynamic Content Strategy",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 0,6,12,18 * * *"
+                        }
+                    ]
+                }
+            },
+            "id": "trigger-4x-daily",
+            "name": "Trigger 4x Daily",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.1,
+            "position": [
+                250,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const hour = new Date().getUTCHours();\n\nconst contentStrategy = {\n  0: { mood: 'calm_night', theme: 'Bedtime relaxation', music_genre: 'lofi', energy: 'low' },\n  6: { mood: 'energetic_morning', theme: 'Morning motivation', music_genre: 'upbeat', energy: 'high' },\n  12: { mood: 'focused_midday', theme: 'Productivity tips', music_genre: 'electronic', energy: 'medium' },\n  18: { mood: 'relaxed_evening', theme: 'Evening wind-down', music_genre: 'chill', energy: 'medium-low' }\n};\n\nconst currentHour = [0, 6, 12, 18].reduce((prev, curr) => \n  Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev\n);\n\nreturn {\n  hour: currentHour,\n  ...contentStrategy[currentHour],\n  timestamp: new Date().toISOString()\n};"
+            },
+            "id": "determine-content-strategy",
+            "name": "Determine Content Strategy (Dynamic)",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                450,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "SELECT id, name, trigger_word, age, style, personality FROM characters WHERE active = true ORDER BY RANDOM() LIMIT 1",
+                "options": {}
+            },
+            "id": "select-character",
+            "name": "Select Random Character",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                650,
+                400
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://waifugen_ollama:11434/api/generate",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "model",
+                            "value": "llama3"
+                        },
+                        {
+                            "name": "prompt",
+                            "value": "=Generate a creative A2E video prompt for a {{ $('Determine Content Strategy (Dynamic)').item.json.energy }} energy TikTok reel.\\n\\nCharacter: {{ $json.name }}, {{ $json.age }} years old, personality: {{ $json.personality }}\\nStyle: {{ $json.style }}\\nTrigger word: {{ $json.trigger_word }}\\nTheme: {{ $('Determine Content Strategy (Dynamic)').item.json.theme }}\\nMood: {{ $('Determine Content Strategy (Dynamic)').item.json.mood }}\\nPlatform: TikTok (9:16 vertical, 720p)\\n\\nGenerate ONLY the visual prompt (60 words max). Focus on: facial expression matching {{ $('Determine Content Strategy (Dynamic)').item.json.mood }}, background setting, lighting, and emotional tone."
+                        },
+                        {
+                            "name": "stream",
+                            "value": false
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "generate-video-prompt",
+            "name": "Generate Video Prompt (Ollama)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                850,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://waifugen_ollama:11434/api/generate",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "model",
+                            "value": "llama3"
+                        },
+                        {
+                            "name": "prompt",
+                            "value": "=Generate a 10-second voice script for {{ $('Select Random Character').item.json.name }}.\\n\\nTheme: {{ $('Determine Content Strategy (Dynamic)').item.json.theme }}\\nMood: {{ $('Determine Content Strategy (Dynamic)').item.json.mood }}\\nPersonality: {{ $('Select Random Character').item.json.personality }}\\n\\nWrite in first person, conversational tone, max 25 words. Start with greeting appropriate for {{ $('Determine Content Strategy (Dynamic)').item.json.hour }}:00 hour."
+                        },
+                        {
+                            "name": "stream",
+                            "value": false
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "generate-voice-script",
+            "name": "Generate Voice Script (Ollama)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                850,
+                600
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.A2E_API_URL || 'https://api.a2e.ai/v1/generate' }}",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "prompt",
+                            "value": "={{ $('Generate Video Prompt (Ollama)').item.json.response }}"
+                        },
+                        {
+                            "name": "duration",
+                            "value": 15
+                        },
+                        {
+                            "name": "model",
+                            "value": "seedance_1.5_pro"
+                        },
+                        {
+                            "name": "resolution",
+                            "value": "720p"
+                        },
+                        {
+                            "name": "aspect_ratio",
+                            "value": "9:16"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "generate-video-a2e",
+            "name": "Generate Video (A2E)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1050,
+                400
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "a2e_api_key",
+                    "name": "A2E API Key"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://waifugen_piper:10200/api/tts",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "text",
+                            "value": "={{ $('Generate Voice Script (Ollama)').item.json.response }}"
+                        },
+                        {
+                            "name": "model",
+                            "value": "en_US-amy-medium"
+                        }
+                    ]
+                },
+                "options": {
+                    "response": {
+                        "response": {
+                            "responseFormat": "file"
+                        }
+                    }
+                }
+            },
+            "id": "generate-voice-piper",
+            "name": "Generate Voice (Piper TTS)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1050,
+                600
+            ]
+        },
+        {
+            "parameters": {
+                "method": "GET",
+                "url": "=https://pixabay.com/api/?key={{ $env.PIXABAY_API_KEY }}&q={{ $('Determine Content Strategy (Dynamic)').item.json.music_genre }}+instrumental&type=music&per_page=3",
+                "options": {}
+            },
+            "id": "search-music-pixabay",
+            "name": "Search Music (Pixabay)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1050,
+                800
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "pixabay-has-results",
+                            "leftValue": "={{ $json.total }}",
+                            "rightValue": 0,
+                            "operator": {
+                                "type": "number",
+                                "operation": "gt"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "check-music-available",
+            "name": "Check Music Available",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2,
+            "position": [
+                1250,
+                800
+            ]
+        },
+        {
+            "parameters": {
+                "url": "={{ $('Search Music (Pixabay)').item.json.hits[0].audio }}",
+                "options": {
+                    "response": {
+                        "response": {
+                            "responseFormat": "file"
+                        }
+                    }
+                }
+            },
+            "id": "download-music-pixabay",
+            "name": "Download Music (Pixabay)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1450,
+                700
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.replicate.com/v1/predictions",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "version",
+                            "value": "b05b1dff1d8c6dc63d14b0cdb42135378dcb87f6373b0d3d341ede46e59e2b38"
+                        },
+                        {
+                            "name": "input",
+                            "value": "={{ { 'prompt': $('Determine Content Strategy (Dynamic)').item.json.music_genre + ' instrumental music, 15 seconds', 'duration': 15 } }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "generate-music-replicate",
+            "name": "Generate Music (Replicate Fallback)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1450,
+                900
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "replicate_api_token",
+                    "name": "Replicate API Token"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "command": "=cd /tmp && ffmpeg -y -i {{ $('Generate Video (A2E)').item.json.video_url }} -i {{ $('Generate Voice (Piper TTS)').item.binary.fileName }} -i {{ $('Download Music (Pixabay)').item.binary.fileName || $('Generate Music (Replicate Fallback)').item.json.output }} -filter_complex \"[1:a]volume=1.0[voice];[2:a]volume=0.3[music];[voice][music]amix=inputs=2:duration=first[audio]\" -map 0:v -map \"[audio]\" -c:v libx264 -preset medium -crf 23 -c:a aac -b:a 128k -shortest /tmp/reel_{{ $('Select Random Character').item.json.id }}_{{ $('Determine Content Strategy (Dynamic)').item.json.timestamp }}.mp4"
+            },
+            "id": "ffmpeg-montage",
+            "name": "FFmpeg Montage (Video+Voice+Music)",
+            "type": "n8n-nodes-base.executeCommand",
+            "typeVersion": 1,
+            "position": [
+                1650,
+                600
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "=INSERT INTO reels (character_id, video_prompt, voice_script, theme, mood, platform, duration, video_path, status, created_at) VALUES ({{ $('Select Random Character').item.json.id }}, '{{ $('Generate Video Prompt (Ollama)').item.json.response }}', '{{ $('Generate Voice Script (Ollama)').item.json.response }}', '{{ $('Determine Content Strategy (Dynamic)').item.json.theme }}', '{{ $('Determine Content Strategy (Dynamic)').item.json.mood }}', 'tiktok', 15, '/tmp/reel_{{ $('Select Random Character').item.json.id }}_{{ $('Determine Content Strategy (Dynamic)').item.json.timestamp }}.mp4', 'ready_to_publish', NOW()) RETURNING id",
+                "options": {}
+            },
+            "id": "save-to-database",
+            "name": "Save Complete Reel to DB",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                1850,
+                600
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=✅ Reel Completo Generado\\n\\nID: {{ $('Save Complete Reel to DB').item.json.id }}\\nPersonaje: {{ $('Select Random Character').item.json.name }}\\nTema: {{ $('Determine Content Strategy (Dynamic)').item.json.theme }}\\nMood: {{ $('Determine Content Strategy (Dynamic)').item.json.mood }}\\nDuración: 15s\\n\\nEstado: Listo para publicar\\nPath: /tmp/reel_...mp4"
+                        },
+                        {
+                            "name": "parse_mode",
+                            "value": "Markdown"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "notify-telegram",
+            "name": "Notify Complete via Telegram",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                2050,
+                600
+            ]
+        }
+    ],
+    "connections": {
+        "Trigger 4x Daily": {
+            "main": [
+                [
+                    {
+                        "node": "Determine Content Strategy (Dynamic)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Determine Content Strategy (Dynamic)": {
+            "main": [
+                [
+                    {
+                        "node": "Select Random Character",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Select Random Character": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Video Prompt (Ollama)",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Generate Voice Script (Ollama)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Video Prompt (Ollama)": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Video (A2E)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Voice Script (Ollama)": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Voice (Piper TTS)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Video (A2E)": {
+            "main": [
+                [
+                    {
+                        "node": "Search Music (Pixabay)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Search Music (Pixabay)": {
+            "main": [
+                [
+                    {
+                        "node": "Check Music Available",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Check Music Available": {
+            "main": [
+                [
+                    {
+                        "node": "Download Music (Pixabay)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Generate Music (Replicate Fallback)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Download Music (Pixabay)": {
+            "main": [
+                [
+                    {
+                        "node": "FFmpeg Montage (Video+Voice+Music)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Music (Replicate Fallback)": {
+            "main": [
+                [
+                    {
+                        "node": "FFmpeg Montage (Video+Voice+Music)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Voice (Piper TTS)": {
+            "main": [
+                [
+                    {
+                        "node": "FFmpeg Montage (Video+Voice+Music)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "FFmpeg Montage (Video+Voice+Music)": {
+            "main": [
+                [
+                    {
+                        "node": "Save Complete Reel to DB",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Save Complete Reel to DB": {
+            "main": [
+                [
+                    {
+                        "node": "Notify Complete via Telegram",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "createdAt": "2026-01-24T19:28:00.000Z",
+    "updatedAt": "2026-01-24T19:28:00.000Z",
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "tags": [
+        {
+            "name": "Phase 1",
+            "id": "phase1"
+        },
+        {
+            "name": "Production",
+            "id": "production"
+        },
+        {
+            "name": "Complete Pipeline",
+            "id": "complete"
+        }
+    ],
+    "triggerCount": 1,
+    "versionId": "2"
+}
