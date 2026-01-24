@@ -219,6 +219,33 @@ services:
       - "com.waifugen.role=llm"
 
   # ============================================================================
+  # PIPER TTS - Local Text-to-Speech Voice Generation (CLI Version)
+  # ============================================================================
+  piper:
+    image: rhasspy/piper:latest
+    container_name: ${PROJECT_NAME:-waifugen}_piper
+    restart: unless-stopped
+    environment:
+      - TZ=${TIMEZONE:-Europe/Madrid}
+    volumes:
+      - piper_data:/data
+      - ./piper_voices:/voices
+      - /tmp:/tmp
+    networks:
+      - waifugen_network
+    entrypoint: [ "sleep", "infinity" ]
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: 1.0
+        reservations:
+          memory: 512M
+    labels:
+      - "com.waifugen.service=piper"
+      - "com.waifugen.role=tts"
+
+  # ============================================================================
   # MONITORING STACK
   # ============================================================================
 
@@ -413,6 +440,8 @@ volumes:
   app_logs:
     driver: local
   ollama_data:
+    driver: local
+  piper_data:
     driver: local
   prometheus_data:
     driver: local
