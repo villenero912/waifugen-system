@@ -1,0 +1,275 @@
+{
+    "name": "04 - DM Automation & Subscriber Nurture",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "minutes",
+                            "minutesInterval": 10
+                        }
+                    ]
+                }
+            },
+            "id": "trigger-every-10min",
+            "name": "Trigger Every 10 Minutes",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.1,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "-- Get new subscribers without welcome sequence\nSELECT \n  s.id,\n  s.subscriber_id,\n  s.platform,\n  s.username,\n  s.tier,\n  s.created_at,\n  EXTRACT(EPOCH FROM (NOW() - s.created_at))/3600 as hours_since_signup\nFROM phase2_subscribers s\nLEFT JOIN dm_sequences seq ON s.subscriber_id = seq.subscriber_id AND seq.sequence_type = 'welcome'\nWHERE seq.id IS NULL\n  AND s.subscription_status = 'active'\n  AND s.created_at > NOW() - INTERVAL '24 hours'\nLIMIT 10",
+                "options": {}
+            },
+            "id": "get-new-subscribers",
+            "name": "Get New Subscribers (No Welcome Yet)",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                450,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "number": [
+                        {
+                            "value1": "={{ $json.length }}",
+                            "operation": "larger",
+                            "value2": 0
+                        }
+                    ]
+                }
+            },
+            "id": "check-new-subs",
+            "name": "New Subscribers Exist?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// DM Sequence Configuration by Tier and Days\nconst subscriber = $json;\nconst tier = subscriber.tier;\nconst hoursSinceSignup = parseFloat(subscriber.hours_since_signup);\nconst daysSinceSignup = Math.floor(hoursSinceSignup / 24);\n\n// Character-based personality for DMs\nconst characterPersonalities = {\n  'Miyuki Sakura': {\n    tone: 'sweet and friendly',\n    emojis: ['💕', '🌸', '✨', '😊'],\n    signature: 'Love, Miyuki 💕'\n  },\n  'Airi Neo': {\n    tone: 'tech-savvy and energetic',\n    emojis: ['⚡', '💫', '🤖', '👾'],\n    signature: 'Stay connected! -Airi ⚡'\n  },\n  'Hana Nakamura': {\n    tone: 'gentle and nurturing',\n    emojis: ['🌸', '💗', '🥺', '✨'],\n    signature: 'With love, Hana 🌸'\n  },\n  'Aiko Hayashi': {\n    tone: 'professional and warm',\n    emojis: ['💼', '✨', '💕'],\n    signature: 'Best regards, Aiko 💼'\n  }\n};\n\n// Random character selection\nconst characters = Object.keys(characterPersonalities);\nconst selectedCharacter = characters[Math.floor(Math.random() * characters.length)];\nconst personality = characterPersonalities[selectedCharacter];\n\n// Sequence determination\nlet sequenceType = 'welcome';\nlet stepNumber = 0;\nlet messageTemplate = '';\n\nif (daysSinceSignup === 0 && hoursSinceSignup < 2) {\n  // IMMEDIATE: Welcome message\n  sequenceType = 'welcome';\n  stepNumber = 0;\n  messageTemplate = `welcome_immediate_${tier}`;\n} else if (daysSinceSignup === 3) {\n  // DAY 3: Check-in\n  sequenceType = 'checkin';\n  stepNumber = 1;\n  messageTemplate = `checkin_day3_${tier}`;\n} else if (daysSinceSignup === 7) {\n  // DAY 7: Tier upsell\n  sequenceType = 'upsell';\n  stepNumber = 2;\n  messageTemplate = `upsell_day7_${tier}`;\n} else if (daysSinceSignup === 14) {\n  // DAY 14: VIP invitation\n  sequenceType = 'vip_invite';\n  stepNumber = 3;\n  messageTemplate = `vip_day14_${tier}`;\n}\n\nreturn {\n  ...subscriber,\n  sequence_config: {\n    sequence_type: sequenceType,\n    step_number: stepNumber,\n    message_template: messageTemplate,\n    character: selectedCharacter,\n    personality: personality,\n    total_steps: 4\n  }\n};"
+            },
+            "id": "determine-sequence",
+            "name": "Determine DM Sequence",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                850,
+                250
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://waifugen_ollama:11434/api/generate",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "model",
+                            "value": "llama3"
+                        },
+                        {
+                            "name": "prompt",
+                            "value": "=Generate a personalized DM message for a subscriber.\\n\\nSubscriber Info:\\n- Username: {{ $json.username }}\\n- Tier: {{ $json.tier }}\\n- Platform: {{ $json.platform }}\\n- Days since signup: {{ Math.floor($json.hours_since_signup / 24) }}\\n\\nCharacter: {{ $json.sequence_config.character }}\\nTone: {{ $json.sequence_config.personality.tone }}\\nEmojis to use: {{ $json.sequence_config.personality.emojis.join(' ') }}\\nSignature: {{ $json.sequence_config.personality.signature }}\\n\\nMessage Type: {{ $json.sequence_config.sequence_type }}\\n\\nGuidelines:\\n- Welcome: Thank for subscribing, preview exclusive content\\n- Check-in (Day 3): Ask how they're enjoying, subtle engagement\\n- Upsell (Day 7): Mention premium tier benefits, not pushy\\n- VIP (Day 14): Exclusive VIP offer, custom content mention\\n\\nGenerate ONLY the message text (max 100 words). Be authentic, warm, personal. Use 2-3 emojis. End with signature."
+                        },
+                        {
+                            "name": "stream",
+                            "value": false
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "generate-dm-ollama",
+            "name": "Generate Personalized DM (Ollama)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1050,
+                250
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const dmText = $('Generate Personalized DM (Ollama)').item.json.response;\\nconst subscriber = $json;\\nconst sequence = subscriber.sequence_config;\\n\\n// Sanitize DM text\\nconst sanitizeText = (text) => {\\n  if (!text) return '';\\n  return text.replace(/'/g, \\\"''\\\").replace(/\\\\\\\\/g, '\\\\\\\\\\\\\\\\').trim();\\n};\\n\\nconst sanitizedDM = sanitizeText(dmText);\\n\\nreturn {\\n  subscriber_id: subscriber.subscriber_id,\\n  platform: subscriber.platform,\\n  username: subscriber.username,\\n  tier: subscriber.tier,\\n  sequence_type: sequence.sequence_type,\\n  step_number: sequence.step_number,\\n  total_steps: sequence.total_steps,\\n  character: sequence.character,\\n  dm_content: sanitizedDM,\\n  dm_length: sanitizedDM.length,\\n  scheduled_at: new Date().toISOString()\\n};"
+            },
+            "id": "process-dm",
+            "name": "Process & Sanitize DM",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1250,
+                250
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "=-- Create DM sequence if not exists\\nINSERT INTO dm_sequences (sequence_id, subscriber_id, platform, sequence_type, current_step, total_steps, status, started_at, metadata)\\nVALUES (\\n  'seq_' || '{{ $json.subscriber_id }}' || '_' || '{{ $json.sequence_type }}',\\n  '{{ $json.subscriber_id }}',\\n  '{{ $json.platform }}',\\n  '{{ $json.sequence_type }}',\\n  {{ $json.step_number }},\\n  {{ $json.total_steps }},\\n  'active',\\n  NOW(),\\n  '{\\\"character\\\": \\\"{{ $json.character }}\\\"}')\\nON CONFLICT (sequence_id) DO UPDATE SET current_step = {{ $json.step_number }}, status = 'active'\\nRETURNING sequence_id;\\n\\n-- Insert DM message\\nINSERT INTO dm_messages (message_id, sequence_id, subscriber_id, platform, step_number, message_content, message_type, scheduled_at, status, metadata)\\nVALUES (\\n  'msg_' || gen_random_uuid(),\\n  'seq_' || '{{ $json.subscriber_id }}' || '_' || '{{ $json.sequence_type }}',\\n  '{{ $json.subscriber_id }}',\\n  '{{ $json.platform }}',\\n  {{ $json.step_number }},\\n  '{{ $json.dm_content }}',\\n  '{{ $json.sequence_type }}',\\n  NOW(),\\n  'pending_send',\\n  '{\\\"character\\\": \\\"{{ $json.character }}\\\", \\\"tier\\\": \\\"{{ $json.tier }}\\\"}')\\nRETURNING id, message_id;",
+                "options": {}
+            },
+            "id": "save-dm-sequence",
+            "name": "Save DM Sequence to PostgreSQL",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                1450,
+                250
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=💌 DM AUTOMATION\\n\\n✉️ Sequence: {{ $('Process \u0026 Sanitize DM').item.json.sequence_type }}\\n👤 Subscriber: {{ $('Process \u0026 Sanitize DM').item.json.username }}\\n🎯 Tier: {{ $('Process \u0026 Sanitize DM').item.json.tier }}\\n📝 Step: {{ $('Process \u0026 Sanitize DM').item.json.step_number }}/{{ $('Process \u0026 Sanitize DM').item.json.total_steps }}\\n🎭 Character: {{ $('Process \u0026 Sanitize DM').item.json.character }}\\n📊 Platform: {{ $('Process \u0026 Sanitize DM').item.json.platform }}\\n\\n📨 Message ready to send!\\n\\n⚠️ Note: Auto-send NOT enabled yet. Message logged in database."
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "notify-telegram",
+            "name": "Notify DM Ready via Telegram",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1650,
+                250
+            ]
+        }
+    ],
+    "connections": {
+        "Trigger Every 10 Minutes": {
+            "main": [
+                [
+                    {
+                        "node": "Get New Subscribers (No Welcome Yet)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get New Subscribers (No Welcome Yet)": {
+            "main": [
+                [
+                    {
+                        "node": "New Subscribers Exist?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "New Subscribers Exist?": {
+            "main": [
+                [
+                    {
+                        "node": "Determine DM Sequence",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Determine DM Sequence": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Personalized DM (Ollama)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Personalized DM (Ollama)": {
+            "main": [
+                [
+                    {
+                        "node": "Process & Sanitize DM",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Process & Sanitize DM": {
+            "main": [
+                [
+                    {
+                        "node": "Save DM Sequence to PostgreSQL",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Save DM Sequence to PostgreSQL": {
+            "main": [
+                [
+                    {
+                        "node": "Notify DM Ready via Telegram",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "createdAt": "2026-01-25T00:00:00.000Z",
+    "updatedAt": "2026-01-25T00:00:00.000Z",
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "tags": [
+        {
+            "name": "Phase 2",
+            "id": "phase2"
+        },
+        {
+            "name": "Automation",
+            "id": "automation"
+        },
+        {
+            "name": "Engagement",
+            "id": "engagement"
+        }
+    ],
+    "triggerCount": 1,
+    "versionId": "1"
+}

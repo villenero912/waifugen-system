@@ -1,5 +1,5 @@
 {
-    "name": "Daily Content Generator - WaifuGen Phase 1",
+    "name": "02 - Weekly Premium Content Generator",
     "nodes": [
         {
             "parameters": {
@@ -7,13 +7,13 @@
                     "interval": [
                         {
                             "field": "cronExpression",
-                            "expression": "0 0,6,12,18 * * *"
+                            "expression": "0 12 * * 0"
                         }
                     ]
                 }
             },
-            "id": "trigger-4x-daily",
-            "name": "Trigger 4x Daily (00:00, 06:00, 12:00, 18:00 UTC)",
+            "id": "trigger-weekly-sunday",
+            "name": "Trigger Weekly Sunday 12:00 JST",
             "type": "n8n-nodes-base.scheduleTrigger",
             "typeVersion": 1.1,
             "position": [
@@ -23,24 +23,16 @@
         },
         {
             "parameters": {
-                "operation": "executeQuery",
-                "query": "SELECT id, name, trigger_word, age, style FROM characters WHERE active = true ORDER BY RANDOM() LIMIT 1",
-                "options": {}
+                "jsCode": "// Weekly character rotation: Elite 8\nconst characters = [\n  { id: 1, name: 'Miyuki Sakura', trigger_word: 'miysak_v1', style: 'cute girlfriend' },\n  { id: 16, name: 'Hana Nakamura', trigger_word: 'hannak_v1', style: 'emotional romantic' },\n  { id: 10, name: 'Airi Neo', trigger_word: 'airneo_v1', style: 'cyber futuristic' },\n  { id: 5, name: 'Aiko Hayashi', trigger_word: 'aikoch_v1', style: 'professional elegant' },\n  { id: 19, name: 'Rio Mizuno', trigger_word: 'riomiz_v1', style: 'beach aesthetic' },\n  { id: 15, name: 'Chiyo Sasaki', trigger_word: 'chisas_v1', style: 'mature sophisticated' },\n  { id: 20, name: 'Mika Sweet', trigger_word: 'mikswt_v1', style: 'sweet playful' },\n  { id: 21, name: 'Momoka AV', trigger_word: 'momkav_v1', style: 'provocative bold' }\n];\n\n// Calculate week number (1-8 cycle)\nconst weekNumber = Math.floor((Date.now() / (7 * 24 * 60 * 60 * 1000))) % 8;\nconst selectedCharacter = characters[weekNumber];\n\nreturn {\n  character_id: selectedCharacter.id,\n  character_name: selectedCharacter.name,\n  trigger_word: selectedCharacter.trigger_word,\n  character_style: selectedCharacter.style,\n  week_number: weekNumber + 1,\n  production_tier: 'premium'\n};"
             },
-            "id": "select-character",
-            "name": "Select Random Character",
-            "type": "n8n-nodes-base.postgres",
-            "typeVersion": 2.4,
+            "id": "select-weekly-character",
+            "name": "Select Weekly Character (Elite 8 Rotation)",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
             "position": [
                 450,
                 300
-            ],
-            "credentials": {
-                "postgres": {
-                    "id": "waifugen_postgres",
-                    "name": "WaifuGen PostgreSQL"
-                }
-            }
+            ]
         },
         {
             "parameters": {
@@ -55,7 +47,7 @@
                         },
                         {
                             "name": "prompt",
-                            "value": "=Generate a creative A2E video prompt for a 15-second TikTok reel.\\n\\nCharacter: {{ $json.name }}, {{ $json.age }} years old\\nStyle: {{ $json.style }}\\nTrigger word: {{ $json.trigger_word }}\\nPlatform: TikTok (9:16 vertical)\\nMood: Morning motivation\\n\\nGenerate ONLY the prompt text, no explanations. Keep it under 60 words, focus on visual details."
+                            "value": "=Generate a PREMIUM A2E video prompt for a 15-second featured reel (weekly highlight).\\n\\nCharacter: {{ $json.character_name }}\\nStyle: {{ $json.character_style }}\\nTrigger word: {{ $json.trigger_word }}\\nPlatform: Cross-platform (TikTok, Instagram, YouTube)\\nAspect: 9:16 vertical\\nQuality: PREMIUM (wan_2.5 model, 1080p)\\nTheme: Weekly Featured Content - Make it CINEMATIC and visually stunning\\n\\nGenerate ONLY the prompt text (60 words max). Focus on: cinematic lighting, dynamic camera angles, high detail, professional quality."
                         },
                         {
                             "name": "stream",
@@ -65,8 +57,8 @@
                 },
                 "options": {}
             },
-            "id": "generate-prompt-ollama",
-            "name": "Generate Prompt with Ollama",
+            "id": "generate-premium-prompt",
+            "name": "Generate Premium Prompt (Ollama)",
             "type": "n8n-nodes-base.httpRequest",
             "typeVersion": 4.2,
             "position": [
@@ -76,10 +68,10 @@
         },
         {
             "parameters": {
-                "jsCode": "const response = $input.item.json.response;\\nconst character = $('Select Random Character').item.json;\\n\\n// Sanitize text to prevent SQL injection\\nconst sanitizeText = (text) => {\\n  if (!text) return '';\\n  return text.replace(/'/g, \"''\").replace(/\\\\/g, '\\\\\\\\').trim();\\n};\\n\\nreturn {\\n  character_id: character.id,\\n  character_name: character.name,\\n  prompt: sanitizeText(response),\\n  video_duration: 15,\\n  platform: 'tiktok'\\n};"
+                "jsCode": "const response = $input.item.json.response;\\ncons character = $('Select Weekly Character (Elite 8 Rotation)').item.json;\\n\\n// Sanitize text\\nconst sanitizeText = (text) => {\\n  if (!text) return '';\\n  return text.replace(/'/g, \\\"''\\\").replace(/\\\\\\\\/g, '\\\\\\\\\\\\\\\\').trim();\\n};\\n\\nreturn {\\n  character_id: character.character_id,\\n  character_name: character.character_name,\\n  prompt: sanitizeText(response),\\n  video_duration: 15,\\n  platform: 'cross_platform',\\n  quality_tier: 'premium'\\n};"
             },
-            "id": "process-prompt",
-            "name": "Process & Sanitize Prompt",
+            "id": "process-premium-prompt",
+            "name": "Process & Sanitize Premium Prompt",
             "type": "n8n-nodes-base.code",
             "typeVersion": 2,
             "position": [
@@ -106,11 +98,11 @@
                         },
                         {
                             "name": "model",
-                            "value": "seedance_1.5_pro"
+                            "value": "wan_2.5"
                         },
                         {
                             "name": "resolution",
-                            "value": "720p"
+                            "value": "1080p"
                         },
                         {
                             "name": "aspect_ratio",
@@ -120,8 +112,8 @@
                 },
                 "options": {}
             },
-            "id": "generate-video-a2e",
-            "name": "Generate Video with A2E",
+            "id": "generate-premium-video",
+            "name": "Generate Premium Video (A2E wan_2.5 1080p)",
             "type": "n8n-nodes-base.httpRequest",
             "typeVersion": 4.2,
             "position": [
@@ -137,46 +129,12 @@
         },
         {
             "parameters": {
-                "method": "POST",
-                "url": "http://waifugen_piper:10200/api/tts",
-                "sendBody": true,
-                "bodyParameters": {
-                    "parameters": [
-                        {
-                            "name": "text",
-                            "value": "=Good morning! I'm {{ $('Select Random Character').item.json.name }}. Today is going to be amazing. Let's make it happen!"
-                        },
-                        {
-                            "name": "model",
-                            "value": "en_US-amy-medium"
-                        }
-                    ]
-                },
-                "options": {
-                    "response": {
-                        "response": {
-                            "responseFormat": "file"
-                        }
-                    }
-                }
-            },
-            "id": "generate-voice-piper",
-            "name": "Generate Voice with Piper TTS",
-            "type": "n8n-nodes-base.httpRequest",
-            "typeVersion": 4.2,
-            "position": [
-                1050,
-                500
-            ]
-        },
-        {
-            "parameters": {
                 "operation": "executeQuery",
-                "query": "=INSERT INTO reels (character_id, prompt, video_url, voice_url, platform, duration, status, created_at)\\nVALUES ({{ $json.character_id }}, '{{ $json.prompt }}', '{{ $('Generate Video with A2E').item.json.video_url }}', '/tmp/voice_{{ $json.character_id }}.wav', '{{ $json.platform }}', {{ $json.video_duration }}, 'pending_edit', NOW())\\nRETURNING id",
+                "query": "=INSERT INTO reels (character_id, prompt, video_url, platform, duration, quality_tier, nsfw_level, status, created_at)\\nVALUES ({{ $json.character_id }}, '{{ $('Process & Sanitize Premium Prompt').item.json.prompt }}', '{{ $('Generate Premium Video (A2E wan_2.5 1080p)').item.json.video_url }}', 'cross_platform', {{ $json.video_duration }}, 'premium', 0, 'ready_to_publish', NOW())\\nRETURNING id",
                 "options": {}
             },
-            "id": "save-to-database",
-            "name": "Save Reel to PostgreSQL",
+            "id": "save-premium-reel",
+            "name": "Save Premium Reel to PostgreSQL",
             "type": "n8n-nodes-base.postgres",
             "typeVersion": 2.4,
             "position": [
@@ -203,14 +161,14 @@
                         },
                         {
                             "name": "text",
-                            "value": "=✅ Reel generado\\n\\nID: {{ $('Save Reel to PostgreSQL').item.json.id }}\\nPersonaje: {{ $('Select Random Character').item.json.name }}\\nPlataforma: TikTok\\nDuración: 15s\\n\\nPendiente: Montaje final"
+                            "value": "=🌟 PREMIUM REEL SEMANAL GENERADO\\n\\n📋 ID: {{ $('Save Premium Reel to PostgreSQL').item.json.id }}\\n👤 Personaje: {{ $('Select Weekly Character (Elite 8 Rotation)').item.json.character_name }}\\n🎬 Modelo: wan_2.5 (1080p Premium)\\n📊 Semana: {{ $('Select Weekly Character (Elite 8 Rotation)').item.json.week_number }}/8\\n⏱️ Duración: 15s\\n🌐 Plataformas: TikTok, Instagram, YouTube\\n\\n✅ Estado: Listo para publicar"
                         }
                     ]
                 },
                 "options": {}
             },
-            "id": "notify-telegram",
-            "name": "Notify via Telegram",
+            "id": "notify-premium-telegram",
+            "name": "Notify Premium Reel via Telegram",
             "type": "n8n-nodes-base.httpRequest",
             "typeVersion": 4.2,
             "position": [
@@ -220,71 +178,66 @@
         }
     ],
     "connections": {
-        "Trigger 4x Daily (00:00, 06:00, 12:00, 18:00 UTC)": {
+        "Trigger Weekly Sunday 12:00 JST": {
             "main": [
                 [
                     {
-                        "node": "Select Random Character",
+                        "node": "Select Weekly Character (Elite 8 Rotation)",
                         "type": "main",
                         "index": 0
                     }
                 ]
             ]
         },
-        "Select Random Character": {
+        "Select Weekly Character (Elite 8 Rotation)": {
             "main": [
                 [
                     {
-                        "node": "Generate Prompt with Ollama",
+                        "node": "Generate Premium Prompt (Ollama)",
                         "type": "main",
                         "index": 0
                     }
                 ]
             ]
         },
-        "Generate Prompt with Ollama": {
+        "Generate Premium Prompt (Ollama)": {
             "main": [
                 [
                     {
-                        "node": "Process Prompt",
+                        "node": "Process & Sanitize Premium Prompt",
                         "type": "main",
                         "index": 0
                     }
                 ]
             ]
         },
-        "Process Prompt": {
+        "Process & Sanitize Premium Prompt": {
             "main": [
                 [
                     {
-                        "node": "Generate Video with A2E",
-                        "type": "main",
-                        "index": 0
-                    },
-                    {
-                        "node": "Generate Voice with Piper TTS",
+                        "node": "Generate Premium Video (A2E wan_2.5 1080p)",
                         "type": "main",
                         "index": 0
                     }
                 ]
             ]
         },
-        "Generate Video with A2E": {
+        "Generate Premium Video (A2E wan_2.5 1080p)": {
             "main": [
                 [
                     {
-                        "node": "Save Reel to PostgreSQL",
+                        "node": "Save Premium Reel to PostgreSQL",
                         "type": "main",
                         "index": 0
                     }
                 ]
             ]
         },
-        "Save Reel to PostgreSQL": {
+        "Save Premium Reel to PostgreSQL": {
             "main": [
                 [
                     {
-                        "node": "Notify via Telegram",
+                        "node": "Notify Premium Reel via Telegram",
                         "type": "main",
                         "index": 0
                     }
@@ -292,8 +245,8 @@
             ]
         }
     },
-    "createdAt": "2026-01-24T19:22:00.000Z",
-    "updatedAt": "2026-01-24T19:22:00.000Z",
+    "createdAt": "2026-01-25T00:00:00.000Z",
+    "updatedAt": "2026-01-25T00:00:00.000Z",
     "settings": {
         "executionOrder": "v1"
     },
@@ -304,8 +257,12 @@
             "id": "phase1"
         },
         {
-            "name": "Production",
-            "id": "production"
+            "name": "Premium",
+            "id": "premium"
+        },
+        {
+            "name": "Weekly",
+            "id": "weekly"
         }
     ],
     "triggerCount": 1,

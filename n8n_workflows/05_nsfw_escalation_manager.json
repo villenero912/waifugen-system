@@ -1,0 +1,451 @@
+{
+    "name": "05 - NSFW Escalation Manager (Phase 2)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 0 * * *"
+                        }
+                    ]
+                }
+            },
+            "id": "trigger-daily-check",
+            "name": "Daily Milestone Check (00:00 UTC)",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.1,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "SELECT SUM(followers) as total_followers FROM social_accounts WHERE platform IN ('tiktok', 'instagram', 'youtube')",
+                "options": {}
+            },
+            "id": "check-follower-milestone",
+            "name": "Check Total Followers",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                450,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "number": [
+                        {
+                            "value1": "={{ $json.total_followers }}",
+                            "operation": "largerEqual",
+                            "value2": 50000
+                        }
+                    ]
+                }
+            },
+            "id": "milestone-reached",
+            "name": "50K Milestone Reached?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// NSFW Escalation Timeline Manager\\n// Based on weeks since milestone reached\\n\\nconst followers = $('Check Total Followers').item.json.total_followers;\\n\\n// Calculate weeks since milestone (simplified - use DB timestamp in production)\\nconst milestoneDate = new Date('2026-02-01'); // Example\\nconst today = new Date();\\nconst weeksSince = Math.floor((today - milestoneDate) / (7 * 24 * 60 * 60 * 1000));\\n\\n// NSFW Escalation Ladder\\nconst escalationLadder = {\\n  week_1: {\\n    level: 0,\\n    focus: 'SFW viral (maintain growth)',\\n    platforms: ['tiktok', 'instagram', 'youtube'],\\n    action: 'none'\\n  },\\n  week_2_3: {\\n    level: 2,\\n    focus: 'Suggestive teasers',\\n    platforms: ['discord', 'twitter', 'reddit', 'telegram'],\\n    content_types: ['cosplay', 'bikini', 'workout', 'teasing'],\\n    pricing: 'free',\\n    goal: 'Discord community building',\\n    action: 'create_discord_content'\\n  },\\n  week_4_6: {\\n    level: 4,\\n    focus: 'Softcore content',\\n    platforms: ['onlyfans_basic', 'fansly_basic', 'patreon'],\\n    content_types: ['lingerie', 'boudoir', 'implied_nudity'],\\n    pricing: 9.99,\\n    model: 'wan_2.5',\\n    resolution: '1080p',\\n    credits: 90,\\n    goal: 'OnlyFans Basic conversions',\\n    action: 'create_onlyfans_content'\\n  },\\n  week_7_10: {\\n    level: 6,\\n    focus: 'Mid-tier NSFW',\\n    platforms: ['onlyfans_premium', 'fansly_premium'],\\n    content_types: ['topless', 'partial_nudity', 'sensual'],\\n    pricing: 24.99,\\n    model: 'wan_2.5',\\n    resolution: '1080p',\\n    credits: 90,\\n    goal: 'Premium tier upsells',\\n    action: 'create_premium_content'\\n  },\\n  week_11_plus: {\\n    level: 8,\\n    focus: 'Explicit + Custom',\\n    platforms: ['onlyfans_vip', 'xvideos', 'pornhub'],\\n    content_types: ['full_nudity', 'explicit', 'custom_fetish'],\\n    pricing: { base: 49.99, ppv: [50, 500] },\\n    provider: 'RunPod GPU',\\n    gpu: 'RTX_4090',\\n    resolution: '4K',\\n    hourly_rate: 0.69,\\n    goal: 'VIP tier + PPV',\\n    action: 'create_vip_content_gpu'\\n  }\\n};\\n\\n// Determine current phase\\nlet currentPhase;\\nif (weeksSince \u003c 2) currentPhase = escalationLadder.week_1;\\nelse if (weeksSince \u003c 4) currentPhase = escalationLadder.week_2_3;\\nelse if (weeksSince \u003c 7) currentPhase = escalationLadder.week_4_6;\\nelse if (weeksSince \u003c 11) currentPhase = escalationLadder.week_7_10;\\nelse currentPhase = escalationLadder.week_11_plus;\\n\\nreturn {\\n  followers: followers,\\n  weeks_since_milestone: weeksSince,\\n  current_nsfw_level: currentPhase.level,\\n  current_phase: currentPhase,\\n  escalation_active: weeksSince \u003e= 2,\\n  milestone_date: milestoneDate.toISOString()\\n};"
+            },
+            "id": "calculate-escalation-phase",
+            "name": "Calculate NSFW Escalation Phase",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                850,
+                250
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "boolean": [
+                        {
+                            "value1": "={{ $json.escalation_active }}",
+                            "value2": true
+                        }
+                    ]
+                }
+            },
+            "id": "escalation-active",
+            "name": "Escalation Active (Week 2+)?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                1050,
+                250
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// Select character and fetish category based on NSFW level\\n\\nconst phase = $('Calculate NSFW Escalation Phase').item.json.current_phase;\\nconst level = phase.level;\\n\\n// Character roster with NSFW suitability\\nconst characters = {\\n  'Aurelia Viral': { recommended_levels: [0,2,4,6,8,10], escalation_speed: 'fast' },\\n  'Miyuki Sakura': { recommended_levels: [0,2,4,6], escalation_speed: 'moderate' },\\n  'Airi Neo': { recommended_levels: [0,2,4,6,8], escalation_speed: 'moderate' },\\n  'Aiko Hayashi': { recommended_levels: [0,2,4,6,8], escalation_speed: 'slow' },\\n  'Rio Mizuno': { recommended_levels: [0,2,4,6,8], escalation_speed: 'fast' },\\n  'Chiyo Sasaki': { recommended_levels: [0,2,4,6,8], escalation_speed: 'slow' }\\n};\\n\\n// Fetishes by category (383 total prompts)\\nconst fetishCategories = {\\n  glamour_fashion: {\\n    tags: ['lingerie', 'silk', 'luxury', 'designer', 'elegant', 'seductive'],\\n    platforms: ['Fantia', 'OnlyFans', 'Xhamster'],\\n    total_prompts: 55,\\n    characters: ['Mika Kobayashi', 'Zara Chen', 'Sofia Rossi']\\n  },\\n  cosplay_anime: {\\n    tags: ['costume', 'character', 'vtuber', 'gaming'],\\n    platforms: ['Fantia', 'Twitter', 'Pornhub'],\\n    total_prompts: 72,\\n    characters: ['Luna Tsukino', 'Jin Kawasaki']\\n  },\\n  mature_elegant: {\\n    tags: ['traditional', 'kimono', 'sophisticated', '65yo'],\\n    platforms: ['Fantia', 'OnlyFans'],\\n    total_prompts: 66,\\n    characters: ['Chiyo Sasaki']\\n  },\\n  athletic_fitness: {\\n    tags: ['military', 'tactical', 'gym', 'workout', 'muscle'],\\n    platforms: ['Fantia', 'Pornhub', 'OnlyFans'],\\n    total_prompts: 84,\\n    characters: ['Takumi Endou', 'Kai Morita', 'Natsuki Taniguchi']\\n  },\\n  cultural_lifestyle: {\\n    tags: ['tropical', 'beach', 'bikini', 'latino', 'kawaii'],\\n    platforms: ['Fantia', 'XVideos', 'OnlyFans'],\\n    total_prompts: 90,\\n    characters: ['Rio Mizuno', 'Mateo Garcia', 'Aya Tomita']\\n  }\\n};\\n\\n// Select suitable character for current level\\nconst suitableChars = Object.entries(characters).filter(([name, data]) => \\n  data.recommended_levels.includes(level)\\n);\\n\\nconst selectedCharacter = suitableChars[Math.floor(Math.random() * suitableChars.length)][0];\\n\\n// Select fetish category based on level\\nlet selectedCategory;\\nif (level \u003c= 2) selectedCategory = 'cosplay_anime';\\nelse if (level \u003c= 4) selectedCategory = 'glamour_fashion';\\nelse if (level \u003c= 6) selectedCategory = 'athletic_fitness';\\nelse selectedCategory = Object.keys(fetishCategories)[Math.floor(Math.random() * 5)];\\n\\nconst category = fetishCategories[selectedCategory];\\n\\nreturn {\\n  ...phase,\\n  selected_character: selectedCharacter,\\n  fetish_category: selectedCategory,\\n  fetish_tags: category.tags,\\n  target_platform: category.platforms[0],\\n  total_prompts_available: category.total_prompts,\\n  production_method: level \u003e= 8 ? 'gpu_runpod' : 'a2e_wan_25'\\n};"
+            },
+            "id": "select-character-fetish",
+            "name": "SelectCharacter \u0026 Fetish Category",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1250,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://waifugen_ollama:11434/api/generate",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "model",
+                            "value": "llama3"
+                        },
+                        {
+                            "name": "prompt",
+                            "value": "=Generate a NSFW Level {{ $json.current_nsfw_level }} video prompt for adult content.\\n\\nCharacter: {{ $json.selected_character }}\\nFetish Category: {{ $json.fetish_category }}\\nTags: {{ $json.fetish_tags.join(', ') }}\\nPlatform: {{ $json.target_platform }}\\nNSFW Level: {{ $json.current_nsfw_level }}/10\\n\\nGenerate ONLY the prompt (max 80 words). Include:\\n- Visual details appropriate for level {{ $json.current_nsfw_level }}\\n- Fetish tags: {{ $json.fetish_tags.slice(0,3).join(', ') }}\\n- Platform aesthetic\\n- Quality markers (4K, professional, etc)\\n\\nBe explicit but tasteful. Follow platform's content rules."
+                        },
+                        {
+                            "name": "stream",
+                            "value": false
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "generate-nsfw-prompt",
+            "name": "Generate NSFW Prompt (Ollama)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1450,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const prompt = $('Generate NSFW Prompt (Ollama)').item.json.response;\\nconst phase = $('Select Character \u0026 Fetish Category').item.json;\\n\\nconst sanitizeText = (text) => {\\n  if (!text) return '';\\n  return text.replace(/'/g, \\\"''\\\").replace(/\\\\\\\\/g, '\\\\\\\\\\\\\\\\').trim();\\n};\\n\\nreturn {\\n  ...phase,\\n  nsfw_prompt: sanitizeText(prompt),\\n  video_duration: phase.level \u003e= 8 ? 60 : 30,\\n  use_gpu: phase.production_method === 'gpu_runpod'\\n};"
+            },
+            "id": "process-nsfw-prompt",
+            "name": "Process \u0026 Sanitize NSFW Prompt",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1650,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "boolean": [
+                        {
+                            "value1": "={{ $json.use_gpu }}",
+                            "value2": true
+                        }
+                    ]
+                }
+            },
+            "id": "routing-decision",
+            "name": "Use GPU (Level 8+)?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                1850,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.A2E_API_URL || 'https://api.a2e.ai/v1/generate' }}",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "prompt",
+                            "value": "={{ $json.nsfw_prompt }}"
+                        },
+                        {
+                            "name": "duration",
+                            "value": "={{ $json.video_duration }}"
+                        },
+                        {
+                            "name": "model",
+                            "value": "wan_2.5"
+                        },
+                        {
+                            "name": "resolution",
+                            "value": "1080p"
+                        },
+                        {
+                            "name": "aspect_ratio",
+                            "value": "9:16"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "generate-nsfw-a2e",
+            "name": "Generate NSFW A2E (Level 4-6)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                2050,
+                100
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "a2e_api_key",
+                    "name": "A2E API Key"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "// RunPod GPU Processing for Level 8+ NSFW\\n// This integrates with gpu_rental_manager.py\\n\\nconst prompt = $json.nsfw_prompt;\\nconst duration = $json.video_duration;\\nconst character = $json.selected_character;\\nconst level = $json.current_nsfw_level;\\n\\n// RunPod GPU configuration\\nconst runpodConfig = {\\n  gpu_type: 'RTX_4090',\\n  hourly_rate: 0.69,\\n  container_image: 'runpod/stable-diffusion:latest',\\n  resolution: '4K',\\n  estimated_cost: (duration / 3600) * 0.69  // Cost per hour\\n};\\n\\n// Prepare GPU job payload\\nconst gpuJobPayload = {\\n  prompt: prompt,\\n  duration_seconds: duration,\\n  resolution: '3840x2160',  // 4K\\n  fps: 30,\\n  model: 'stable_video_diffusion',\\n  nsfw_level: level,\\n  character: character\\n};\\n\\nreturn {\\n  ...runpodConfig,\\n  job_payload: gpuJobPayload,\\n  production_method: 'runpod_gpu',\\n  estimated_processing_time: duration * 2,  // 2x duration\\n  message: 'GPU job prepared for RunPod RTX 4090'\\n};"
+            },
+            "id": "prepare-gpu-job",
+            "name": "Prepare RunPod GPU Job (Level 8+)",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2050,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "=INSERT INTO nsfw_content (character, nsfw_level, fetish_category, prompt, platform, pricing_tier, production_method, video_url, status, created_at)\\nVALUES ('{{ $('Select Character \u0026 Fetish Category').item.json.selected_character }}', {{ $('Select Character \u0026 Fetish Category').item.json.current_nsfw_level }}, '{{ $('Select Character \u0026 Fetish Category').item.json.fetish_category }}', '{{ $('Process \u0026 Sanitize NSFW Prompt').item.json.nsfw_prompt }}', '{{ $('Select Character \u0026 Fetish Category').item.json.target_platform }}', {{ $('Select Character \u0026 Fetish Category').item.json.pricing || 'NULL' }}, '{{ $json.production_method || 'a2e_wan_25' }}', '{{ $json.video_url || $json.message }}', 'generated', NOW())\\nRETURNING id",
+                "options": {}
+            },
+            "id": "save-nsfw-content",
+            "name": "Save NSFW Content to PostgreSQL",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                2250,
+                200
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=🔞 NSFW CONTENT GENERATED (PHASE 2)\\n\\n👥 Followers: {{ $('Check Total Followers').item.json.total_followers }}\\n📅 Weeks since milestone: {{ $('Calculate NSFW Escalation Phase').item.json.weeks_since_milestone }}\\n🔥 NSFW Level: {{ $('Select Character \u0026 Fetish Category').item.json.current_nsfw_level }}/10\\n👤 Character: {{ $('Select Character \u0026 Fetish Category').item.json.selected_character }}\\n💋 Fetish: {{ $('Select Character \u0026 Fetish Category').item.json.fetish_category }}\\n🌐 Platform: {{ $('Select Character \u0026 Fetish Category').item.json.target_platform }}\\n💰 Pricing: ${{ $('Select Character \u0026 Fetish Category').item.json.pricing || 'Free' }}\\n🎬 Method: {{ $json.production_method || 'A2E wan_2.5' }}\\n\\n✅ Content ID: {{ $('Save NSFW Content to PostgreSQL').item.json.id }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "notify-nsfw",
+            "name": "Notify NSFW Generation via Telegram",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                2450,
+                200
+            ]
+        }
+    ],
+    "connections": {
+        "Daily Milestone Check (00:00 UTC)": {
+            "main": [
+                [
+                    {
+                        "node": "Check Total Followers",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Check Total Followers": {
+            "main": [
+                [
+                    {
+                        "node": "50K Milestone Reached?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "50K Milestone Reached?": {
+            "main": [
+                [
+                    {
+                        "node": "Calculate NSFW Escalation Phase",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Calculate NSFW Escalation Phase": {
+            "main": [
+                [
+                    {
+                        "node": "Escalation Active (Week 2+)?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Escalation Active (Week 2+)?": {
+            "main": [
+                [
+                    {
+                        "node": "Select Character \u0026 Fetish Category",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Select Character \u0026 Fetish Category": {
+            "main": [
+                [
+                    {
+                        "node": "Generate NSFW Prompt (Ollama)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate NSFW Prompt (Ollama)": {
+            "main": [
+                [
+                    {
+                        "node": "Process \u0026 Sanitize NSFW Prompt",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Process \u0026 Sanitize NSFW Prompt": {
+            "main": [
+                [
+                    {
+                        "node": "Use GPU (Level 8+)?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Use GPU (Level 8+)?": {
+            "main": [
+                [
+                    {
+                        "node": "Prepare RunPod GPU Job (Level 8+)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Generate NSFW A2E (Level 4-6)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate NSFW A2E (Level 4-6)": {
+            "main": [
+                [
+                    {
+                        "node": "Save NSFW Content to PostgreSQL",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Prepare RunPod GPU Job (Level 8+)": {
+            "main": [
+                [
+                    {
+                        "node": "Save NSFW Content to PostgreSQL",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Save NSFW Content to PostgreSQL": {
+            "main": [
+                [
+                    {
+                        "node": "Notify NSFW Generation via Telegram",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "createdAt": "2026-01-25T00:00:00.000Z",
+    "updatedAt": "2026-01-25T00:00:00.000Z",
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "tags": [
+        {
+            "name": "Phase 2",
+            "id": "phase2"
+        },
+        {
+            "name": "NSFW",
+            "id": "nsfw"
+        },
+        {
+            "name": "Monetization",
+            "id": "monetization"
+        }
+    ],
+    "triggerCount": 1,
+    "versionId": "1"
+}
