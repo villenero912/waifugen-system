@@ -112,7 +112,7 @@
         {
             "parameters": {
                 "method": "POST",
-                "url": "http://waifugen_ollama:11434/api/generate",
+                "url": "http://ollama:11434/api/generate",
                 "sendBody": true,
                 "bodyParameters": {
                     "parameters": [
@@ -194,14 +194,6 @@
                         {
                             "name": "model",
                             "value": "wan_2.5"
-                        },
-                        {
-                            "name": "resolution",
-                            "value": "1080p"
-                        },
-                        {
-                            "name": "aspect_ratio",
-                            "value": "9:16"
                         }
                     ]
                 },
@@ -224,7 +216,7 @@
         },
         {
             "parameters": {
-                "jsCode": "// RunPod GPU Processing for Level 8+ NSFW\\n// This integrates with gpu_rental_manager.py\\n\\nconst prompt = $json.nsfw_prompt;\\nconst duration = $json.video_duration;\\nconst character = $json.selected_character;\\nconst level = $json.current_nsfw_level;\\n\\n// RunPod GPU configuration\\nconst runpodConfig = {\\n  gpu_type: 'RTX_4090',\\n  hourly_rate: 0.69,\\n  container_image: 'runpod/stable-diffusion:latest',\\n  resolution: '4K',\\n  estimated_cost: (duration / 3600) * 0.69  // Cost per hour\\n};\\n\\n// Prepare GPU job payload\\nconst gpuJobPayload = {\\n  prompt: prompt,\\n  duration_seconds: duration,\\n  resolution: '3840x2160',  // 4K\\n  fps: 30,\\n  model: 'stable_video_diffusion',\\n  nsfw_level: level,\\n  character: character\\n};\\n\\nreturn {\\n  ...runpodConfig,\\n  job_payload: gpuJobPayload,\\n  production_method: 'runpod_gpu',\\n  estimated_processing_time: duration * 2,  // 2x duration\\n  message: 'GPU job prepared for RunPod RTX 4090'\\n};"
+                "jsCode": "return {\n  job_payload: {\n    id: $input.item.json.id,\n    character: $input.item.json.selected_character,\n    level: $input.item.json.current_nsfw_level,\n    prompt: $input.item.json.nsfw_prompt,\n    duration: $input.item.json.video_duration,\n    gpu: 'RTX_4090',\n    provider: 'runpod'\n  }\n};"
             },
             "id": "prepare-gpu-job",
             "name": "Prepare RunPod GPU Job (Level 8+)",
@@ -237,8 +229,21 @@
         },
         {
             "parameters": {
+                "command": "python src/processing/n8n_long_video_bridge.py '{{ JSON.stringify($json.job_payload) }}'"
+            },
+            "id": "execute-gpu-job",
+            "name": "Execute RunPod GPU Job",
+            "type": "n8n-nodes-base.executeCommand",
+            "typeVersion": 1,
+            "position": [
+                2150,
+                300
+            ]
+        },
+        {
+            "parameters": {
                 "operation": "executeQuery",
-                "query": "=INSERT INTO nsfw_content (character, nsfw_level, fetish_category, prompt, platform, pricing_tier, production_method, video_url, status, created_at)\\nVALUES ('{{ $('Select Character \u0026 Fetish Category').item.json.selected_character }}', {{ $('Select Character \u0026 Fetish Category').item.json.current_nsfw_level }}, '{{ $('Select Character \u0026 Fetish Category').item.json.fetish_category }}', '{{ $('Process \u0026 Sanitize NSFW Prompt').item.json.nsfw_prompt }}', '{{ $('Select Character \u0026 Fetish Category').item.json.target_platform }}', {{ $('Select Character \u0026 Fetish Category').item.json.pricing || 'NULL' }}, '{{ $json.production_method || 'a2e_wan_25' }}', '{{ $json.video_url || $json.message }}', 'generated', NOW())\\nRETURNING id",
+                "query": "=INSERT INTO nsfw_content (character, nsfw_level, fetish_category, prompt, platform, pricing_tier, production_method, video_url, status, created_at)\nVALUES ('{{ $('Select Character & Fetish Category').item.json.selected_character }}', {{ $('Select Character & Fetish Category').item.json.current_nsfw_level }}, '{{ $('Select Character & Fetish Category').item.json.fetish_category }}', '{{ $('Process & Sanitize NSFW Prompt').item.json.nsfw_prompt }}', '{{ $('Select Character & Fetish Category').item.json.target_platform }}', {{ $('Select Character & Fetish Category').item.json.pricing || 'NULL' }}, 'runpod_gpu_rtx4090', '{{ $json.status }}', 'triggered', NOW())\nRETURNING id",
                 "options": {}
             },
             "id": "save-nsfw-content",
@@ -246,7 +251,7 @@
             "type": "n8n-nodes-base.postgres",
             "typeVersion": 2.4,
             "position": [
-                2250,
+                2350,
                 200
             ],
             "credentials": {
@@ -404,6 +409,17 @@
             ]
         },
         "Prepare RunPod GPU Job (Level 8+)": {
+            "main": [
+                [
+                    {
+                        "node": "Execute RunPod GPU Job",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Execute RunPod GPU Job": {
             "main": [
                 [
                     {

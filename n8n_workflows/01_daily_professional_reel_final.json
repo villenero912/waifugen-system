@@ -69,7 +69,7 @@
                         },
                         {
                             "name": "prompt",
-                            "value": "=Generate A2E video prompt (max 60 words):\\n\\nCharacter: {{ $('Get Character from PostgreSQL').item.json.name }}, {{ $('Get Character from PostgreSQL').item.json.age }} years old\\nPersonality: {{ $('Get Character from PostgreSQL').item.json.personality }}\\nTrigger word: {{ $('Get Character from PostgreSQL').item.json.trigger_word }}\\nTheme: {{ $('Determine Content Slot').item.json.slot.theme }}\\nStyle: {{ $('Determine Content Slot').item.json.slot.style }}\\nPlatform: {{ $('Determine Content Slot').item.json.slot.platform }} (9:16 vertical)\\nMood: {{ $('Determine Content Slot').item.json.slot.energy }} energy\\n\\nGenerate ONLY visual description: facial expression, clothing, background, lighting. SFW level 0, bright, cheerful, no NSFW."
+                            "value": "=As an expert director, generate a high-conversion video prompt for A2E (max 60 words):\n\nCharacter: {{ $('Get Character from PostgreSQL').item.json.name }}\nContext: {{ $('Get Character from PostgreSQL').item.json.personality }}\nNiches: {{ $('Get Character from PostgreSQL').item.json.niches.join(', ') }}\nVisual Hooks: {{ $('Get Character from PostgreSQL').item.json.visual_hooks.join(', ') }}\nTrigger: {{ $('Get Character from PostgreSQL').item.json.trigger_word }}\nPlatform: {{ $('Determine Content Slot').item.json.slot.platform }}\n\nRequirements: Cinematic 4k, extreme detail, soft studio lighting, focused on '{{ $('Get Character from PostgreSQL').item.json.trigger_word }}', {{ $('Get Character from PostgreSQL').item.json.visual_hooks[0] }}. 9:16 vertical."
                         },
                         {
                             "name": "stream",
@@ -101,7 +101,7 @@
                         },
                         {
                             "name": "prompt",
-                            "value": "=Generate 10-second voice script (max 25 words):\\n\\nCharacter: {{ $('Get Character from PostgreSQL').item.json.name }}\\nPersonality: {{ $('Get Character from PostgreSQL').item.json.personality }}\\nTheme: {{ $('Determine Content Slot').item.json.slot.theme }}\\nStyle: {{ $('Determine Content Slot').item.json.slot.style }}\\nTime: {{ $('Determine Content Slot').item.json.slot.time_jst }} JST\\n\\nWrite in first person, conversational, 25 words max. Start with greeting for {{ $('Determine Content Slot').item.json.slot.time_jst }} time."
+                            "value": "=Write a viral 10s script (max 20 words) for {{ $('Get Character from PostgreSQL').item.json.name }}:\n\nRole: {{ $('Get Character from PostgreSQL').item.json.personality }}\nStyle: {{ $('Determine Content Slot').item.json.slot.style }}\nEngagement Hooks: {{ $('Get Character from PostgreSQL').item.json.engagement_hooks[0] }}\n\nStructure:\n1. 2s Hook: Catch attention immediately.\n2. 6s Core: Relatable or aspirational message.\n3. 2s CTA: Clear call to action.\n\nUse first person, natural tone, NO emojis in text (will be added via subs)."
                         },
                         {
                             "name": "stream",
@@ -302,7 +302,7 @@
                         },
                         {
                             "name": "input",
-                            "value": "={{ { 'prompt': $('Determine Content Slot').item.json.slot.music_genre + ' instrumental background music, upbeat, 15 seconds, no vocals', 'duration': 15, 'model_version': 'stereo-large', 'output_format': 'mp3' } }}"
+                            "value": "={{ { 'prompt': 'Professional ' + $('Get Character from PostgreSQL').item.json.audio_preferences.primary_genres[0] + ' background music, high fidelity, viral production, ' + $('Get Character from PostgreSQL').item.json.audio_preferences.bpm_range[0] + '-' + $('Get Character from PostgreSQL').item.json.audio_preferences.bpm_range[1] + ' BPM, loopable, no vocals', 'duration': 15, 'model_version': 'stereo-large', 'output_format': 'mp3' } }}"
                         }
                     ]
                 },
@@ -325,7 +325,7 @@
         },
         {
             "parameters": {
-                "jsCode": "// Security: Sanitize text to prevent command injection\nconst voiceScript = $('Generate Voice Script (Ollama)').item.json.response;\nconst videoPrompt = $('Generate Video Prompt (Ollama)').item.json.response;\nconst characterName = $('Get Character from PostgreSQL').item.json.name;\n\n// Escape single quotes, double quotes, backticks, and special chars\nconst sanitize = (text) => {\n  return text\n    .replace(/'/g, \"'\\\\''\")\n    .replace(/\"/g, '\\\\\"')\n    .replace(/`/g, '\\\\`')\n    .replace(/\\$/g, '\\\\$')\n    .replace(/\\n/g, ' ')\n    .trim();\n};\n\nreturn {\n  subtitle_text_safe: sanitize(voiceScript),\n  video_prompt_safe: sanitize(videoPrompt),\n  character_name_safe: sanitize(characterName),\n  timestamp: $('Determine Content Slot').item.json.timestamp,\n  video_url: $('Generate Video (A2E Pro - 15 credits)').item.json.video_url,\n  voice_file: $('Generate Voice (Piper TTS)').item.binary.fileName,\n  music_file: $('Download Music (Pixabay)').item.binary.fileName || $('Generate Music (Replicate Fallback)').item.json.output,\n  char_id: $('Get Character from PostgreSQL').item.json.id,\n  platform: $('Determine Content Slot').item.json.slot.platform\n};"
+                "jsCode": "// Security: Sanitize text to prevent command injection\nconst voiceScript = $('Generate Voice Script (Ollama)').item.json.response;\nconst videoPrompt = $('Generate Video Prompt (Ollama)').item.json.response;\nconst characterName = $('Get Character from PostgreSQL').item.json.name;\n\n// Escape single quotes, double quotes, backticks, and special chars\nconst sanitize = (text) => {\n  return text\n    .replace(/'/g, \"'\\\\''\")\n    .replace(/\"/g, '\\\\\"')\n    .replace(/`/g, '\\\\`')\n    .replace(/\\$/g, '\\\\$')\n    .replace(/\\n/g, ' ')\n    .trim();\n};\n\nreturn {\n  subtitle_text_safe: sanitize(voiceScript),\n  video_prompt_safe: sanitize(videoPrompt),\n  character_name_safe: sanitize(characterName),\n  timestamp: $('Determine Content Slot').item.json.timestamp,\n  video_url: $('Generate Video (A2E Pro - 15 credits)').item.json.video_url,\n  voice_file: $('Generate Voice (Piper TTS)').item.binary.fileName,\n  music_url: $('Generate Music (Replicate Fallback)').item.json.output,\n  char_id: $('Get Character from PostgreSQL').item.json.id,\n  platform: $('Determine Content Slot').item.json.slot.platform\n};"
             },
             "id": "sanitize-text",
             "name": "Sanitize Text (Security)",
@@ -339,7 +339,7 @@
         },
         {
             "parameters": {
-                "command": "=# Professional Montage with Subtitles, Effects, Transitions (SECURED)\ncd /tmp\n\n# Extract sanitized variables\nVIDEO_URL='{{ $json.video_url }}'\nVOICE_FILE='{{ $json.voice_file }}'\nMUSIC_FILE='{{ $json.music_file }}'\nSUBTITLE_TEXT='{{ $json.subtitle_text_safe }}'\nCHARACTER='{{ $json.character_name_safe }}'\nCHAR_ID='{{ $json.char_id }}'\nPLATFORM='{{ $json.platform }}'\n\n# Download video\nwget -O raw_video.mp4 \"$VIDEO_URL\"\n\n# Create subtitle file (SRT format) - SAFE\ncat > subtitles.srt << EOF\n1\n00:00:01,000 --> 00:00:10,000\n$SUBTITLE_TEXT\nEOF\n\n# Professional FFmpeg montage\nffmpeg -y \\\n  -i raw_video.mp4 \\\n  -i \"$VOICE_FILE\" \\\n  -i \"$MUSIC_FILE\" \\\n  -vf \"\\\n    zoompan=z='min(zoom+0.0005,1.05)':d=450:s=720x1280,\\\n    eq=brightness=0.02:contrast=1.1,\\\n    curves=vintage,\\\n    subtitles=subtitles.srt:force_style='FontName=Arial,FontSize=24,PrimaryColour=&HFFFFFF,OutlineColour=&H000000,Outline=2,Shadow=1,MarginV=40,Alignment=2'\n  \" \\\n  -filter_complex \"\\\n    [1:a]volume=1.0,highpass=f=100,lowpass=f=3000[voice];\\\n    [2:a]volume=0.25,highpass=f=100[music];\\\n    [voice][music]amix=inputs=2:duration=first:dropout_transition=2[audio]\n  \" \\\n  -map 0:v \\\n  -map '[audio]' \\\n  -c:v libx264 \\\n  -preset medium \\\n  -crf 23 \\\n  -profile:v high \\\n  -level 4.2 \\\n  -pix_fmt yuv420p \\\n  -c:a aac \\\n  -b:a 128k \\\n  -ar 44100 \\\n  -movflags +faststart \\\n  -shortest \\\n  \"reel_${CHAR_ID}_${PLATFORM}_$(date +%Y%m%d_%H%M%S).mp4\"\n\necho \"✓ Professional reel generated: reel_${CHAR_ID}_${PLATFORM}_*.mp4\""
+                "command": "=# EXPERT MONTAGE: Cinematic Color, Audio Ducking, and High-Impact Subs\ncd /tmp\n\n# Variables\nVIDEO_URL='{{ $json.video_url }}'\nVOICE_FILE='{{ $json.voice_file }}'\nMUSIC_URL='{{ $json.music_url }}'\nSUBTITLE_TEXT='{{ $json.subtitle_text_safe }}'\nCHAR_ID='{{ $json.char_id }}'\n\n# Download Assets\nwget -O raw_v.mp4 \"$VIDEO_URL\"\nwget -O bg_m.mp3 \"$MUSIC_URL\"\n\n# Generate SRT with High Visibility style\ncat > s.srt << EOF\n1\n00:00:00,300 --> 00:00:09,800\n$SUBTITLE_TEXT\nEOF\n\n# FFmpeg Elite Pipeline\n# - zoompan: subtle slow zoom for life\n# - unsharp: pixel-perfect clarity\n# - vignette: focus on subject\n# - curves: professional color grading (vintage look)\n# - sidechaincompress: music ducks automatically when voice is present\nffmpeg -y \\\n  -i raw_v.mp4 \\\n  -i \"$VOICE_FILE\" \\\n  -i bg_m.mp3 \\\n  -vf \"\\\n    zoompan=z='min(zoom+0.0006,1.1)':d=450:s=720x1280,\\\n    unsharp=5:5:0.8:5:5:0.8,\\\n    vignette=PI/5,\\\n    curves=preset=vintage,\\\n    subtitles=s.srt:force_style='FontName=Montserrat ExtraBold,FontSize=30,PrimaryColour=&H00FFFF,BorderStyle=4,Outline=2.5,Shadow=1.5,MarginV=65,Alignment=2'\\\n  \" \\\n  -filter_complex \"\\\n    [2:a][1:a]sidechaincompress=threshold=0.1:ratio=25:attack=5:release=150[bg_ducked];\\\n    [1:a]volume=1.3[v_boosted];\\\n    [v_boosted][bg_ducked]amix=inputs=2:duration=first:dropout_transition=2[a_final]\\\n  \" \\\n  -map 0:v -map '[a_final]' \\\n  -c:v libx264 -preset medium -crf 19 -c:a aac -b:a 192k \\\n  \"reel_${CHAR_ID}_pro_$(date +%s).mp4\"\n\necho \"✓ Elite Production Complete\""
             },
             "id": "ffmpeg-pro-montage",
             "name": "FFmpeg Professional Montage (Secured)",
@@ -464,35 +464,6 @@
                         "index": 0
                     },
                     {
-                        "node": "Search Music (Pixabay Free)",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Search Music (Pixabay Free)": {
-            "main": [
-                [
-                    {
-                        "node": "Check Pixabay Results",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Check Pixabay Results": {
-            "main": [
-                [
-                    {
-                        "node": "Download Music (Pixabay)",
-                        "type": "main",
-                        "index": 0
-                    }
-                ],
-                [
-                    {
                         "node": "Generate Music (Replicate Fallback)",
                         "type": "main",
                         "index": 0
@@ -512,17 +483,6 @@
             ]
         },
         "Generate Voice (Piper TTS)": {
-            "main": [
-                [
-                    {
-                        "node": "Sanitize Text (Security)",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Download Music (Pixabay)": {
             "main": [
                 [
                     {

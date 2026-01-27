@@ -55,3 +55,7 @@ huggingface-hub>=0.16.0
 
 # Telegram integration
 python-telegram-bot>=20.0
+
+# Phase 2 - Stealth Upload and Browser Automation
+playwright>=1.40.0
+playwright-stealth>=1.0.6

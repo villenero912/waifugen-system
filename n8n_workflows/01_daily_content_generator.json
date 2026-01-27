@@ -45,7 +45,7 @@
         {
             "parameters": {
                 "method": "POST",
-                "url": "http://waifugen_ollama:11434/api/generate",
+                "url": "http://ollama:11434/api/generate",
                 "sendBody": true,
                 "bodyParameters": {
                     "parameters": [
@@ -76,10 +76,10 @@
         },
         {
             "parameters": {
-                "jsCode": "const response = $input.item.json.response;\\nconst character = $('Select Random Character').item.json;\\n\\n// Sanitize text to prevent SQL injection\\nconst sanitizeText = (text) => {\\n  if (!text) return '';\\n  return text.replace(/'/g, \"''\").replace(/\\\\/g, '\\\\\\\\').trim();\\n};\\n\\nreturn {\\n  character_id: character.id,\\n  character_name: character.name,\\n  prompt: sanitizeText(response),\\n  video_duration: 15,\\n  platform: 'tiktok'\\n};"
+                "jsCode": "const response = $input.item.json.response;\nconst character = $('Select Random Character').item.json;\n\n// Mapeo experto de idiomas y modelos\nconst langMap = {\n  \"Japanese\": { code: \"ja\", tts: \"ja_JP-fujiwara-medium\", romanize: true, style: \"anime\" },\n  \"Spanish\": { code: \"es\", tts: \"es_ES-carlota-medium\", romanize: false, style: \"classic\" },\n  \"English\": { code: \"en\", tts: \"en_US-amy-medium\", romanize: false, style: \"modern\" }\n};\n\nconst charLang = langMap[character.nationality] || langMap[\"English\"];\n\nreturn {\n  character_id: character.id,\n  character_name: character.name,\n  prompt: response.trim(),\n  video_duration: 15,\n  platform: 'tiktok',\n  lang_code: charLang.code,\n  tts_model: charLang.tts,\n  needs_romaji: charLang.romanize,\n  visual_style: charLang.style\n};"
             },
             "id": "process-prompt",
-            "name": "Process & Sanitize Prompt",
+            "name": "Process & Language Logic",
             "type": "n8n-nodes-base.code",
             "typeVersion": 2,
             "position": [
@@ -138,17 +138,17 @@
         {
             "parameters": {
                 "method": "POST",
-                "url": "http://waifugen_piper:10200/api/tts",
+                "url": "http://piper:10200/api/tts",
                 "sendBody": true,
                 "bodyParameters": {
                     "parameters": [
                         {
                             "name": "text",
-                            "value": "=Good morning! I'm {{ $('Select Random Character').item.json.name }}. Today is going to be amazing. Let's make it happen!"
+                            "value": "={{ $json.prompt }}"
                         },
                         {
                             "name": "model",
-                            "value": "en_US-amy-medium"
+                            "value": "={{ $json.tts_model }}"
                         }
                     ]
                 },

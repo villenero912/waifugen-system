@@ -197,18 +197,28 @@ class ProxyManager:
             protocol=protocol
         )
     
-    def get_proxy_url(self) -> Optional[str]:
-        """Get the full proxy URL for connections"""
+    def get_proxy_url(self, country: Optional[str] = None) -> Optional[str]:
+        """
+        Get the full proxy URL for connections.
+        
+        Args:
+            country: ISO country code (e.g. 'JP', 'US') for targeted residential IPs
+        """
         if not self.enabled or not self.credentials:
             return None
         
-        safe_user = urllib.parse.quote(self.credentials.username)
+        username = self.credentials.username
+        if country:
+            # IPRoyal specific country targeting format
+            username = f"{username}_country-{country.lower()}"
+            
+        safe_user = urllib.parse.quote(username)
         safe_pass = urllib.parse.quote(self.credentials.password)
         return f"{self.credentials.protocol}://{safe_user}:{safe_pass}@{self.credentials.host}:{self.credentials.port}"
     
-    def get_proxy_dict(self) -> Optional[Dict[str, str]]:
+    def get_proxy_dict(self, country: Optional[str] = None) -> Optional[Dict[str, str]]:
         """Get proxy configuration dictionary for aiohttp"""
-        url = self.get_proxy_url()
+        url = self.get_proxy_url(country=country)
         if not url:
             return None
         

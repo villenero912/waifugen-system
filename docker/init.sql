@@ -9,7 +9,95 @@
 -- =============================================================================
 
 -- =============================================================================
--- PHASE 1 TABLES (Preserved from original schema)
+-- PHASE 1 TABLES (Critical for daily content generation)
+-- =============================================================================
+
+-- Characters table - Elite 8 and beyond
+CREATE TABLE IF NOT EXISTS characters (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    trigger_word VARCHAR(50) NOT NULL,
+    age INT NOT NULL,
+    style TEXT NOT NULL,
+    personality TEXT NOT NULL,
+    voice_model VARCHAR(100) DEFAULT 'en_US-amy-medium',
+    lora_strength DECIMAL(3,2) DEFAULT 0.8,
+    active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Content reels table
+CREATE TABLE IF NOT EXISTS reels (
+    id SERIAL PRIMARY KEY,
+    character_id INT REFERENCES characters(id),
+    prompt TEXT NOT NULL,
+    video_url TEXT,
+    voice_url TEXT,
+    video_path TEXT,
+    platform VARCHAR(50) NOT NULL,
+    duration INT NOT NULL,
+    quality_tier VARCHAR(20) DEFAULT 'standard',
+    nsfw_level INT DEFAULT 0,
+    credits_used INT,
+    cost_usd DECIMAL(10,4),
+    status VARCHAR(50) NOT NULL DEFAULT 'pending',
+    has_subtitles BOOLEAN DEFAULT false,
+    has_music BOOLEAN DEFAULT false,
+    production_quality VARCHAR(50) DEFAULT 'standard',
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Social media comments (Scraped)
+CREATE TABLE IF NOT EXISTS social_comments (
+    id SERIAL PRIMARY KEY,
+    platform VARCHAR(50) NOT NULL,
+    post_id VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255),
+    comment_text TEXT NOT NULL,
+    replied BOOLEAN DEFAULT false,
+    replied_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Automated replies log
+CREATE TABLE IF NOT EXISTS comment_replies (
+    id SERIAL PRIMARY KEY,
+    comment_id INT REFERENCES social_comments(id),
+    character_id INT REFERENCES characters(id),
+    reply_text TEXT NOT NULL,
+    sentiment VARCHAR(20),
+    platform VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- NSFW Content tracking (Phase 2 escalation)
+CREATE TABLE IF NOT EXISTS nsfw_content (
+    id SERIAL PRIMARY KEY,
+    character_id INT REFERENCES characters(id),
+    nsfw_level INT NOT NULL,
+    fetish_category VARCHAR(100),
+    prompt TEXT NOT NULL,
+    platform VARCHAR(50) NOT NULL,
+    pricing_tier DECIMAL(10,2),
+    production_method VARCHAR(50),
+    video_url TEXT,
+    status VARCHAR(50) DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Seed Elite 8 Characters
+INSERT INTO characters (id, name, trigger_word, age, style, personality, active) VALUES
+(1, 'Miyuki Sakura', 'miysak_v1', 22, 'elegant, soft features, cute girlfriend', 'sweet, encouraging, girlfriend experience', true),
+(16, 'Hana Nakamura', 'hannak_v1', 22, 'floral spring aesthetic, ethereal', 'gentle, nurturing, emotional romantic', true),
+(10, 'Airi Neo', 'airineo_fusion', 24, 'cyborg, cyber-kimono, futuristic neon', 'energetic, tech-savvy, confident cyber AI', true),
+(5, 'Aiko Hayashi', 'aikoch_v1', 24, 'minimalist, professional, elegant businesswoman', 'professional, warm, sophisticated', true),
+(19, 'Rio Mizuno', 'riomiz_v1', 23, 'tropical beach, hydro aesthetic, athletic', 'active, teasing, beach lifestyle', true),
+(15, 'Chiyo Sasaki', 'chisak_v1', 65, 'traditional kimono, mature elegant', 'wise, sophisticated, traditional', true),
+(20, 'Mika Sweet', 'mikasweet_v1', 25, 'sweet playful, cute aesthetic', 'playful, flirty, energetic', true),
+(21, 'Momoka AV', 'momoka_av_v1', 28, 'provocative bold, adult industry', 'confident, seductive, direct', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- PHASE 1 CORE TABLES (Legacy and Auth)
 -- =============================================================================
 
 -- Users table for authentication

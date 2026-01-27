@@ -74,9 +74,10 @@
         ],
         "audio_preferences": {
           "primary_genres": [
+            "K-Pop Upbeat Dance",
+            "Anime Opening remix",
             "j-pop",
-            "k-pop",
-            "jazz cover"
+            "trending tiktok"
           ],
           "bpm_range": [
             100,
@@ -253,10 +254,10 @@
         ],
         "audio_preferences": {
           "primary_genres": [
+            "Cyberpunk Midtempo",
+            "Phonk Night Drive",
             "hardstyle",
-            "dubstep",
-            "glitch",
-            "synthwave"
+            "glitch core"
           ],
           "bpm_range": [
             140,
@@ -431,10 +432,10 @@
         ],
         "audio_preferences": {
           "primary_genres": [
+            "Luxury Lounge Chill",
+            "Deep House Elegant",
             "jazz",
-            "acoustic",
-            "lo-fi",
-            "classical"
+            "lo-fi"
           ],
           "bpm_range": [
             60,
@@ -614,10 +615,10 @@
         ],
         "audio_preferences": {
           "primary_genres": [
-            "asmr",
+            "Tropical House Summer",
+            "Beach Party Instrumental",
             "lo-fi",
-            "acoustic",
-            "nature sounds"
+            "acoustic"
           ],
           "bpm_range": [
             60,
@@ -796,10 +797,10 @@
         ],
         "audio_preferences": {
           "primary_genres": [
+            "Lofi Sakura Chill",
+            "Romantic Piano Cinematic",
             "ballads",
-            "r&b",
-            "acoustic",
-            "j-pop ballads"
+            "acoustic"
           ],
           "bpm_range": [
             50,

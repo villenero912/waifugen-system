@@ -1,0 +1,140 @@
+{
+    "name": "06 - LoRA Training Automator (Fase 2 Independence)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 2 * * 1"
+                        }
+                    ]
+                }
+            },
+            "id": "trigger-weekly-training",
+            "name": "Trigger Weekly Training (Monday 02:00)",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.1,
+            "position": [
+                200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "SELECT id, name, trigger_word FROM characters WHERE training_needed = true LIMIT 1",
+                "options": {}
+            },
+            "id": "select-target-character",
+            "name": "Select Character for Training",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                400,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "command": "python src/processing/lora_trainer_bridge.py {{ $json.name }}"
+            },
+            "id": "execute-lora-training",
+            "name": "Execute LoRA Training on GPU",
+            "type": "n8n-nodes-base.executeCommand",
+            "typeVersion": 1,
+            "position": [
+                600,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=🏗️ ENTRENAMIENTO LoRA INICIADO\\n\\n👤 Personaje: {{ $('Select Character for Training').item.json.name }}\\n⚡ Nodo: RunPod RTX 4090\\n⏳ Tiempo estimado: 2 horas\\n💰 Coste estimado: $1.38\\n\\n🚀 El sistema ahora es independiente para este personaje."
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "notify-telegram-training",
+            "name": "Notify Training via Telegram",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                800,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Trigger Weekly Training (Monday 02:00)": {
+            "main": [
+                [
+                    {
+                        "node": "Select Character for Training",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Select Character for Training": {
+            "main": [
+                [
+                    {
+                        "node": "Execute LoRA Training on GPU",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Execute LoRA Training on GPU": {
+            "main": [
+                [
+                    {
+                        "node": "Notify Training via Telegram",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "tags": [
+        {
+            "name": "Phase 2",
+            "id": "phase2"
+        },
+        {
+            "name": "LoRA",
+            "id": "lora"
+        },
+        {
+            "name": "Independence",
+            "id": "independence"
+        }
+    ]
+}

@@ -1,0 +1,222 @@
+{
+    "name": "FASE 2 - Automated DM & Language-Aware Engagement",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "social-webhook",
+                "options": {}
+            },
+            "id": "webhook-social",
+            "name": "Webhook (New Comment/DM)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1.1,
+            "position": [
+                200,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://waifugen_ollama:11434/api/generate",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "model",
+                            "value": "llama3"
+                        },
+                        {
+                            "name": "prompt",
+                            "value": "=Analyze the following message and detect the language. Respond ONLY with the language code (e.g., 'en', 'ja', 'es', 'pt', 'de', 'fr').\n\nMessage: {{ $json.body.message || $json.body.comment_text }}"
+                        },
+                        {
+                            "name": "stream",
+                            "value": false
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "detect-language-ollama",
+            "name": "Detect Language (Ollama)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                400,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "=SELECT * FROM characters WHERE id = {{ $json.body.character_id || 1 }} LIMIT 1",
+                "options": {}
+            },
+            "id": "get-character-phase2",
+            "name": "Get Character Persona",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                600,
+                400
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "const lang = $('Detect Language (Ollama)').item.json.response.trim().toLowerCase();\nconst character = $('Get Character Persona').item.json;\nconst interactionType = $json.body.type || 'welcome'; // welcome, engagement, upsell\n\n// Persona behavior based on the config\nconst personaTemplates = {\n  'miyuki_sakura': {\n    'younger_sister': {\n        'en': 'Hi! Thanks for reaching out! I\\'m so happy to talk to you! 😊',\n        'ja': 'こんにちは！メッセージありがとうございます！お話しできてとても嬉しいです！✨',\n        'es': '¡Hola! ¡Gracias por escribirme! ¡Estoy muy feliz de hablar contigo! 💕'\n    }\n  },\n  'aiko_hayashi': {\n    'boss_authority': {\n        'en': 'Welcome to my office. I hope you\\'ve been productive today. 💼',\n        'ja': '私のオフィスへようこそ。今日の仕事は順調ですか？💼',\n        'es': 'Bienvenido a mi oficina. Espero que hayas sido productivo hoy. 💼'\n    }\n  }\n};\n\nconst characterPersonaTemplate = personaTemplates[character.id] || personaTemplates['miyuki_sakura'];\nconst personaMode = character.persona_mode || 'younger_sister';\nconst responseTemplate = characterPersonaTemplate[personaMode][lang] || characterPersonaTemplate[personaMode]['en'];\n\nreturn {\n  detected_lang: lang,\n  response_text: responseTemplate,\n  character_id: character.id,\n  trigger_word: character.trigger_word,\n  follower_username: $json.body.username,\n  nsfw_level: $json.body.subscriber_tier === 'premium' ? 4 : 0\n};"
+            },
+            "id": "prepare-response",
+            "name": "Prepare Persona Response",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                800,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.replicate.com/v1/predictions",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "version",
+                            "value": "da77403487f90cbd56bcc580f124c6e9196b6bf09d8d6467362f6bcc1b90f488"
+                        },
+                        {
+                            "name": "input",
+                            "value": "={{ { 'prompt': $json.trigger_word + ', ' + $('Get Character Persona').item.json.appearance.base_description + ', looking at camera, high detail, masterpiece, 8k, bokeh background', 'negative_prompt': 'nsfw, low quality, blurry', 'width': 1024, 'height': 1024, 'num_inference_steps': 30, 'guidance_scale': 7.5 } }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "gen-personalized-image",
+            "name": "Generate Personalized Image (Replicate)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1000,
+                300
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "replicate_api_token",
+                    "name": "Replicate API Token"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendPhoto",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "photo",
+                            "value": "={{ $('Generate Personalized Image (Replicate)').item.json.output[0] }}"
+                        },
+                        {
+                            "name": "caption",
+                            "value": "=🤖 *Phase 2 Auto-Response*\n\n👤 *Follower:* {{ $json.follower_username }}\n🌍 *Lang:* {{ $json.detected_lang }}\n🎭 *Persona:* {{ $('Get Character Persona').item.json.name }}\n\n💬 *Message:* \n{{ $json.response_text }}\n\n✅ *Action:* Message sent with personalized image."
+                        },
+                        {
+                            "name": "parse_mode",
+                            "value": "Markdown"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "notify-admin",
+            "name": "Admin Notification & Preview",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1200,
+                400
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook (New Comment/DM)": {
+            "main": [
+                [
+                    {
+                        "node": "Detect Language (Ollama)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Detect Language (Ollama)": {
+            "main": [
+                [
+                    {
+                        "node": "Get Character Persona",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Character Persona": {
+            "main": [
+                [
+                    {
+                        "node": "Prepare Persona Response",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Prepare Persona Response": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Personalized Image (Replicate)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Personalized Image (Replicate)": {
+            "main": [
+                [
+                    {
+                        "node": "Admin Notification & Preview",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": {
+        "instanceId": "waifugen_production"
+    }
+}

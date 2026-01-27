@@ -1,5 +1,3 @@
-version: '3.8'
-
 # =============================================================================
 # WaifuGen System - Docker Compose Configuration
 # =============================================================================
@@ -120,8 +118,8 @@ services:
       - SECRET_KEY=${SECRET_KEY}
 
       # API Keys (from environment)
-      - A2E_API_KEY=${A2E_API_KEY}
-      - QWEN_API_KEY=${QWEN_API_KEY}
+      - A2E_API_KEY=${A2E_API_KEY:-}
+      - QWEN_API_KEY=${QWEN_API_KEY:-}
       - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434}
 
       # Monitoring
@@ -219,21 +217,27 @@ services:
       - "com.waifugen.role=llm"
 
   # ============================================================================
-  # PIPER TTS - Local Text-to-Speech Voice Generation (CLI Version)
+  # PIPER TTS - Local Text-to-Speech Voice Generation (HTTP API)
   # ============================================================================
   piper:
-    image: rhasspy/piper:latest
+    image: rhasspy/piper-http:latest
     container_name: ${PROJECT_NAME:-waifugen}_piper
     restart: unless-stopped
+    ports:
+      - "127.0.0.1:10200:10200"
     environment:
       - TZ=${TIMEZONE:-Europe/Madrid}
     volumes:
       - piper_data:/data
       - ./piper_voices:/voices
-      - /tmp:/tmp
+    command: --voice en_US-amy-medium
     networks:
       - waifugen_network
-    entrypoint: [ "sleep", "infinity" ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:10200/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     deploy:
       resources:
         limits:
@@ -402,14 +406,14 @@ services:
     container_name: ${PROJECT_NAME:-waifugen}_n8n
     restart: unless-stopped
     ports:
-      - "127.0.0.1:5678:5678"
+      - "5678:5678"
     environment:
       - N8N_HOST=0.0.0.0
       - N8N_PORT=5678
       - N8N_PATH=/n8n/
       - N8N_PROTOCOL=http
       - N8N_SECURE_COOKIE=false
-      - WEBHOOK_URL=${WEBHOOK_URL:-https://your-domain.com/}
+      - WEBHOOK_URL=${WEBHOOK_URL:-}
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
       - DB_POSTGRESDB_PORT=5432

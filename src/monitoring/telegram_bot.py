@@ -144,6 +144,8 @@ class TelegramBot:
             'restart': self._cmd_restart,
             'pause': self._cmd_pause,
             'resume': self._cmd_resume,
+            'phase1': self._cmd_phase1,
+            'phase2': self._cmd_phase2,
         }
         
         logger.info("Telegram Bot initialized")
@@ -511,6 +513,44 @@ Use /restart to reload scheduler configuration.
             await update.message.reply_text("⛔ No tienes permiso para reanudar la producción.")
             return
         await update.message.reply_text("▶️ Reanudando producción...")
+
+    async def _cmd_phase1(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Muestra el panel de control de Fase 1 (Reels & Karaoke)"""
+        keyboard = [
+            [
+                InlineKeyboardButton("🎬 Reels Profesionales", callback_data="p1_start_reels"),
+                InlineKeyboardButton("🎤 Karaoke JP (Miyuki)", callback_data="p1_start_karaoke")
+            ],
+            [
+                InlineKeyboardButton("📊 Reporte Diario", callback_data="daily_summary"),
+                InlineKeyboardButton("⚙️ Config n8n", callback_data="p1_n8n_status")
+            ]
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await update.message.reply_text(
+            "🚀 <b>FASE 1: Automatización Diaria</b>\n\nContenido profesional de alta frecuencia para TikTok, IG y YouTube.",
+            reply_markup=reply_markup,
+            parse_mode='HTML'
+        )
+
+    async def _cmd_phase2(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Muestra el panel de control de Fase 2 (Nivel 8 & GPU)"""
+        keyboard = [
+            [
+                InlineKeyboardButton("📁 Generar Dataset (Aiko)", callback_data="p2_dataset_aiko"),
+                InlineKeyboardButton("🏗️ Entrenar LoRA (4090)", callback_data="p2_train_aiko")
+            ],
+            [
+                InlineKeyboardButton("🔞 Iniciar Edición NSFW", callback_data="p2_start_edit"),
+                InlineKeyboardButton("🛡️ Aplicar Pixelado/Proxy", callback_data="p2_compliance")
+            ]
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await update.message.reply_text(
+            "🔞 <b>FASE 2: Expansión Global & Contenido Adulto</b>\n\nGestión de GPU remota, entrenamiento LoRA y cumplimiento legal (JP).",
+            reply_markup=reply_markup,
+            parse_mode='HTML'
+        )
     
     async def _handle_callback(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle inline keyboard callbacks"""
@@ -523,6 +563,25 @@ Use /restart to reload scheduler configuration.
             await self._cmd_credits(update, context)
         elif query.data == 'daily_summary':
             await self._cmd_daily(update, context)
+        
+        # Callbacks Fase 1
+        elif query.data == 'p1_start_reels':
+            await query.edit_message_text("✅ Iniciando workflow n8n: <b>01_daily_professional_reel_final</b>", parse_mode='HTML')
+            # Lógica para disparar n8n
+        elif query.data == 'p1_start_karaoke':
+            await query.edit_message_text("🎤 Lanzando sesión de <b>Miyuki JP Karaoke</b> en Docker...", parse_mode='HTML')
+            
+        # Callbacks Fase 2
+        elif query.data == 'p2_dataset_aiko':
+            await query.edit_message_text("📸 Generando 20 imágenes de referencia para <b>Aiko Hayashi</b> (Semilla 5588)...")
+            # Iniciar DatasetGenerator
+        elif query.data == 'p2_train_aiko':
+            await query.edit_message_text("🏗️ Provisionando <b>RunPod RTX 4090</b> para entrenamiento de LoRA...")
+            # Iniciar LoRATrainer
+        elif query.data == 'p2_start_edit':
+            await query.edit_message_text("🔞 Preparando edición personalizada... Se notificará al terminar renderizado RAW.")
+        elif query.data == 'p2_compliance':
+            await query.edit_message_text("🛡️ Verificando política de pixelado para mercado <b>JP</b>...")
     
     async def _handle_unknown(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle unknown commands"""
