@@ -19,7 +19,7 @@ ENV LD_LIBRARY_PATH=/usr/local/lib
 
 # Application setup
 WORKDIR /app
-COPY app.py .
+COPY docker/piper/app.py .
 RUN pip install --no-cache-dir flask
 
 # Create volume for voices
