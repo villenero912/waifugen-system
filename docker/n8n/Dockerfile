@@ -1,15 +1,14 @@
-FROM n8nio/n8n:latest
+FROM n8nio/n8n:latest-alpine
 
 USER root
 
 # Install Python3, PIP, and FFmpeg (needed for montage/media)
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
     python3 \
-    python3-pip \
+    py3-pip \
     ffmpeg \
     git \
-    bash \
-    && rm -rf /var/lib/apt/lists/*
+    bash
 
 # Create app directory for scripts
 WORKDIR /app
