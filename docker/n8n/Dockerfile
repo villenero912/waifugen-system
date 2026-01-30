@@ -3,12 +3,13 @@ FROM n8nio/n8n:latest
 USER root
 
 # Install Python3, PIP, and FFmpeg (needed for montage/media)
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     python3 \
-    py3-pip \
+    python3-pip \
     ffmpeg \
     git \
-    bash
+    bash \
+    && rm -rf /var/lib/apt/lists/*
 
 # Create app directory for scripts
 WORKDIR /app
