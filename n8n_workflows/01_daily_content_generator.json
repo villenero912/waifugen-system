@@ -138,7 +138,7 @@
         {
             "parameters": {
                 "method": "POST",
-                "url": "http://piper:10200/api/tts",
+                "url": "http://piper:5000/api/tts",
                 "sendBody": true,
                 "bodyParameters": {
                     "parameters": [
@@ -203,7 +203,15 @@
                         },
                         {
                             "name": "text",
-                            "value": "=✅ Reel generado\\n\\nID: {{ $('Save Reel to PostgreSQL').item.json.id }}\\nPersonaje: {{ $('Select Random Character').item.json.name }}\\nPlataforma: TikTok\\nDuración: 15s\\n\\nPendiente: Montaje final"
+                            "value": "=✅ Reel generado\\n\\nID: {{ $('Save Reel to PostgreSQL').item.json.id }}\\nPersonaje: {{ $('Select Random Character').item.json.name }}\\nPlataforma: TikTok\\nDuración: 15s\\n\\n⚠️ <b>Acción Requerida:</b> Aprobar para publicar."
+                        },
+                        {
+                            "name": "reply_markup",
+                            "value": "={{ JSON.stringify({ \"inline_keyboard\": [[ { \"text\": \"✅ Aprobar y Publicar\", \"callback_data\": \"approve_reel_\" + $('Save Reel to PostgreSQL').item.json.id }, { \"text\": \"❌ Rechazar\", \"callback_data\": \"reject_reel_\" + $('Save Reel to PostgreSQL').item.json.id } ]] }) }}"
+                        },
+                        {
+                            "name": "parse_mode",
+                            "value": "HTML"
                         }
                     ]
                 },

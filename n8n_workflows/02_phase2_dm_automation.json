@@ -19,7 +19,7 @@
         {
             "parameters": {
                 "method": "POST",
-                "url": "http://waifugen_ollama:11434/api/generate",
+                "url": "http://ollama:11434/api/generate",
                 "sendBody": true,
                 "bodyParameters": {
                     "parameters": [
@@ -120,6 +120,27 @@
         },
         {
             "parameters": {
+                "operation": "executeQuery",
+                "query": "=INSERT INTO dm_messages (message_id, subscriber_id, platform, message_content, status, created_at)\nVALUES (md5(random()::text || clock_timestamp()::text)::uuid, '{{ $json.follower_username }}', 'instagram', '{{ $json.response_text }}', 'pending_approval', NOW())\nRETURNING message_id",
+                "options": {}
+            },
+            "id": "save-dm-proposal",
+            "name": "Save DM Proposal",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                1200,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
                 "method": "POST",
                 "url": "={{ $env.TELEGRAM_BOT_URL }}/sendPhoto",
                 "sendBody": true,
@@ -135,7 +156,11 @@
                         },
                         {
                             "name": "caption",
-                            "value": "=🤖 *Phase 2 Auto-Response*\n\n👤 *Follower:* {{ $json.follower_username }}\n🌍 *Lang:* {{ $json.detected_lang }}\n🎭 *Persona:* {{ $('Get Character Persona').item.json.name }}\n\n💬 *Message:* \n{{ $json.response_text }}\n\n✅ *Action:* Message sent with personalized image."
+                            "value": "=🤖 *Phase 2 Auto-Response Proposal*\n\n👤 *Follower:* {{ $('Prepare Persona Response').item.json.follower_username }}\n🌍 *Lang/Context:* {{ $('Prepare Persona Response').item.json.detected_lang }}\n📊 *Segment:* {{ $('Prepare Persona Response').item.json.nsfw_level > 0 ? 'Premium/NSFW' : 'Standard/SFW' }}\n\n💬 *Proposed Message:* \n_{{ $('Prepare Persona Response').item.json.response_text }}_\n\n⚠️ *Action Required:* Approve to send."
+                        },
+                        {
+                            "name": "reply_markup",
+                            "value": "={{ JSON.stringify({ \"inline_keyboard\": [[ { \"text\": \"✅ Send Message\", \"callback_data\": \"approve_dm_\" + $json.message_id }, { \"text\": \"❌ Reject\", \"callback_data\": \"reject_dm_\" + $json.message_id } ]] }) }}"
                         },
                         {
                             "name": "parse_mode",
@@ -150,9 +175,126 @@
             "type": "n8n-nodes-base.httpRequest",
             "typeVersion": 4.2,
             "position": [
-                1200,
-                400
+                1400,
+                300
             ]
+        },
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "exec-dm-job",
+                "options": {}
+            },
+            "id": "webhook-dm-approve",
+            "name": "Webhook (Approve DM)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1.1,
+            "position": [
+                200,
+                150
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "=UPDATE dm_messages SET status = 'approved' WHERE message_id = '{{ $json.body.id }}' RETURNING *",
+                "options": {}
+            },
+            "id": "update-dm-status",
+            "name": "Update DM Status DB",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                400,
+                150
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "return {\n  status: \"success\",\n  message: \"DM approved and marked for sending\",\n  dm_details: $input.item.json\n};"
+            },
+            "id": "finalize-dm",
+            "name": "Finalize DM Approval",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                600,
+                150
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=✅ <b>DM Approved and Sent</b>\n\nID: {{ $json.dm_details.message_id }}\nRecipient: {{ $json.dm_details.subscriber_id }}\nContent: <i>{{ $json.dm_details.message_content }}</i>"
+                        },
+                        {
+                            "name": "parse_mode",
+                            "value": "HTML"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "notify-dm-success",
+            "name": "Notify DM Success",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                800,
+                150
+            ]
+        },
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "reject-dm-job",
+                "options": {}
+            },
+            "id": "webhook-dm-reject",
+            "name": "Webhook (Reject DM)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1.1,
+            "position": [
+                200,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "=UPDATE dm_messages SET status = 'rejected' WHERE message_id = '{{ $json.body.id }}'",
+                "options": {}
+            },
+            "id": "update-dm-reject",
+            "name": "Update DM Status Reject",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                400,
+                0
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
         }
     ],
     "connections": {
@@ -204,7 +346,62 @@
             "main": [
                 [
                     {
+                        "node": "Save DM Proposal",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Save DM Proposal": {
+            "main": [
+                [
+                    {
                         "node": "Admin Notification & Preview",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Webhook (Approve DM)": {
+            "main": [
+                [
+                    {
+                        "node": "Update DM Status DB",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Update DM Status DB": {
+            "main": [
+                [
+                    {
+                        "node": "Finalize DM Approval",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Finalize DM Approval": {
+            "main": [
+                [
+                    {
+                        "node": "Notify DM Success",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Webhook (Reject DM)": {
+            "main": [
+                [
+                    {
+                        "node": "Update DM Status Reject",
                         "type": "main",
                         "index": 0
                     }

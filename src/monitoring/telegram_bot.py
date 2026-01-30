@@ -582,6 +582,103 @@ Use /restart to reload scheduler configuration.
             await query.edit_message_text("🔞 Preparando edición personalizada... Se notificará al terminar renderizado RAW.")
         elif query.data == 'p2_compliance':
             await query.edit_message_text("🛡️ Verificando política de pixelado para mercado <b>JP</b>...")
+        
+        # Approval Callbacks
+        elif query.data.startswith('approve_reel_'):
+            reel_id = query.data.split('_')[-1]
+            await query.answer("✅ Aprobando reel...")
+            
+            # Trigger N8N Webhook for posting
+            webhook_url = "http://n8n:5678/webhook/publish-reel"
+            async with aiohttp.ClientSession() as session:
+                try:
+                    async with session.post(webhook_url, json={"reel_id": reel_id, "action": "approve"}) as resp:
+                        if resp.status == 200:
+                            await query.edit_message_text(
+                                f"✅ <b>Reel {reel_id} Aprobado</b>\n\nEnviado a la cola de publicación (Workflow 2)."
+                            )
+                        else:
+                            await query.edit_message_text(
+                                f"⚠️ <b>Error al aprobar Reel {reel_id}</b>\nStatus: {resp.status}"
+                            )
+                except Exception as e:
+                    logger.error(f"Failed to trigger GPU webhook: {e}")
+                    await query.edit_message_text(f"❌ Error de conexión: {e}")
+
+        elif query.data.startswith('reject_reel_'):
+            reel_id = query.data.split('_')[-1]
+            await query.answer("❌ Reel descartado")
+            
+            webhook_url = "http://n8n:5678/webhook/reject-reel"
+            async with aiohttp.ClientSession() as session:
+                try:
+                    await session.post(webhook_url, json={"reel_id": reel_id})
+                except:
+                    pass
+            
+            await query.edit_message_text(f"🚮 <b>Reel {reel_id} Descartado</b>\n\nNo se publicará en redes.")
+
+        elif query.data.startswith('approve_gpu_'):
+            job_id = query.data.split('_')[-1]
+            await query.answer("✅ Iniciando renderizado GPU...")
+            
+            webhook_url = "http://n8n:5678/webhook/exec-gpu-job"
+            async with aiohttp.ClientSession() as session:
+                try:
+                    async with session.post(webhook_url, json={"id": job_id}) as resp:
+                        if resp.status == 200:
+                            await query.edit_message_text(
+                                f"🚀 <b>GPU Job {job_id} Iniciado</b>\n\nRenderizando contenido NSFW..."
+                            )
+                        else:
+                            await query.edit_message_text(f"⚠️ Error: {resp.status}")
+                except Exception as e:
+                    await query.edit_message_text(f"❌ Error de conexión: {e}")
+
+        elif query.data.startswith('approve_dm_'):
+            msg_id = query.data.split('_')[-1]
+            await query.answer("✅ Enviando DM...")
+            
+            webhook_url = "http://n8n:5678/webhook/exec-dm-job"
+            async with aiohttp.ClientSession() as session:
+                try:
+                    async with session.post(webhook_url, json={"id": msg_id}) as resp:
+                        if resp.status == 200:
+                            await query.edit_message_text(
+                                f"📨 <b>DM {msg_id} Enviado</b>\n\nMensaje entregado al usuario."
+                            )
+                        else:
+                            await query.edit_message_text(f"⚠️ Error: {resp.status}")
+                except Exception as e:
+                    await query.edit_message_text(f"❌ Error de conexión: {e}")
+
+        elif query.data.startswith('reject_gpu_'):
+            job_id = query.data.split('_')[-1]
+            await query.answer("❌ Propuesta descartada")
+            
+            # Optional: Notify n8n or DB that it was rejected
+            webhook_url = "http://n8n:5678/webhook/reject-gpu-job"
+            async with aiohttp.ClientSession() as session:
+                try:
+                    await session.post(webhook_url, json={"id": job_id})
+                except:
+                    pass
+            
+            await query.edit_message_text(f"🚮 <b>Propuesta {job_id} Descartada</b>\n\nNo se ha realizado ningún cargo.")
+
+        elif query.data.startswith('reject_dm_'):
+            msg_id = query.data.split('_')[-1]
+            await query.answer("❌ Mensaje cancelado")
+            
+            # Optional: Notify n8n or DB that it was rejected
+            webhook_url = "http://n8n:5678/webhook/reject-dm-job"
+            async with aiohttp.ClientSession() as session:
+                try:
+                    await session.post(webhook_url, json={"id": msg_id})
+                except:
+                    pass
+                    
+            await query.edit_message_text(f"🚫 <b>DM {msg_id} Cancelado</b>\n\nNo se enviará el mensaje.")
     
     async def _handle_unknown(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle unknown commands"""

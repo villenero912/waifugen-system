@@ -59,7 +59,7 @@
         {
             "parameters": {
                 "method": "POST",
-                "url": "http://waifugen_ollama:11434/api/generate",
+                "url": "http://ollama:11434/api/generate",
                 "sendBody": true,
                 "bodyParameters": {
                     "parameters": [
@@ -91,7 +91,7 @@
         {
             "parameters": {
                 "method": "POST",
-                "url": "http://waifugen_ollama:11434/api/generate",
+                "url": "http://ollama:11434/api/generate",
                 "sendBody": true,
                 "bodyParameters": {
                     "parameters": [
@@ -185,7 +185,7 @@
         {
             "parameters": {
                 "method": "POST",
-                "url": "http://waifugen_piper:10200/api/tts",
+                "url": "http://waifugen_piper:5000/api/tts",
                 "sendBody": true,
                 "bodyParameters": {
                     "parameters": [

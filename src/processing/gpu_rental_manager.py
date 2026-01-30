@@ -17,6 +17,7 @@ from typing import Optional, Dict, Any, List, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime
 import aiohttp
+import requests
 import json
 import logging
 import time
@@ -320,7 +321,7 @@ class GpuRentalManager:
                 {"key": "PYTHONUNBUFFERED", "value": "1"},
                 {"key": "CUDA_VISIBLE_DEVICES", "value": "0"}
             ],
-            "ports": "22/tcp,8888/tcp",
+            "ports": "22/tcp,8188/tcp,8888/tcp",
             "idleTimeout": 300
         }
         
@@ -416,7 +417,11 @@ class GpuRentalManager:
                     
                     if status == "RUNNING":
                         gpu_type = pod_data.get("gpuType", "RTX 4090")
-                        container_url = pod_data.get("directInvokeEndpoint")
+                        
+                        # Extract the proxy URL for port 8188 (ComfyUI)
+                        # RunPod pod URLs for ports usually follow this pattern:
+                        # https://{pod_id}-{port}.proxy.runpod.net
+                        container_url = f"https://{instance_id}-8188.proxy.runpod.net"
                         
                         instance = GpuInstance(
                             provider=GpuRentalProvider.RUNPOD,
@@ -427,7 +432,7 @@ class GpuRentalManager:
                             hourly_rate=pod_data.get("pricePerHour", 0.69),
                             status=status,
                             endpoint_url=container_url,
-                            container_url=f"https://{container_url}" if container_url else None
+                            container_url=container_url
                         )
                         
                         self.active_instances[instance_id] = instance

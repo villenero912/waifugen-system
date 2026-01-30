@@ -37,7 +37,7 @@
         {
             "parameters": {
                 "method": "POST",
-                "url": "http://waifugen_ollama:11434/api/generate",
+                "url": "http://ollama:11434/api/generate",
                 "sendBody": true,
                 "bodyParameters": {
                     "parameters": [

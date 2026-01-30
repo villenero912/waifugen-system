@@ -122,7 +122,7 @@
                         },
                         {
                             "name": "prompt",
-                            "value": "=Generate a NSFW Level {{ $json.current_nsfw_level }} video prompt for adult content.\\n\\nCharacter: {{ $json.selected_character }}\\nFetish Category: {{ $json.fetish_category }}\\nTags: {{ $json.fetish_tags.join(', ') }}\\nPlatform: {{ $json.target_platform }}\\nNSFW Level: {{ $json.current_nsfw_level }}/10\\n\\nGenerate ONLY the prompt (max 80 words). Include:\\n- Visual details appropriate for level {{ $json.current_nsfw_level }}\\n- Fetish tags: {{ $json.fetish_tags.slice(0,3).join(', ') }}\\n- Platform aesthetic\\n- Quality markers (4K, professional, etc)\\n\\nBe explicit but tasteful. Follow platform's content rules."
+                            "value": "=Generate a NSFW Level {{ $json.current_nsfw_level }} video prompt for adult content.\n\nCharacter: {{ $json.selected_character }}\nFetish Category: {{ $json.fetish_category }}\nTags: {{ $json.fetish_tags.join(', ') }}\nPlatform: {{ $json.target_platform }}\n\nCRITICAL AESTHETIC: 'AMATEUR REALISM'.\nThe goal is to look like a leaked tape or a private selfie sent to a boyfriend. \n- Use keywords: 'phone camera', 'camera flash', 'grainy', 'poor lighting', 'imperfect makeup', 'messy room', 'mirror selfie', 'vertical video', 'shaky cam'.\n- AVOID: 'cinematic', 'studio lighting', 'professional', '8k masterpiece'.\n\nGenerate ONLY the prompt (max 80 words)."
                         },
                         {
                             "name": "stream",
@@ -143,10 +143,10 @@
         },
         {
             "parameters": {
-                "jsCode": "const prompt = $('Generate NSFW Prompt (Ollama)').item.json.response;\\nconst phase = $('Select Character \u0026 Fetish Category').item.json;\\n\\nconst sanitizeText = (text) => {\\n  if (!text) return '';\\n  return text.replace(/'/g, \\\"''\\\").replace(/\\\\\\\\/g, '\\\\\\\\\\\\\\\\').trim();\\n};\\n\\nreturn {\\n  ...phase,\\n  nsfw_prompt: sanitizeText(prompt),\\n  video_duration: phase.level \u003e= 8 ? 60 : 30,\\n  use_gpu: phase.production_method === 'gpu_runpod'\\n};"
+                "jsCode": "const prompt = $('Generate NSFW Prompt (Ollama)').item.json.response;\nconst phase = $('Select Character & Fetish Category').item.json;\n\nconst sanitizeText = (text) => {\n  if (!text) return '';\n  return text.replace(/'/g, \"''\").replace(/\\\\/g, '\\\\\\\\').trim();\n};\n\nreturn {\n  ...phase,\n  nsfw_prompt: sanitizeText(prompt),\n  video_duration: phase.level >= 8 ? 60 : 30,\n  use_gpu: phase.production_method === 'gpu_runpod',\n  estimated_cost: phase.level >= 8 ? 0.69 : 0.05\n};"
             },
             "id": "process-nsfw-prompt",
-            "name": "Process \u0026 Sanitize NSFW Prompt",
+            "name": "Process & Sanitize NSFW Prompt",
             "type": "n8n-nodes-base.code",
             "typeVersion": 2,
             "position": [
@@ -156,102 +156,16 @@
         },
         {
             "parameters": {
-                "conditions": {
-                    "boolean": [
-                        {
-                            "value1": "={{ $json.use_gpu }}",
-                            "value2": true
-                        }
-                    ]
-                }
-            },
-            "id": "routing-decision",
-            "name": "Use GPU (Level 8+)?",
-            "type": "n8n-nodes-base.if",
-            "typeVersion": 1,
-            "position": [
-                1850,
-                200
-            ]
-        },
-        {
-            "parameters": {
-                "method": "POST",
-                "url": "={{ $env.A2E_API_URL || 'https://api.a2e.ai/v1/generate' }}",
-                "authentication": "genericCredentialType",
-                "genericAuthType": "httpHeaderAuth",
-                "sendBody": true,
-                "bodyParameters": {
-                    "parameters": [
-                        {
-                            "name": "prompt",
-                            "value": "={{ $json.nsfw_prompt }}"
-                        },
-                        {
-                            "name": "duration",
-                            "value": "={{ $json.video_duration }}"
-                        },
-                        {
-                            "name": "model",
-                            "value": "wan_2.5"
-                        }
-                    ]
-                },
-                "options": {}
-            },
-            "id": "generate-nsfw-a2e",
-            "name": "Generate NSFW A2E (Level 4-6)",
-            "type": "n8n-nodes-base.httpRequest",
-            "typeVersion": 4.2,
-            "position": [
-                2050,
-                100
-            ],
-            "credentials": {
-                "httpHeaderAuth": {
-                    "id": "a2e_api_key",
-                    "name": "A2E API Key"
-                }
-            }
-        },
-        {
-            "parameters": {
-                "jsCode": "return {\n  job_payload: {\n    id: $input.item.json.id,\n    character: $input.item.json.selected_character,\n    level: $input.item.json.current_nsfw_level,\n    prompt: $input.item.json.nsfw_prompt,\n    duration: $input.item.json.video_duration,\n    gpu: 'RTX_4090',\n    provider: 'runpod'\n  }\n};"
-            },
-            "id": "prepare-gpu-job",
-            "name": "Prepare RunPod GPU Job (Level 8+)",
-            "type": "n8n-nodes-base.code",
-            "typeVersion": 2,
-            "position": [
-                2050,
-                300
-            ]
-        },
-        {
-            "parameters": {
-                "command": "python src/processing/n8n_long_video_bridge.py '{{ JSON.stringify($json.job_payload) }}'"
-            },
-            "id": "execute-gpu-job",
-            "name": "Execute RunPod GPU Job",
-            "type": "n8n-nodes-base.executeCommand",
-            "typeVersion": 1,
-            "position": [
-                2150,
-                300
-            ]
-        },
-        {
-            "parameters": {
                 "operation": "executeQuery",
-                "query": "=INSERT INTO nsfw_content (character, nsfw_level, fetish_category, prompt, platform, pricing_tier, production_method, video_url, status, created_at)\nVALUES ('{{ $('Select Character & Fetish Category').item.json.selected_character }}', {{ $('Select Character & Fetish Category').item.json.current_nsfw_level }}, '{{ $('Select Character & Fetish Category').item.json.fetish_category }}', '{{ $('Process & Sanitize NSFW Prompt').item.json.nsfw_prompt }}', '{{ $('Select Character & Fetish Category').item.json.target_platform }}', {{ $('Select Character & Fetish Category').item.json.pricing || 'NULL' }}, 'runpod_gpu_rtx4090', '{{ $json.status }}', 'triggered', NOW())\nRETURNING id",
+                "query": "=INSERT INTO nsfw_content (character, nsfw_level, fetish_category, prompt, platform, pricing_tier, production_method, video_url, status, created_at)\nVALUES ('{{ $json.selected_character }}', {{ $json.current_nsfw_level }}, '{{ $json.fetish_category }}', '{{ $json.nsfw_prompt }}', '{{ $json.target_platform }}', {{ $json.pricing || 'NULL' }}, 'runpod_gpu_rtx4090', NULL, 'pending_approval', NOW())\nRETURNING id",
                 "options": {}
             },
-            "id": "save-nsfw-content",
-            "name": "Save NSFW Content to PostgreSQL",
+            "id": "save-proposal",
+            "name": "Save Proposal to PostgreSQL",
             "type": "n8n-nodes-base.postgres",
             "typeVersion": 2.4,
             "position": [
-                2350,
+                1850,
                 200
             ],
             "credentials": {
@@ -262,6 +176,14 @@
             }
         },
         {
+            "id": "notify-proposal",
+            "name": "Notify Proposal via Telegram",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                2050,
+                200
+            ],
             "parameters": {
                 "method": "POST",
                 "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
@@ -274,20 +196,20 @@
                         },
                         {
                             "name": "text",
-                            "value": "=🔞 NSFW CONTENT GENERATED (PHASE 2)\\n\\n👥 Followers: {{ $('Check Total Followers').item.json.total_followers }}\\n📅 Weeks since milestone: {{ $('Calculate NSFW Escalation Phase').item.json.weeks_since_milestone }}\\n🔥 NSFW Level: {{ $('Select Character \u0026 Fetish Category').item.json.current_nsfw_level }}/10\\n👤 Character: {{ $('Select Character \u0026 Fetish Category').item.json.selected_character }}\\n💋 Fetish: {{ $('Select Character \u0026 Fetish Category').item.json.fetish_category }}\\n🌐 Platform: {{ $('Select Character \u0026 Fetish Category').item.json.target_platform }}\\n💰 Pricing: ${{ $('Select Character \u0026 Fetish Category').item.json.pricing || 'Free' }}\\n🎬 Method: {{ $json.production_method || 'A2E wan_2.5' }}\\n\\n✅ Content ID: {{ $('Save NSFW Content to PostgreSQL').item.json.id }}"
+                            "value": "=📋 <b>Strategic Content Proposal</b>\n\n🎯 <b>Market Strategy:</b> {{ $json.current_phase.focus }}\n👥 <b>Target Audience:</b> {{ $json.fetish_category }} ({{ $json.target_platform }})\n📈 <b>Goal:</b> {{ $json.current_phase.goal }}\n\n<b>Concept:</b> {{ $('Process & Sanitize NSFW Prompt').item.json.nsfw_prompt }}\n\n👤 <b>Character:</b> {{ $json.selected_character }}\n💰 <b>Est. Cost:</b> ${{ $json.estimated_cost }}\n\n<i>Aesthetic: Amateur/Realism</i>"
+                        },
+                        {
+                            "name": "reply_markup",
+                            "value": "={{ JSON.stringify({ \"inline_keyboard\": [[ { \"text\": \"✅ Approve Investment\", \"callback_data\": \"approve_gpu_\" + $json.id }, { \"text\": \"❌ Reject\", \"callback_data\": \"reject_gpu_\" + $json.id } ]] }) }}"
+                        },
+                        {
+                            "name": "parse_mode",
+                            "value": "HTML"
                         }
                     ]
                 },
                 "options": {}
-            },
-            "id": "notify-nsfw",
-            "name": "Notify NSFW Generation via Telegram",
-            "type": "n8n-nodes-base.httpRequest",
-            "typeVersion": 4.2,
-            "position": [
-                2450,
-                200
-            ]
+            }
         }
     ],
     "connections": {
@@ -339,14 +261,14 @@
             "main": [
                 [
                     {
-                        "node": "Select Character \u0026 Fetish Category",
+                        "node": "Select Character & Fetish Category",
                         "type": "main",
                         "index": 0
                     }
                 ]
             ]
         },
-        "Select Character \u0026 Fetish Category": {
+        "Select Character & Fetish Category": {
             "main": [
                 [
                     {
@@ -361,80 +283,29 @@
             "main": [
                 [
                     {
-                        "node": "Process \u0026 Sanitize NSFW Prompt",
+                        "node": "Process & Sanitize NSFW Prompt",
                         "type": "main",
                         "index": 0
                     }
                 ]
             ]
         },
-        "Process \u0026 Sanitize NSFW Prompt": {
+        "Process & Sanitize NSFW Prompt": {
             "main": [
                 [
                     {
-                        "node": "Use GPU (Level 8+)?",
+                        "node": "Save Proposal to PostgreSQL",
                         "type": "main",
                         "index": 0
                     }
                 ]
             ]
         },
-        "Use GPU (Level 8+)?": {
+        "Save Proposal to PostgreSQL": {
             "main": [
                 [
                     {
-                        "node": "Prepare RunPod GPU Job (Level 8+)",
-                        "type": "main",
-                        "index": 0
-                    }
-                ],
-                [
-                    {
-                        "node": "Generate NSFW A2E (Level 4-6)",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Generate NSFW A2E (Level 4-6)": {
-            "main": [
-                [
-                    {
-                        "node": "Save NSFW Content to PostgreSQL",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Prepare RunPod GPU Job (Level 8+)": {
-            "main": [
-                [
-                    {
-                        "node": "Execute RunPod GPU Job",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Execute RunPod GPU Job": {
-            "main": [
-                [
-                    {
-                        "node": "Save NSFW Content to PostgreSQL",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Save NSFW Content to PostgreSQL": {
-            "main": [
-                [
-                    {
-                        "node": "Notify NSFW Generation via Telegram",
+                        "node": "Notify Proposal via Telegram",
                         "type": "main",
                         "index": 0
                     }

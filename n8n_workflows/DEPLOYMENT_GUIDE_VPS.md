@@ -15,7 +15,10 @@
 2. ✅ `02_weekly_premium_generator.json` - **NUEVO**
 3. ✅ `03_comment_auto_reply.json` - **NUEVO**
 4. ✅ `05_nsfw_escalation_manager.json` - **NUEVO** (Fase 2)
-5. ✅ `FINAL_SYSTEM_SUMMARY.md` - **NUEVO** (documentación completa)
+5. ✅ `06_nsfw_execution_pipeline.json` - **NUEVO** (Fase 2 GPU Execution - **SECURED**)
+6. ✅ `07_dm_execution_pipeline.json` - **NUEVO** (Fase 2 DM Execution - **SECURED**)
+7. ✅ `docker-compose.yml` - **SECURITY FIX** (Removed exposed ports)
+8. ✅ `FINAL_SYSTEM_SUMMARY.md` - **NUEVO** (documentación completa)
 
 ### **Tablas DB Faltantes:**
 - `characters` - **CRÍTICO** (requerido por workflows)
@@ -487,6 +490,15 @@ cat ~/waifugen-system/n8n_workflows/05_nsfw_escalation_manager.json
 ```
 
 **Importar en N8N** pero **NO ACTIVAR** (es para Fase 2)
+
+### **Paso 7.5: Importar Workflow 06 y 07 (Execution Pipelines)**
+
+```bash
+cat ~/waifugen-system/n8n_workflows/06_nsfw_execution_pipeline.json
+cat ~/waifugen-system/n8n_workflows/07_dm_execution_pipeline.json
+```
+
+**Importar AMBOS en N8N** y mantener **INACTIVOS** hasta Fase 2.
 
 ✅ **CHECKPOINT 7:** 4 workflows importados en N8N
 

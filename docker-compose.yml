@@ -48,7 +48,7 @@ services:
     networks:
       - waifugen_network
     #    ports:
-    #      - "${POSTGRES_PORT:-5432}:5432"
+    #      removed for security
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-waifugen_user} -d ${POSTGRES_DB:-waifugen_prod}" ]
       interval: 30s
@@ -190,6 +190,42 @@ services:
       - "com.waifugen.service=worker"
       - "com.waifugen.role=background"
 
+  telegram_bot:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: runtime
+    container_name: ${PROJECT_NAME:-waifugen}_telegram_bot
+    restart: unless-stopped
+    command: python main.py --mode monitor
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_ADMIN_CHAT_ID=${TELEGRAM_ADMIN_CHAT_ID}
+    volumes:
+      - app_data:/app/data
+      - app_logs:/app/logs
+      - ./assets:/app/assets:ro
+    networks:
+      - waifugen_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+    labels:
+      - "com.waifugen.service=telegram_bot"
+      - "com.waifugen.role=bot"
+
   ollama:
     image: ollama/ollama:latest
     container_name: ${PROJECT_NAME:-waifugen}_ollama
@@ -217,24 +253,20 @@ services:
       - "com.waifugen.role=llm"
 
   # ============================================================================
-  # PIPER TTS - Local Text-to-Speech Voice Generation (HTTP API)
+  # PIPER TTS - API HTTP para Generación de Voz
   # ============================================================================
   piper:
-    image: rhasspy/piper-http:latest
+    image: vokan/piper-http:latest
     container_name: ${PROJECT_NAME:-waifugen}_piper
     restart: unless-stopped
     ports:
-      - "127.0.0.1:10200:10200"
-    environment:
-      - TZ=${TIMEZONE:-Europe/Madrid}
+      - "127.0.0.1:5000:5000"
     volumes:
-      - piper_data:/data
-      - ./piper_voices:/voices
-    command: --voice en_US-amy-medium
+      - ./piper_voices:/app/voices
     networks:
       - waifugen_network
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:10200/" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:5000/" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -375,6 +407,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/sites-available:/etc/nginx/sites-available:ro
       - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/.htpasswd:/etc/nginx/.htpasswd:ro
       - static_files:/var/www/html
       - nginx_logs:/var/log/nginx
     networks:
@@ -402,11 +435,13 @@ services:
 
   # n8n - Workflow automation
   n8n:
-    image: n8nio/n8n:latest
+    build:
+      context: .
+      dockerfile: docker/n8n/Dockerfile
     container_name: ${PROJECT_NAME:-waifugen}_n8n
     restart: unless-stopped
     ports:
-      - "5678:5678"
+      - "127.0.0.1:5678:5678"
     environment:
       - N8N_HOST=0.0.0.0
       - N8N_PORT=5678
@@ -422,6 +457,9 @@ services:
       - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - n8n_data:/home/node/.n8n
+      - ./scripts:/app/scripts:ro
+      - ./src:/app/src:ro
+      - ./config:/app/config:ro
     networks:
       - waifugen_network
     depends_on:

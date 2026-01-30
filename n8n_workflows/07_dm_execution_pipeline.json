@@ -1,0 +1,113 @@
+{
+    "name": "07 - DM Execution Pipeline",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "exec-dm-job",
+                "options": {}
+            },
+            "id": "webhook-dm",
+            "name": "Webhook (Approve DM)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1.1,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "return { job_id: String($json.body.id).replace(/[^a-zA-Z0-9_-]/g, '') };"
+            },
+            "id": "prepare-dm-job",
+            "name": "Prepare DM Job",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                450,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "command": "python scripts/send_dm.py --id {{ $json.job_id }} --force"
+            },
+            "id": "execute-dm",
+            "name": "Execute Send Script",
+            "type": "n8n-nodes-base.executeCommand",
+            "typeVersion": 1,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=📨 <b>DM Sent Successfully!</b>\n\nMessage ID: {{ $json.message_id }}\nTimestamp: {{ $json.sent_at }}"
+                        },
+                        {
+                            "name": "parse_mode",
+                            "value": "HTML"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "notify-success-dm",
+            "name": "Notify Success DM",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                850,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook (Approve DM)": {
+            "main": [
+                [
+                    {
+                        "node": "Prepare DM Job",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Prepare DM Job": {
+            "main": [
+                [
+                    {
+                        "node": "Execute Send Script",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Execute Send Script": {
+            "main": [
+                [
+                    {
+                        "node": "Notify Success DM",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

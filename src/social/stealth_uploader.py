@@ -2,6 +2,7 @@
 import asyncio
 import os
 import logging
+from typing import Optional, List, Dict, Any
 from pathlib import Path
 from playwright.async_api import async_playwright
 from playwright_stealth import stealth_async
