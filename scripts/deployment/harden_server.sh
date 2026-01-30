@@ -53,9 +53,9 @@ SSH_CONFIG="/etc/ssh/sshd_config"
 cp $SSH_CONFIG "${SSH_CONFIG}.bak_$(date +%F_%T)"
 
 # Security tweaks
-# - Disable root login
-sed -i 's/^#PermitRootLogin.*/PermitRootLogin no/' $SSH_CONFIG
-sed -i 's/^PermitRootLogin.*/PermitRootLogin no/' $SSH_CONFIG
+# - Disable root login (COMMENTED FOR SAFETY - Enable only after creating a sudo user)
+# sed -i 's/^#PermitRootLogin.*/PermitRootLogin no/' $SSH_CONFIG
+# sed -i 's/^PermitRootLogin.*/PermitRootLogin no/' $SSH_CONFIG
 
 # - Limit max auth attempts
 sed -i 's/^#MaxAuthTries.*/MaxAuthTries 3/' $SSH_CONFIG
