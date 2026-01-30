@@ -1,4 +1,4 @@
-FROM n8nio/n8n:latest-alpine
+FROM n8nio/n8n:alpine
 
 USER root
 
