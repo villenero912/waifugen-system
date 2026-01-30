@@ -256,10 +256,11 @@ services:
   # PIPER TTS - API HTTP para Generación de Voz
   # ============================================================================
   piper:
-    image: arthurslv/piper-http:latest
+    build:
+      context: .
+      dockerfile: docker/piper/Dockerfile
     container_name: ${PROJECT_NAME:-waifugen}_piper
     restart: unless-stopped
-    command: --model /app/voices/en_US-amy-medium.onnx
     ports:
       - "127.0.0.1:10200:5000"
     volumes:
