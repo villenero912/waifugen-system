@@ -256,7 +256,7 @@ services:
   # PIPER TTS - API HTTP para Generación de Voz
   # ============================================================================
   piper:
-    image: vokan/piper-http:latest
+    image: voken/piper-http:latest
     container_name: ${PROJECT_NAME:-waifugen}_piper
     restart: unless-stopped
     ports:
