@@ -21,7 +21,6 @@ server {
         proxy_set_header Connection "Upgrade";
         chunked_transfer_encoding off;
         proxy_buffering off;
-        proxy_autostatus on;
     }
 
     location /grafana/ {

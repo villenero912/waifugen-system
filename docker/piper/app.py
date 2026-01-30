@@ -13,6 +13,10 @@ app = Flask(__name__)
 # Directory where voices are stored
 VOICES_DIR = "/app/voices"
 
+@app.route('/', methods=['GET'])
+def index():
+    return Response("Piper API is running", status=200)
+
 @app.route('/health', methods=['GET'])
 def health():
     return Response("OK", status=200)
