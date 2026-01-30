@@ -256,17 +256,18 @@ services:
   # PIPER TTS - API HTTP para Generación de Voz
   # ============================================================================
   piper:
-    image: voken/piper-http:latest
+    image: arthurslv/piper-http:latest
     container_name: ${PROJECT_NAME:-waifugen}_piper
     restart: unless-stopped
+    command: --model /app/voices/en_US-amy-medium.onnx
     ports:
-      - "127.0.0.1:5000:5000"
+      - "127.0.0.1:10200:5000"
     volumes:
       - ./piper_voices:/app/voices
     networks:
       - waifugen_network
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:5000/" ]
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/" ]
       interval: 30s
       timeout: 10s
       retries: 3
