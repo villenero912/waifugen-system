@@ -1,84 +1,47 @@
 #!/bin/bash
 # ============================================================================
-# Password Generation Script - Security Enhanced
+# Generador de Contraseñas Seguras - Sistema WaifuGen (Bash)
 # ============================================================================
-# Generates cryptographically secure passwords for all services
-# Usage: ./generate_passwords.sh > .env.new
+# Script wrapper para ejecutar el generador de contraseñas Python
 # ============================================================================
 
-echo "# ============================================================================"
-echo "# WAIFUGEN SYSTEM - SECURE ENVIRONMENT VARIABLES"
-echo "# ============================================================================"
-echo "# AUTO-GENERATED: $(date)"
-echo "# SECURITY: Keep this file PRIVATE. Never commit to Git."
-echo "# ============================================================================"
+set -e
+
+# Colores
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+# Contraseña maestra por defecto
+MASTER_PASSWORD="${1:-Otoñoazul82@}"
+OUTPUT_FILE="${2:-.env}"
+
+echo -e "${GREEN}============================================================================${NC}"
+echo -e "${GREEN}  Generador de Contraseñas Seguras - WaifuGen System${NC}"
+echo -e "${GREEN}============================================================================${NC}"
 echo ""
 
-echo "PROJECT_NAME=waifugen"
-echo "TIMEZONE=Europe/Madrid"
-echo "DEBUG=false"
-echo "LOG_LEVEL=INFO"
+# Verificar que Python está instalado
+if ! command -v python3 &> /dev/null; then
+    echo -e "${RED}ERROR: Python 3 no está instalado${NC}"
+    echo "Por favor, instala Python 3 para continuar"
+    exit 1
+fi
+
+echo -e "${YELLOW}Contraseña maestra:${NC} $MASTER_PASSWORD"
+echo -e "${YELLOW}Archivo de salida:${NC} $OUTPUT_FILE"
 echo ""
 
-echo "# ============================================================================"
-echo "# CRYPTOGRAPHICALLY SECURE PASSWORDS (32 bytes base64)"
-echo "# ============================================================================"
-echo "SECRET_KEY=$(openssl rand -base64 32)"
-echo ""
+# Ejecutar el generador de contraseñas Python
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+python3 "$SCRIPT_DIR/generate_passwords.py" --master "$MASTER_PASSWORD" --output "$OUTPUT_FILE"
 
-echo "# PostgreSQL Credentials"
-echo "POSTGRES_DB=waifugen_production"
-echo "POSTGRES_USER=waifugen_user"
-echo "POSTGRES_PASSWORD=$(openssl rand -base64 32)"
-echo "POSTGRES_PORT=5432"
 echo ""
-
-echo "# Redis Credentials"
-echo "REDIS_PASSWORD=$(openssl rand -base64 32)"
-echo "REDIS_PORT=6379"
+echo -e "${GREEN}✅ Contraseñas generadas exitosamente${NC}"
 echo ""
-
-echo "# ============================================================================"
-echo "# API KEYS (REPLACE WITH YOUR ACTUAL KEYS)"
-echo "# ============================================================================"
-echo "A2E_API_KEY=REPLACE_WITH_YOUR_A2E_API_KEY"
-echo "REPLICATE_API_TOKEN=REPLACE_WITH_YOUR_REPLICATE_TOKEN"
-echo "PIXABAY_API_KEY=REPLACE_WITH_YOUR_PIXABAY_KEY"
+echo -e "${YELLOW}Próximos pasos:${NC}"
+echo "1. Edita el archivo $OUTPUT_FILE y añade tus claves API"
+echo "2. Establece permisos seguros: chmod 600 $OUTPUT_FILE"
+echo "3. Despliega al VPS usando: ./scripts/deploy_env.sh"
 echo ""
-
-echo "# ============================================================================"
-echo "# TELEGRAM NOTIFICATIONS (OPTIONAL)"
-echo "# ============================================================================"
-echo "TELEGRAM_BOT_TOKEN=REPLACE_WITH_YOUR_BOT_TOKEN"
-echo "TELEGRAM_ADMIN_CHAT_ID=REPLACE_WITH_YOUR_CHAT_ID"
-echo ""
-
-echo "# ============================================================================"
-echo "# SERVICES CONFIGURATION"
-echo "# ============================================================================"
-echo "OLLAMA_BASE_URL=http://ollama:11434"
-echo ""
-
-echo "# Grafana Admin"
-echo "GRAFANA_USER=admin"
-echo "GRAFANA_PASSWORD=$(openssl rand -base64 32)"
-echo ""
-
-echo "# Application"
-echo "APP_PORT=8000"
-echo ""
-
-echo "# ============================================================================"
-echo "# PHASE 2 - ADDITIONAL SERVICES (OPTIONAL)"
-echo "# ============================================================================"
-echo "# RUNPOD_API_KEY=REPLACE_WHEN_READY"
-echo "# MODAL_API_KEY=REPLACE_WHEN_READY"
-echo ""
-
-echo "# ============================================================================"
-echo "# SECURITY NOTES:"
-echo "# - All passwords are 32-byte cryptographically secure random strings"
-echo "# - Each service has UNIQUE password (defense in depth)"
-echo "# - Rotate passwords every 90 days minimum"
-echo "# - Use Docker Secrets in production"
-echo "# ============================================================================"

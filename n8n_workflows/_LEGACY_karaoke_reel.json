@@ -1,0 +1,529 @@
+{
+    "name": "Daily Reel - Karaoke Edition (Phase 1.5)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 0,6,12,18 * * *"
+                        }
+                    ]
+                }
+            },
+            "id": "trigger",
+            "name": "Schedule (4x Daily)",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.1,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "SELECT id, name, trigger_word, age, style FROM characters WHERE active = true ORDER BY RANDOM() LIMIT 1"
+            },
+            "id": "select-character",
+            "name": "Select Character",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                450,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://ollama:11434/api/generate",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "model",
+                            "value": "llama3"
+                        },
+                        {
+                            "name": "prompt",
+                            "value": "=Generate a creative video prompt for a 15s TikTok. Character: {{ $json.name }}, {{ $json.style }}. Mood: {{ ['Energetic', 'Romantic', 'Funny'].random() }}. Output ONLY the visual prompt text."
+                        },
+                        {
+                            "name": "stream",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            "id": "ollama-prompt",
+            "name": "Generate Prompt",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const char = $('Select Character').item.json; const prompt = $input.item.json.response; return { character_id: char.id, character_name: char.name, prompt: prompt.trim(), video_duration: 15, platform: 'tiktok' };"
+            },
+            "id": "config",
+            "name": "Config",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                850,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.A2E_API_URL || 'https://api.a2e.ai/v1/generate' }}",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "prompt",
+                            "value": "={{ $json.prompt }}"
+                        },
+                        {
+                            "name": "duration",
+                            "value": "15"
+                        },
+                        {
+                            "name": "model",
+                            "value": "seedance_1.5_pro"
+                        },
+                        {
+                            "name": "aspect_ratio",
+                            "value": "9:16"
+                        }
+                    ]
+                }
+            },
+            "id": "a2e-gen",
+            "name": "A2E Video",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1050,
+                100
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "a2e_api_key",
+                    "name": "A2E API Key"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://piper:5000/api/tts",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "text",
+                            "value": "={{ $('Config').item.json.prompt }}"
+                        },
+                        {
+                            "name": "model",
+                            "value": "en_US-amy-medium"
+                        }
+                    ]
+                },
+                "options": {
+                    "response": {
+                        "response": {
+                            "responseFormat": "file"
+                        }
+                    }
+                }
+            },
+            "id": "piper-tts",
+            "name": "Piper TTS",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1050,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.replicate.com/v1/predictions",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "version",
+                            "value": "b05b1dff1d8c6dc63d14b0cdb42135378dcb87f6373b0d3d341ede46e59e2b38"
+                        },
+                        {
+                            "name": "input",
+                            "value": "={{ { \"prompt\": \"lofi hip hop beat, energetic, " + $('Config').item.json.prompt + "\", \"duration\": 15 } }}"
+                        }
+                    ]
+                },
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth"
+            },
+            "id": "replicate-music",
+            "name": "MusicGen (Replicate)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1050,
+                500
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "replicate_api_token",
+                    "name": "Replicate API Token"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "url": "={{ $json.output }}",
+                "options": {
+                    "response": {
+                        "response": {
+                            "responseFormat": "file"
+                        }
+                    }
+                }
+            },
+            "id": "download-music",
+            "name": "Download Music",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1200,
+                500
+            ]
+        },
+        {
+            "parameters": {
+                "mode": "mergeByIndex",
+                "join": "inner"
+            },
+            "id": "merge",
+            "name": "Merge Files",
+            "type": "n8n-nodes-base.merge",
+            "typeVersion": 2.1,
+            "position": [
+                1400,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "={{ $('A2E Video').item.json.video_url }}",
+                "options": {
+                    "response": {
+                        "response": {
+                            "responseFormat": "file"
+                        }
+                    }
+                }
+            },
+            "id": "download-video",
+            "name": "Download Video",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1200,
+                100
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://karaoke:8001/generate",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "contentType": "multipart-form-data",
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "video",
+                            "parameterType": "formBinaryData",
+                            "value": "={{ $('Download Video').item.binary.data }}"
+                        },
+                        {
+                            "name": "audio",
+                            "parameterType": "formBinaryData",
+                            "value": "={{ $('Piper TTS').item.binary.data }}"
+                        },
+                        {
+                            "name": "music",
+                            "parameterType": "formBinaryData",
+                            "value": "={{ $('Download Music').item.binary.data }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "={{ $('Config').item.json.prompt }}"
+                        }
+                    ]
+                },
+                "options": {
+                    "response": {
+                        "response": {
+                            "responseFormat": "file"
+                        }
+                    }
+                }
+            },
+            "id": "karaoke-gen",
+            "name": "Karaoke Service",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1600,
+                300
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "karaoke_key_manual",
+                    "name": "Karaoke Key (Auto)"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "fileName": "=/data/assets/output/reels/karaoke_{{ $now.format('X') }}_{{ $('Config').item.json.character_id }}.mp4"
+            },
+            "id": "save-file",
+            "name": "Save to Disk",
+            "type": "n8n-nodes-base.writeBinaryFile",
+            "typeVersion": 1,
+            "position": [
+                1800,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "INSERT INTO reels (character_id, prompt, video_path, video_url, status, created_at) VALUES ($1, $2, $3, $4, 'pending_approval', NOW()) RETURNING id",
+                "additionalFields": {
+                    "queryParameters": "={{ JSON.stringify([$('Config').item.json.character_id, $('Config').item.json.prompt, $('Save to Disk').item.json.fileName, 'http://localhost/assets/output/reels/' + $('Save to Disk').item.json.fileName.split('/').pop()]) }}"
+                }
+            },
+            "id": "save-db",
+            "name": "Save DB",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                1950,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=🎤 Nuevo Karaoke Reel (con Música)!\nID: {{ $('Save DB').item.json.id }}\nVer video: {{ $('Save DB').json.video_url }}"
+                        },
+                        {
+                            "name": "reply_markup",
+                            "value": "={{ JSON.stringify({ \"inline_keyboard\": [[ { \"text\": \"✅ Aprobar\", \"callback_data\": \"approve_\" + $('Save DB').item.json.id } ]] }) }}"
+                        }
+                    ]
+                }
+            },
+            "id": "notify",
+            "name": "Telegram",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                2100,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Schedule (4x Daily)": {
+            "main": [
+                [
+                    {
+                        "node": "Select Character",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Select Character": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Prompt",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Prompt": {
+            "main": [
+                [
+                    {
+                        "node": "Config",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Config": {
+            "main": [
+                [
+                    {
+                        "node": "A2E Video",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Piper TTS",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "MusicGen (Replicate)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "A2E Video": {
+            "main": [
+                [
+                    {
+                        "node": "Download Video",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Piper TTS": {
+            "main": [
+                [
+                    {
+                        "node": "Merge Files",
+                        "type": "main",
+                        "index": 1
+                    }
+                ]
+            ]
+        },
+        "MusicGen (Replicate)": {
+            "main": [
+                [
+                    {
+                        "node": "Download Music",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Download Music": {
+            "main": [
+                [
+                    {
+                        "node": "Merge Files",
+                        "type": "main",
+                        "index": 2
+                    }
+                ]
+            ]
+        },
+        "Download Video": {
+            "main": [
+                [
+                    {
+                        "node": "Merge Files",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Merge Files": {
+            "main": [
+                [
+                    {
+                        "node": "Karaoke Service",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Karaoke Service": {
+            "main": [
+                [
+                    {
+                        "node": "Save to Disk",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Save to Disk": {
+            "main": [
+                [
+                    {
+                        "node": "Save DB",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Save DB": {
+            "main": [
+                [
+                    {
+                        "node": "Telegram",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

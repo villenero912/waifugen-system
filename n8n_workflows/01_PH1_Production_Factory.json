@@ -1,0 +1,814 @@
+{
+    "name": "01 - The Factory (Viral Production Pipeline) [MASTER-V11-ULTIMATE-FINAL]",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 0,6,12,18 * * *"
+                        }
+                    ]
+                }
+            },
+            "id": "node_schedule",
+            "name": "Viral Schedule (Prime Times)",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                400,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "SELECT * FROM characters WHERE active = true ORDER BY RANDOM() LIMIT 1;",
+                "options": {}
+            },
+            "id": "node_postgres_select",
+            "name": "Select Character (DB)",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                580,
+                400
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "url": "http://ollama:11434/api/generate",
+                "method": "POST",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "model",
+                            "value": "llama3.2"
+                        },
+                        {
+                            "name": "prompt",
+                            "value": "=Create a viral 30-sec script and caption for character '{{ $json.name }}'. Style: {{ $json.style }}. Personality: {{ $json.personality }}. Trigger word: {{ $json.trigger_word }}. Output JSON with keys 'script' (plain text story) and 'caption' (social media post text, no objects)."
+                        },
+                        {
+                            "name": "stream",
+                            "value": false
+                        },
+                        {
+                            "name": "format",
+                            "value": "json"
+                        }
+                    ]
+                }
+            },
+            "id": "node_ollama",
+            "name": "Engineering Viral Script",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                760,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const rawResponse = $node[\"Engineering Viral Script\"].json.response;\nconst char = $node[\"Select Character (DB)\"].json;\n\n// Expert robustness: Extract JSON even if Ollama adds 'Sure!' or other text\nconst jsonMatch = rawResponse.match(/\\{.*\\}/s);\nif (!jsonMatch) throw new Error(\"IA didn't return a valid JSON script\");\nconst response = JSON.parse(jsonMatch[0]);\n\nreturn {\n  script: response.script,\n  caption: response.caption,\n  avatar: char.name,\n  voice: char.voice_model || 'en_US-amy-medium',\n  lora_strength: parseFloat(char.lora_strength) || 0.8,\n  trigger: char.trigger_word\n};"
+            },
+            "id": "node_code_config",
+            "name": "Character Intel",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                940,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://api.a2e.ai/v1/generate",
+                "method": "POST",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "avatar",
+                            "value": "={{ $json.avatar }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "={{ $json.script }}"
+                        },
+                        {
+                            "name": "lora_strength",
+                            "value": "={{ $json.lora_strength }}"
+                        }
+                    ]
+                }
+            },
+            "id": "node_a2e",
+            "name": "A2E: Submit Job",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1140,
+                240
+            ]
+        },
+        {
+            "parameters": {
+                "amount": 20
+            },
+            "id": "node_wait_video",
+            "name": "Wait (20s)",
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1,
+            "position": [
+                1320,
+                240
+            ]
+        },
+        {
+            "parameters": {
+                "url": "=https://api.a2e.ai/v1/status/{{ $node[\"A2E: Submit Job\"].json.id }}",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth"
+            },
+            "id": "node_a2e_status",
+            "name": "A2E: Check Status",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1500,
+                240
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const status = $node[\"A2E: Check Status\"].json.status;\nconst retry_count = $node[\"A2E: Check Status\"].runIndex;\n\nif (status === 'completed') {\n  return { ready: true, status: 'completed' };\n} else if (retry_count < 15) {\n  return { ready: false, status: status, retry_count: retry_count };\n} else {\n  throw new Error(\"A2E Job timed out after 15 retries (5 minutes)\");\n}"
+            },
+            "id": "node_video_analyze",
+            "name": "Analyze Status",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1600,
+                240
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "boolean": [
+                        {
+                            "value1": "={{ $json.ready }}",
+                            "value2": true
+                        }
+                    ]
+                }
+            },
+            "id": "node_video_if",
+            "name": "Video Ready?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                1780,
+                240
+            ]
+        },
+        {
+            "parameters": {
+                "url": "={{ $json.video_url }}",
+                "responseFormat": "file"
+            },
+            "id": "node_video_dl",
+            "name": "Download Video",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1860,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "url": "http://piper:5000/",
+                "sendQuery": true,
+                "queryParameters": {
+                    "parameters": [
+                        {
+                            "name": "text",
+                            "value": "={{ $json.script }}"
+                        },
+                        {
+                            "name": "model",
+                            "value": "={{ $json.voice }}"
+                        }
+                    ]
+                },
+                "responseFormat": "file"
+            },
+            "id": "node_piper",
+            "name": "Generate Voice (Piper)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1140,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://api.replicate.com/v1/predictions",
+                "method": "POST",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "version",
+                            "value": "b58ad9361ad284ea41c6d36e2f69f2378939c085295c96b7972d73f1d3e8e169"
+                        },
+                        {
+                            "name": "input",
+                            "value": "={ \"prompt\": \"{{ $json.style }} beat\", \"duration\": 30 }"
+                        }
+                    ]
+                }
+            },
+            "id": "node_replicate",
+            "name": "Submit Music",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1140,
+                560
+            ]
+        },
+        {
+            "parameters": {
+                "amount": 10
+            },
+            "id": "node_wait_music",
+            "name": "Wait (10s)",
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1,
+            "position": [
+                1320,
+                560
+            ]
+        },
+        {
+            "parameters": {
+                "url": "={{ $node[\"Submit Music\"].json.urls.get }}",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth"
+            },
+            "id": "node_music_status",
+            "name": "Check Music",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1500,
+                560
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "string": [
+                        {
+                            "value1": "={{ $json.status }}",
+                            "value2": "succeeded"
+                        }
+                    ]
+                }
+            },
+            "id": "node_music_if",
+            "name": "Music Ready?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                1680,
+                560
+            ]
+        },
+        {
+            "parameters": {
+                "url": "={{ $json.output }}",
+                "responseFormat": "file"
+            },
+            "id": "node_music_dl",
+            "name": "Download Music",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1860,
+                600
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "return {\n  binary: {\n    video: $node[\"Download Video\"].binary.data,\n    audio: $node[\"Generate Voice (Piper)\"].binary.data\n  },\n  json: {\n    avatar: $node[\"Character Intel\"].json.avatar,\n    script: $node[\"Character Intel\"].json.script\n  }\n};"
+            },
+            "id": "node_merge_video",
+            "name": "Merge: Vid + Vox",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2080,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "return {\n  binary: {\n    video: $input.item.binary.video,\n    audio: $input.item.binary.audio,\n    music: $node[\"Download Music\"].binary.data\n  },\n  json: {\n    ...$input.item.json\n  }\n};"
+            },
+            "id": "node_merge_music",
+            "name": "Merge + Music",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2260,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "url": "http://karaoke:8001/generate",
+                "method": "POST",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "contentType": "multipart-form-data",
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "video",
+                            "parameterType": "formBinaryData",
+                            "inputDataFieldName": "video"
+                        },
+                        {
+                            "name": "audio",
+                            "parameterType": "formBinaryData",
+                            "inputDataFieldName": "audio"
+                        },
+                        {
+                            "name": "music",
+                            "parameterType": "formBinaryData",
+                            "inputDataFieldName": "music"
+                        },
+                        {
+                            "name": "text",
+                            "value": "={{ $json.script }}"
+                        },
+                        {
+                            "name": "style",
+                            "value": "ANIME"
+                        }
+                    ]
+                }
+            },
+            "id": "node_karaoke",
+            "name": "Karaoke Studio",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                2440,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "fileName": "=/data/assets/output/reels/viral_{{ $now.format('X') }}.mp4"
+            },
+            "id": "node_save_disk",
+            "name": "Save to Disk",
+            "type": "n8n-nodes-base.writeBinaryFile",
+            "typeVersion": 1,
+            "position": [
+                2620,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "INSERT INTO reels (character_id, video_url, status, created_at) VALUES ($1, $2, 'pending', NOW()) RETURNING id;",
+                "options": {},
+                "additionalFields": {
+                    "queryParameters": "={{ JSON.stringify([$node[\"Character Intel\"].json.character_id || 1, $node[\"A2E: Check Status\"].json.video_url]) }}"
+                }
+            },
+            "id": "node_postgres_save_pending",
+            "name": "Save Pending Reel",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                2800,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendDocument",
+                "sendBody": true,
+                "contentType": "multipart-form-data",
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID || '990380531' }}"
+                        },
+                        {
+                            "name": "document",
+                            "parameterType": "formBinaryData",
+                            "inputDataFieldName": "data"
+                        },
+                        {
+                            "name": "caption",
+                            "value": "=🔬 *MODO EDICIÓN COMPLETA (PRUEBA)* \n\n✅ *Voz:* {{ $node[\"Character Intel\"].json.voice }}\n✅ *Música:* {{ $node[\"Submit Music\"].json.input.prompt }}\n✅ *Karaoke:* Activado (Estilo ANIME)\n\n📝 *Script Concatenado:* \n{{ $node[\"Character Intel\"].json.script }}\n\n🎬 *Caption de Post:* \n{{ $node[\"Character Intel\"].json.caption }}\n\n⚠️ Este reel NO se subirá a redes a menos que pulses el botón de abajo."
+                        },
+                        {
+                            "name": "parse_mode",
+                            "value": "Markdown"
+                        },
+                        {
+                            "name": "reply_markup",
+                            "value": "={{ JSON.stringify({ \"inline_keyboard\": [[ { \"text\": \"🚀 ENVIAR A DISTRIBUCIÓN (W2)\", \"url\": ($env.WEBHOOK_URL || 'http://n8n:5678') + \"/webhook/approve-viral-reel?reel_id=\" + $json.id } ]] }) }}"
+                        }
+                    ]
+                }
+            },
+            "id": "node_telegram",
+            "name": "Telegram Preview & Approval",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                3000,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "httpMethod": "GET",
+                "path": "approve-viral-reel",
+                "options": {}
+            },
+            "id": "node_webhook_approval",
+            "name": "Webhook (Approve Viral)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1.1,
+            "position": [
+                3200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "UPDATE reels SET status = 'published', published_at = NOW() WHERE id = $1 RETURNING *;",
+                "options": {},
+                "additionalFields": {
+                    "queryParameters": "={{ JSON.stringify([$json.query.reel_id]) }}"
+                }
+            },
+            "id": "node_postgres_publish",
+            "name": "Publish to Reels (W4)",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                3400,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=✅ *Reel Publicado con Éxito*\n\nID: {{ $json.id }}\nURL: {{ $json.video_url }}"
+                        }
+                    ]
+                }
+            },
+            "id": "notify-success",
+            "name": "Notify Success",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                3600,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Viral Schedule (Prime Times)": {
+            "main": [
+                [
+                    {
+                        "node": "Select Character (DB)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Select Character (DB)": {
+            "main": [
+                [
+                    {
+                        "node": "Engineering Viral Script",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Engineering Viral Script": {
+            "main": [
+                [
+                    {
+                        "node": "Character Intel",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Character Intel": {
+            "main": [
+                [
+                    {
+                        "node": "A2E: Submit Job",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Generate Voice (Piper)",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Submit Music",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "A2E: Submit Job": {
+            "main": [
+                [
+                    {
+                        "node": "Wait (20s)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait (20s)": {
+            "main": [
+                [
+                    {
+                        "node": "A2E: Check Status",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "A2E: Check Status": {
+            "main": [
+                [
+                    {
+                        "node": "Analyze Status",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Analyze Status": {
+            "main": [
+                [
+                    {
+                        "node": "Video Ready?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Video Ready?": {
+            "main": [
+                [
+                    {
+                        "node": "Download Video",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Wait (20s)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Download Video": {
+            "main": [
+                [
+                    {
+                        "node": "Merge: Vid + Vox",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Voice (Piper)": {
+            "main": [
+                [
+                    {
+                        "node": "Merge: Vid + Vox",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Submit Music": {
+            "main": [
+                [
+                    {
+                        "node": "Wait (10s)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait (10s)": {
+            "main": [
+                [
+                    {
+                        "node": "Check Music",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Check Music": {
+            "main": [
+                [
+                    {
+                        "node": "Music Ready?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Music Ready?": {
+            "main": [
+                [
+                    {
+                        "node": "Download Music",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Wait (10s)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Download Music": {
+            "main": [
+                [
+                    {
+                        "node": "Merge + Music",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Merge: Vid + Vox": {
+            "main": [
+                [
+                    {
+                        "node": "Merge + Music",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Merge + Music": {
+            "main": [
+                [
+                    {
+                        "node": "Karaoke Studio",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Karaoke Studio": {
+            "main": [
+                [
+                    {
+                        "node": "Save to Disk",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Save to Disk": {
+            "main": [
+                [
+                    {
+                        "node": "Save Pending Reel",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Save Pending Reel": {
+            "main": [
+                [
+                    {
+                        "node": "Telegram Preview & Approval",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Webhook (Approve Viral)": {
+            "main": [
+                [
+                    {
+                        "node": "Publish to Reels (W4)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Publish to Reels (W4)": {
+            "main": [
+                [
+                    {
+                        "node": "Notify Success",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

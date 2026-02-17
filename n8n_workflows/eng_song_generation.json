@@ -1,0 +1,40 @@
+{
+    "name": "Generación de Canción",
+    "nodes": [
+        {
+            "id": 1,
+            "type": "n8n-nodes-base.webhook",
+            "position": [
+                200,
+                380
+            ],
+            "parameters": {
+                "path": "webhook/song-generation",
+                "httpMethod": "POST",
+                "responseMode": "onReceived",
+                "responseData": "{\"ok\":true}"
+            }
+        },
+        {
+            "id": 2,
+            "type": "n8n-nodes-base.httpRequest",
+            "position": [
+                500,
+                380
+            ],
+            "parameters": {
+                "requestMethod": "POST",
+                "url": "http://app:8000/api/generate/song-generation",
+                "jsonParameters": true
+            }
+        }
+    ],
+    "connections": {
+        "1": [
+            {
+                "node": 2,
+                "type": "main"
+            }
+        ]
+    }
+}

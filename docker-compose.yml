@@ -244,10 +244,10 @@ services:
     deploy:
       resources:
         limits:
-          memory: 8G
-          cpus: 2.0
+          memory: 6G
+          cpus: "2.0"
         reservations:
-          memory: 4G
+          memory: 3G
     labels:
       - "com.waifugen.service=ollama"
       - "com.waifugen.role=llm"
@@ -276,7 +276,7 @@ services:
       resources:
         limits:
           memory: 1G
-          cpus: 1.0
+          cpus: "1.0"
         reservations:
           memory: 512M
     labels:
@@ -408,21 +408,15 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/sites-available:/etc/nginx/sites-available:ro
-      - ./nginx/ssl:/etc/nginx/ssl:ro
-      - ./nginx/.htpasswd:/etc/nginx/.htpasswd:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /var/lib/letsencrypt:/var/lib/letsencrypt:ro
+      - ./assets:/var/www/html/assets:ro
       - static_files:/var/www/html
       - nginx_logs:/var/log/nginx
     networks:
       - waifugen_network
     depends_on:
-      - app
-      - prometheus
-      - grafana
-    #    healthcheck:
-    #      test: ["CMD", "nginx", "-t", "-s", "reload"]
-    #      interval: 30s
-    #      timeout: 10s
-    #      retries: 3
+      - n8n
     deploy:
       resources:
         limits:
@@ -443,22 +437,30 @@ services:
     container_name: ${PROJECT_NAME:-waifugen}_n8n
     restart: unless-stopped
     ports:
-      - "127.0.0.1:5678:5678"
+      - "5678:5678"
     environment:
       - N8N_HOST=0.0.0.0
       - N8N_PORT=5678
-      - N8N_PATH=/n8n/
       - N8N_PROTOCOL=http
+      - A2E_API_KEY=${A2E_API_KEY}
+      - REPLICATE_API_TOKEN=${REPLICATE_API_TOKEN}
+      - KARAOKE_API_KEY=${KARAOKE_API_KEY}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_ADMIN_CHAT_ID=${TELEGRAM_ADMIN_CHAT_ID}
+      - PLATFORM_POSTER_API_KEY=${PLATFORM_POSTER_API_KEY}
       - N8N_SECURE_COOKIE=false
+      - N8N_PROXY_HOPS=${N8N_PROXY_HOPS:-1}
+      - N8N_BLOCK_SVC_ENV_ACCESS=false
       - WEBHOOK_URL=${WEBHOOK_URL:-}
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
       - DB_POSTGRESDB_PORT=5432
-      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
+      - DB_POSTGRESDB_DATABASE=${N8N_DB_NAME:-n8n_db}
       - DB_POSTGRESDB_USER=${POSTGRES_USER}
       - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - n8n_data:/home/node/.n8n
+      - ./assets:/data/assets # Access generated assets
       - ./scripts:/app/scripts:ro
       - ./src:/app/src:ro
       - ./config:/app/config:ro
@@ -470,6 +472,93 @@ services:
       resources:
         limits:
           memory: 1G
+
+  # Thumbnail Generation Service
+  thumbnail-service:
+    build:
+      context: .
+      dockerfile: docker/thumbnail/Dockerfile
+    container_name: ${PROJECT_NAME:-waifugen}_thumbnail_service
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:10300:5000"
+    networks:
+      - waifugen_network
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - THUMBNAIL_SERVICE_API_KEY=${THUMBNAIL_SERVICE_API_KEY:-}
+    labels:
+      - "com.waifugen.service=thumbnail-service"
+      - "com.waifugen.role=media"
+
+  # Platform Posting Service
+  platform-poster:
+    build:
+      context: .
+      dockerfile: docker/platform_poster/Dockerfile
+    container_name: ${PROJECT_NAME:-waifugen}_platform_poster
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:10400:8080"
+    environment:
+      - TIKTOK_API_TOKEN=${TIKTOK_API_TOKEN:-}
+      - INSTAGRAM_API_TOKEN=${INSTAGRAM_API_TOKEN:-}
+      - YOUTUBE_API_TOKEN=${YOUTUBE_API_TOKEN:-}
+      - ONLYFANS_USERNAME=${ONLYFANS_USERNAME:-}
+      - ONLYFANS_PASSWORD=${ONLYFANS_PASSWORD:-}
+      - PLATFORM_POSTER_API_KEY=${PLATFORM_POSTER_API_KEY:-secure_default_key}
+      - PROXY_URL=${PROXY_URL:-}
+    networks:
+      - waifugen_network
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    labels:
+      - "com.waifugen.service=platform-poster"
+      - "com.waifugen.role=social"
+
+  # Karaoke & Subtitle Service (Secure)
+  karaoke:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.karaoke
+    container_name: ${PROJECT_NAME:-waifugen}_karaoke
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:10301:8001"
+    environment:
+      - KARAOKE_API_KEY=${KARAOKE_API_KEY}
+    volumes:
+      - ./scripts:/app/scripts:ro
+      - ./assets:/app/assets
+    networks:
+      - waifugen_network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8001/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    labels:
+      - "com.waifugen.service=karaoke"
+      - "com.waifugen.role=media"
 
 # =============================================================================
 # VOLUMES - Persistent data storage
@@ -504,11 +593,6 @@ volumes:
 networks:
   waifugen_network:
     driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.28.0.0/16
-          gateway: 172.28.0.1
 
 # =============================================================================
 # END OF docker-compose.yml

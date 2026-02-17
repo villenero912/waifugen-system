@@ -1,0 +1,40 @@
+{
+    "name": "Video Musical",
+    "nodes": [
+        {
+            "id": 1,
+            "type": "n8n-nodes-base.webhook",
+            "position": [
+                200,
+                260
+            ],
+            "parameters": {
+                "path": "webhook/music-video",
+                "httpMethod": "POST",
+                "responseMode": "onReceived",
+                "responseData": "{\"ok\":true}"
+            }
+        },
+        {
+            "id": 2,
+            "type": "n8n-nodes-base.httpRequest",
+            "position": [
+                500,
+                260
+            ],
+            "parameters": {
+                "requestMethod": "POST",
+                "url": "http://app:8000/api/generate/music-video",
+                "jsonParameters": true
+            }
+        }
+    ],
+    "connections": {
+        "1": [
+            {
+                "node": 2,
+                "type": "main"
+            }
+        ]
+    }
+}

@@ -17,8 +17,8 @@ Features:
 - Comprehensive audio processing libraries
 
 Usage:
-    docker build -f Dockerfile.karaoke -t jav-karaoke .
-    docker run -v /path/to/assets:/app/assets jav-karaoke
+docker build -f Dockerfile.karaoke -t jav-karaoke .
+docker run -v /path/to/assets:/app/assets jav-karaoke
 
 Author: JAV Automation System
 Version: 1.0.0
@@ -84,13 +84,13 @@ COPY --chown=appuser:appgroup . /app
 
 # Create directories for output with proper permissions
 RUN mkdir -p /app/karaoke_lyrics \
-             /app/karaoke_voices \
-             /app/karaoke_mixed \
-             /app/karaoke_videos \
-             /app/karaoke_lipsync \
-             /app/music_library \
-             /app/assets/output/phase1 \
-             /app/assets/output/phase2 \
+    /app/karaoke_voices \
+    /app/karaoke_mixed \
+    /app/karaoke_videos \
+    /app/karaoke_lipsync \
+    /app/music_library \
+    /app/assets/output/phase1 \
+    /app/assets/output/phase2 \
     && chown -R appuser:appgroup /app
 
 # Set working directory
@@ -107,18 +107,7 @@ HEALTHCHECK --interval=60s --timeout=30s --start-period=10s --retries=3 \
     CMD python -c "from scripts.karaoke_generator import CompleteKaraokePipeline; print('Karaoke system ready')" 2>/dev/null || exit 1
 
 # Entry point for karaoke generation
-# Can be used as standalone processor or API service
-CMD ["python", "-c", "
-import asyncio
-from scripts.karaoke_generator import CompleteKaraokePipeline
-
-async def demo():
-    pipeline = CompleteKaraokePipeline()
-    print('Karaoke system initialized successfully')
-    await pipeline.close()
-
-asyncio.run(demo())
-"]
+CMD ["python", "scripts/karaoke_generator.py"]
 
 # Alternative: Run as simple CLI tool for testing
 # CMD ["python", "scripts/karaoke_generator.py"]

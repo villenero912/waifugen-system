@@ -1,0 +1,45 @@
+{
+    "name": "Personalizado",
+    "nodes": [
+        {
+            "id": 1,
+            "type": "n8n-nodes-base.webhook",
+            "position": [
+                200,
+                440
+            ],
+            "parameters": {
+                "path": "webhook/custom",
+                "httpMethod": "POST",
+                "responseMode": "onReceived",
+                "responseData": "{\"ok\":true}"
+            }
+        },
+        {
+            "id": 2,
+            "type": "n8n-nodes-base.set",
+            "position": [
+                500,
+                440
+            ],
+            "parameters": {
+                "values": {
+                    "string": [
+                        {
+                            "name": "status",
+                            "value": "custom"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "connections": {
+        "1": [
+            {
+                "node": 2,
+                "type": "main"
+            }
+        ]
+    }
+}

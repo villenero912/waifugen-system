@@ -22,6 +22,8 @@ pasted-text-*.txt
 data/postgres/
 data/redis/
 data/n8n/
+nginx/.htpasswd
+**/.htpasswd
 
 # Python
 __pycache__/

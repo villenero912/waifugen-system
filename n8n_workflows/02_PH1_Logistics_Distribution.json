@@ -1,0 +1,414 @@
+{
+    "name": "04 - The Logistics (Distribution Pipeline) [AUTO-AUTH]",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "GET",
+                "path": "publish-reel",
+                "options": {}
+            },
+            "id": "webhook-approve-reel",
+            "name": "Webhook (Approve Reel)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1.1,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "SELECT r.*, c.name as character_name, c.personality, c.nationality FROM reels r JOIN characters c ON r.character_id = c.id WHERE r.id = $1 LIMIT 1",
+                "additionalFields": {
+                    "queryParameters": "={{ JSON.stringify([$json.query.reel_id]) }}"
+                }
+            },
+            "id": "get-reel-data",
+            "name": "Get Reel from Database",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                450,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://ollama:11434/api/generate",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "model",
+                            "value": "tinyllama"
+                        },
+                        {
+                            "name": "prompt",
+                            "value": "=Generate a viral social media post caption for this video.\n\nCharacter: {{ $json.character_name }}\nPersonality: {{ $json.personality }}\nVideo Prompt: {{ $json.prompt }}\nPlatform: {{ $json.platform }}\n\nCreate a SHORT, engaging caption (max 150 characters) with:\n- Hook in first 5 words\n- 3-5 relevant hashtags\n- Call-to-action\n- Character's voice/personality\n\nRespond ONLY with the caption text, no explanations."
+                        },
+                        {
+                            "name": "stream",
+                            "value": false
+                        }
+                    ]
+                }
+            },
+            "id": "generate-caption",
+            "name": "Generate Caption (Ollama)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://thumbnail-service:5000/generate",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "video_url",
+                            "value": "={{ $('Get Reel from Database').item.json.video_url }}"
+                        },
+                        {
+                            "name": "platform",
+                            "value": "={{ $('Get Reel from Database').item.json.platform }}"
+                        },
+                        {
+                            "name": "character_name",
+                            "value": "={{ $('Get Reel from Database').item.json.character_name }}"
+                        }
+                    ]
+                },
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "options": {
+                    "response": {
+                        "response": {
+                            "responseFormat": "file"
+                        }
+                    }
+                }
+            },
+            "id": "generate-thumbnail",
+            "name": "Generate Thumbnail",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                650,
+                500
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const reel = $('Get Reel from Database').item.json;\nconst caption = $('Generate Caption (Ollama)').item.json.response;\n\n// Sanitize caption\nconst sanitizeText = (text) => {\n  if (!text) return '';\n  return text.replace(/'/g, \"''\").replace(/\\\\/g, '\\\\\\\\').trim();\n};\n\n// Platform-specific hashtags\nconst platformHashtags = {\n  'tiktok': ['#fyp', '#viral', '#anime', '#waifugen'],\n  'instagram': ['#reels', '#viral', '#anime', '#aiart'],\n  'youtube': ['#shorts', '#viral', '#anime', '#ai']\n};\n\nconst platform = reel.platform || 'tiktok';\nconst hashtags = platformHashtags[platform] || platformHashtags['tiktok'];\n\nreturn {\n  reel_id: reel.id,\n  video_url: reel.video_url,\n  character_name: reel.character_name,\n  caption: sanitizeText(caption),\n  hashtags: hashtags.join(' '),\n  platform: platform,\n  duration: reel.duration\n};"
+            },
+            "id": "prepare-post-data",
+            "name": "Prepare Post Data",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                850,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "string": [
+                        {
+                            "value1": "={{ $json.platform }}",
+                            "operation": "equals",
+                            "value2": "tiktok"
+                        }
+                    ]
+                }
+            },
+            "id": "route-by-platform",
+            "name": "Route by Platform",
+            "type": "n8n-nodes-base.switch",
+            "typeVersion": 1,
+            "position": [
+                1050,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://platform-poster:8080/api/tiktok/upload",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "video_url",
+                            "value": "={{ $json.video_url }}"
+                        },
+                        {
+                            "name": "caption",
+                            "value": "={{ $json.caption + ' ' + $json.hashtags }}"
+                        }
+                    ]
+                }
+            },
+            "id": "post-to-tiktok",
+            "name": "Post to TikTok (Proxy)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1250,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://platform-poster:8080/api/instagram/upload",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "video_url",
+                            "value": "={{ $json.video_url }}"
+                        },
+                        {
+                            "name": "caption",
+                            "value": "={{ $json.caption + ' ' + $json.hashtags }}"
+                        }
+                    ]
+                }
+            },
+            "id": "post-to-instagram",
+            "name": "Post to Instagram (Proxy)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://platform-poster:8080/api/youtube/upload",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "video_url",
+                            "value": "={{ $json.video_url }}"
+                        },
+                        {
+                            "name": "title",
+                            "value": "={{ $json.character_name }}"
+                        },
+                        {
+                            "name": "description",
+                            "value": "={{ $json.caption }}"
+                        }
+                    ]
+                }
+            },
+            "id": "post-to-youtube",
+            "name": "Post to YouTube Shorts (Proxy)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1250,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "UPDATE reels SET status = 'published', published_at = NOW() WHERE id = $1 RETURNING *;",
+                "additionalFields": {
+                    "queryParameters": "={{ JSON.stringify([$('Prepare Post Data').item.json.reel_id]) }}"
+                }
+            },
+            "id": "update-reel-status",
+            "name": "Update Reel Status in DB",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                1450,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=✅ *Reel Publicado con Éxito* \n\nID: {{ $json.id }}\nURL: {{ $json.video_url }}"
+                        }
+                    ]
+                }
+            },
+            "id": "notify-success",
+            "name": "Notify Success via Telegram",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1650,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook (Approve Reel)": {
+            "main": [
+                [
+                    {
+                        "node": "Get Reel from Database",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Reel from Database": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Caption (Ollama)",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Generate Thumbnail",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Caption (Ollama)": {
+            "main": [
+                [
+                    {
+                        "node": "Prepare Post Data",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Thumbnail": {
+            "main": [
+                [
+                    {
+                        "node": "Prepare Post Data",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Prepare Post Data": {
+            "main": [
+                [
+                    {
+                        "node": "Route by Platform",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Route by Platform": {
+            "main": [
+                [
+                    {
+                        "node": "Post to TikTok (Proxy)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Post to Instagram (Proxy)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Post to YouTube Shorts (Proxy)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Post to TikTok (Proxy)": {
+            "main": [
+                [
+                    {
+                        "node": "Update Reel Status in DB",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Post to Instagram (Proxy)": {
+            "main": [
+                [
+                    {
+                        "node": "Update Reel Status in DB",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Post to YouTube Shorts (Proxy)": {
+            "main": [
+                [
+                    {
+                        "node": "Update Reel Status in DB",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Update Reel Status in DB": {
+            "main": [
+                [
+                    {
+                        "node": "Notify Success via Telegram",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

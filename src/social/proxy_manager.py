@@ -20,6 +20,7 @@ from pathlib import Path
 import aiohttp
 from collections import deque
 import urllib.parse
+from src.utils.security import vault
 
 # Configure logging
 logging.basicConfig(
@@ -179,7 +180,10 @@ class ProxyManager:
             return None
         
         username = os.getenv("IPROYAL_USERNAME")
-        password = os.getenv("IPROYAL_PASSWORD")
+        password_enc = os.getenv("IPROYAL_PASSWORD")
+        # Desencriptar si es necesario (asumimos que puede venir encriptado)
+        password = vault.decrypt(password_enc) if password_enc and len(password_enc) > 64 else password_enc
+        
         host = os.getenv("IPROYAL_HOST", "geo.iproyal.com")
         port = int(os.getenv("IPROYAL_PORT", "12345"))
         protocol = os.getenv("IPROYAL_PROTOCOL", "http")
@@ -434,6 +438,7 @@ class ProxyManager:
         # Track bytes for response
         kwargs['proxy'] = proxy.get('http')
         
+        try:
             async with session.request(method, url, **kwargs) as response:
                 # Track actual bytes received
                 content = await response.read()

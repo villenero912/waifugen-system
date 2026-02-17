@@ -1,0 +1,457 @@
+{
+    "name": "06 - NSFW Execution Pipeline (GPU + Adult Platforms)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "GET",
+                "path": "approve-gpu",
+                "options": {}
+            },
+            "id": "webhook-approve-gpu",
+            "name": "Webhook (Approve GPU Investment)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1.1,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "SELECT * FROM nsfw_content WHERE id = $1 LIMIT 1",
+                "options": {},
+                "additionalFields": {
+                    "queryParameters": "={{ JSON.stringify([$json.query.nsfw_id]) }}"
+                }
+            },
+            "id": "get-nsfw-proposal",
+            "name": "Get NSFW Proposal from DB",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                450,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "const proposal = $input.item.json;\n\n// RunPod GPU configuration\nconst gpuConfig = {\n  gpu_type: 'NVIDIA RTX 4090',\n  hourly_rate: 0.69,\n  estimated_time_minutes: proposal.video_duration || 60,\n  model: 'stable-diffusion-video-xl',\n  resolution: proposal.nsfw_level >= 8 ? '4K' : '1080p',\n  fps: 30\n};\n\n// Calculate estimated cost\nconst estimatedCost = (gpuConfig.hourly_rate / 60) * gpuConfig.estimated_time_minutes;\n\nreturn {\n  nsfw_id: proposal.id,\n  character: proposal.character,\n  nsfw_level: proposal.nsfw_level,\n  fetish_category: proposal.fetish_category,\n  prompt: proposal.prompt,\n  platform: proposal.platform,\n  pricing_tier: proposal.pricing_tier,\n  gpu_config: gpuConfig,\n  estimated_cost: estimatedCost.toFixed(2),\n  video_duration: proposal.video_duration || 60\n};"
+            },
+            "id": "prepare-gpu-job",
+            "name": "Prepare GPU Job Config",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.RUNPOD_API_URL || 'https://api.runpod.io/v2/run' }}",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "input",
+                            "value": "={{ { 'prompt': $json.prompt, 'negative_prompt': 'censored, blurry, low quality, watermark, professional studio, cinematic lighting', 'num_frames': $json.video_duration * 30, 'width': $json.gpu_config.resolution === '4K' ? 3840 : 1920, 'height': $json.gpu_config.resolution === '4K' ? 2160 : 1080, 'guidance_scale': 7.5, 'num_inference_steps': 50, 'seed': Math.floor(Math.random() * 1000000) } }}"
+                        },
+                        {
+                            "name": "gpu_type_id",
+                            "value": "NVIDIA RTX 4090"
+                        },
+                        {
+                            "name": "cloud_type",
+                            "value": "SECURE"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "trigger-runpod-job",
+            "name": "Trigger RunPod GPU Job",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                850,
+                300
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "runpod_api_key",
+                    "name": "RunPod API Key"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "unit": "seconds",
+                "amount": 30
+            },
+            "id": "wait-30s",
+            "name": "Wait 30 Seconds",
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1,
+            "position": [
+                1050,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "GET",
+                "url": "={{ $env.RUNPOD_API_URL || 'https://api.runpod.io/v2' }}/status/{{ $('Trigger RunPod GPU Job').item.json.id }}",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "options": {}
+            },
+            "id": "poll-job-status",
+            "name": "Poll Job Status",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1250,
+                300
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "runpod_api_key",
+                    "name": "RunPod API Key"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "string": [
+                        {
+                            "value1": "={{ $json.status }}",
+                            "operation": "equals",
+                            "value2": "COMPLETED"
+                        }
+                    ]
+                }
+            },
+            "id": "check-completion",
+            "name": "Job Completed?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                1450,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "GET",
+                "url": "={{ $('Poll Job Status').item.json.output.video_url }}",
+                "options": {
+                    "response": {
+                        "response": {
+                            "responseFormat": "file"
+                        }
+                    }
+                }
+            },
+            "id": "download-video",
+            "name": "Download Generated Video",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1650,
+                250
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const video = $('Download Generated Video').item.json;\nconst proposal = $('Prepare GPU Job Config').item.json;\n\n// Platform-specific upload configurations\nconst platformConfigs = {\n  'OnlyFans': {\n    api_url: process.env.ONLYFANS_API_URL || 'http://platform-poster:8080/api/onlyfans/upload',\n    requires_auth: true,\n    supports_ppv: true,\n    max_duration: 300\n  },\n  'Pornhub': {\n    api_url: process.env.PORNHUB_API_URL || 'http://platform-poster:8080/api/pornhub/upload',\n    requires_auth: true,\n    supports_ppv: false,\n    max_duration: 600\n  },\n  'XVideos': {\n    api_url: process.env.XVIDEOS_API_URL || 'http://platform-poster:8080/api/xvideos/upload',\n    requires_auth: true,\n    supports_ppv: false,\n    max_duration: 600\n  },\n  'Fantia': {\n    api_url: process.env.FANTIA_API_URL || 'http://platform-poster:8080/api/fantia/upload',\n    requires_auth: true,\n    supports_ppv: true,\n    max_duration: 300\n  }\n};\n\nconst platform = proposal.platform || 'OnlyFans';\nconst config = platformConfigs[platform] || platformConfigs['OnlyFans'];\n\nreturn {\n  nsfw_id: proposal.nsfw_id,\n  video_data: video.data,\n  platform: platform,\n  platform_config: config,\n  character: proposal.character,\n  fetish_category: proposal.fetish_category,\n  pricing_tier: proposal.pricing_tier,\n  nsfw_level: proposal.nsfw_level,\n  title: `${proposal.character} - ${proposal.fetish_category}`,\n  description: `Amateur content featuring ${proposal.character}. Level ${proposal.nsfw_level}.`,\n  tags: [proposal.fetish_category, proposal.character, 'amateur', 'ai', 'exclusive']\n};"
+            },
+            "id": "prepare-upload",
+            "name": "Prepare Platform Upload",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1850,
+                250
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $json.platform_config.api_url }}",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "video_data",
+                            "value": "={{ $json.video_data }}"
+                        },
+                        {
+                            "name": "title",
+                            "value": "={{ $json.title }}"
+                        },
+                        {
+                            "name": "description",
+                            "value": "={{ $json.description }}"
+                        },
+                        {
+                            "name": "tags",
+                            "value": "={{ $json.tags.join(',') }}"
+                        },
+                        {
+                            "name": "pricing_tier",
+                            "value": "={{ $json.pricing_tier }}"
+                        },
+                        {
+                            "name": "nsfw_level",
+                            "value": "={{ $json.nsfw_level }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "upload-to-platform",
+            "name": "Upload to Adult Platform",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                2050,
+                250
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "adult_platform_token",
+                    "name": "Adult Platform Token"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "UPDATE nsfw_content \nSET status = 'published', \n    video_url = $1,\n    platform_post_id = $2,\n    published_at = NOW(),\n    gpu_cost = $3\nWHERE id = $4\nRETURNING *",
+                "options": {},
+                "additionalFields": {
+                    "queryParameters": "={{ JSON.stringify([$('Upload to Adult Platform').item.json.video_url, $('Upload to Adult Platform').item.json.post_id, $('Prepare GPU Job Config').item.json.estimated_cost, $('Prepare GPU Job Config').item.json.nsfw_id]) }}"
+                }
+            },
+            "id": "update-nsfw-status",
+            "name": "Update NSFW Content Status",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                2250,
+                250
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendVideo",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "video",
+                            "value": "={{ $json.video_url }}"
+                        },
+                        {
+                            "name": "caption",
+                            "value": "=💰 <b>NSFW Content Published!</b>\n\n🎯 <b>Platform:</b> {{ $('Prepare Platform Upload').item.json.platform }}\n👤 <b>Character:</b> {{ $json.character }}\n🔞 <b>NSFW Level:</b> {{ $json.nsfw_level }}\n🏷️ <b>Category:</b> {{ $json.fetish_category }}\n💵 <b>Pricing:</b> ${{ $json.pricing_tier }}\n💻 <b>GPU Cost:</b> ${{ $json.gpu_cost }}\n🆔 <b>Post ID:</b> {{ $json.platform_post_id }}\n⏰ <b>Published:</b> {{ $json.published_at }}\n\n✅ Status: LIVE & MONETIZING"
+                        },
+                        {
+                            "name": "parse_mode",
+                            "value": "HTML"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "notify-success-nsfw",
+            "name": "Notify Success with Preview",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                2450,
+                250
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook (Approve GPU Investment)": {
+            "main": [
+                [
+                    {
+                        "node": "Get NSFW Proposal from DB",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get NSFW Proposal from DB": {
+            "main": [
+                [
+                    {
+                        "node": "Prepare GPU Job Config",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Prepare GPU Job Config": {
+            "main": [
+                [
+                    {
+                        "node": "Trigger RunPod GPU Job",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Trigger RunPod GPU Job": {
+            "main": [
+                [
+                    {
+                        "node": "Wait 30 Seconds",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait 30 Seconds": {
+            "main": [
+                [
+                    {
+                        "node": "Poll Job Status",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Poll Job Status": {
+            "main": [
+                [
+                    {
+                        "node": "Job Completed?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Job Completed?": {
+            "main": [
+                [
+                    {
+                        "node": "Download Generated Video",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Wait 30 Seconds",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Download Generated Video": {
+            "main": [
+                [
+                    {
+                        "node": "Prepare Platform Upload",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Prepare Platform Upload": {
+            "main": [
+                [
+                    {
+                        "node": "Upload to Adult Platform",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Upload to Adult Platform": {
+            "main": [
+                [
+                    {
+                        "node": "Update NSFW Content Status",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Update NSFW Content Status": {
+            "main": [
+                [
+                    {
+                        "node": "Notify Success with Preview",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "createdAt": "2026-02-01T12:00:00.000Z",
+    "updatedAt": "2026-02-01T12:00:00.000Z",
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "tags": [
+        {
+            "name": "Phase 2",
+            "id": "phase2"
+        },
+        {
+            "name": "NSFW",
+            "id": "nsfw"
+        },
+        {
+            "name": "GPU",
+            "id": "gpu"
+        },
+        {
+            "name": "Monetization",
+            "id": "monetization"
+        }
+    ],
+    "triggerCount": 1,
+    "versionId": "1"
+}

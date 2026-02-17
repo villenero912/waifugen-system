@@ -1,0 +1,40 @@
+{
+    "name": "Avatar Parlante",
+    "nodes": [
+        {
+            "id": 1,
+            "type": "n8n-nodes-base.webhook",
+            "position": [
+                200,
+                200
+            ],
+            "parameters": {
+                "path": "webhook/talking-avatar",
+                "httpMethod": "POST",
+                "responseMode": "onReceived",
+                "responseData": "{\"ok\":true}"
+            }
+        },
+        {
+            "id": 2,
+            "type": "n8n-nodes-base.httpRequest",
+            "position": [
+                500,
+                200
+            ],
+            "parameters": {
+                "requestMethod": "POST",
+                "url": "http://app:8000/api/generate/talking-avatar",
+                "jsonParameters": true
+            }
+        }
+    ],
+    "connections": {
+        "1": [
+            {
+                "node": 2,
+                "type": "main"
+            }
+        ]
+    }
+}

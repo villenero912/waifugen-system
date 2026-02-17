@@ -38,7 +38,7 @@ class TikTokVideoConfig:
     content_type: str = "video"
     auto_add_music: bool = True
     video_cover_timestamp: int = 0
-    reference TikTok API documentation for all available options
+    # reference TikTok API documentation for all available options
 
 
 class TikTokClient(SocialMediaClient):

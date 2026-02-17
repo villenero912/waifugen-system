@@ -1,0 +1,40 @@
+{
+    "name": "Animación de Personaje",
+    "nodes": [
+        {
+            "id": 1,
+            "type": "n8n-nodes-base.webhook",
+            "position": [
+                200,
+                320
+            ],
+            "parameters": {
+                "path": "webhook/character-animation",
+                "httpMethod": "POST",
+                "responseMode": "onReceived",
+                "responseData": "{\"ok\":true}"
+            }
+        },
+        {
+            "id": 2,
+            "type": "n8n-nodes-base.httpRequest",
+            "position": [
+                500,
+                320
+            ],
+            "parameters": {
+                "requestMethod": "POST",
+                "url": "http://app:8000/api/generate/character-animation",
+                "jsonParameters": true
+            }
+        }
+    ],
+    "connections": {
+        "1": [
+            {
+                "node": 2,
+                "type": "main"
+            }
+        ]
+    }
+}

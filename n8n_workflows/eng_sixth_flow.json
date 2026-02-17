@@ -1,0 +1,40 @@
+{
+    "name": "Sexto Flujo",
+    "nodes": [
+        {
+            "id": 1,
+            "type": "n8n-nodes-base.webhook",
+            "position": [
+                200,
+                500
+            ],
+            "parameters": {
+                "path": "webhook/sixth-flow",
+                "httpMethod": "POST",
+                "responseMode": "onReceived",
+                "responseData": "{\"ok\":true}"
+            }
+        },
+        {
+            "id": 2,
+            "type": "n8n-nodes-base.httpRequest",
+            "position": [
+                500,
+                500
+            ],
+            "parameters": {
+                "requestMethod": "POST",
+                "url": "http://app:8000/api/generate/sixth-flow",
+                "jsonParameters": true
+            }
+        }
+    ],
+    "connections": {
+        "1": [
+            {
+                "node": 2,
+                "type": "main"
+            }
+        ]
+    }
+}

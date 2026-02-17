@@ -26,16 +26,36 @@ CREATE TABLE IF NOT EXISTS characters (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
+-- Publications queue for Workflow 02 context
+CREATE TABLE IF NOT EXISTS publications_queue (
+    id SERIAL PRIMARY KEY,
+    video_url TEXT NOT NULL,
+    caption TEXT,
+    status VARCHAR(50) DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Social accounts for milestone tracking
+CREATE TABLE IF NOT EXISTS social_accounts (
+    id SERIAL PRIMARY KEY,
+    platform VARCHAR(50) NOT NULL,
+    username VARCHAR(100),
+    followers INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
 -- Content reels table
 CREATE TABLE IF NOT EXISTS reels (
     id SERIAL PRIMARY KEY,
     character_id INT REFERENCES characters(id),
-    prompt TEXT NOT NULL,
+    prompt TEXT,
+    video_prompt TEXT,
+    voice_script TEXT,
     video_url TEXT,
     voice_url TEXT,
     video_path TEXT,
-    platform VARCHAR(50) NOT NULL,
-    duration INT NOT NULL,
+    platform VARCHAR(50),
+    duration INT,
     quality_tier VARCHAR(20) DEFAULT 'standard',
     nsfw_level INT DEFAULT 0,
     credits_used INT,
@@ -707,6 +727,11 @@ CREATE INDEX IF NOT EXISTS idx_content_perf_date ON content_performance(publish_
 CREATE INDEX IF NOT EXISTS idx_jp_metrics_platform_date ON japanese_platform_metrics(platform, metric_date);
 CREATE INDEX IF NOT EXISTS idx_fc2_id ON fc2_data(fc2_id);
 CREATE INDEX IF NOT EXISTS idx_fantia_id ON fantia_data(fantia_id);
+
+-- Queue optimization indexes
+CREATE INDEX IF NOT EXISTS idx_publications_queue_status ON publications_queue(status);
+CREATE INDEX IF NOT EXISTS idx_publications_queue_created ON publications_queue(created_at);
+CREATE INDEX IF NOT EXISTS idx_social_accounts_platform ON social_accounts(platform);
 
 -- =============================================================================
 -- TABLE COMMENTS FOR DOCUMENTATION

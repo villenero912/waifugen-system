@@ -21,7 +21,7 @@ from enum import Enum
 import croniter
 import pytz
 
-from .models import (
+from ..database import (
     DatabaseManager,
     JobStatus,
     PostStatus,
