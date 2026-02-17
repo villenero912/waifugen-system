@@ -85,7 +85,7 @@ class TierHistory:
     effective_date: datetime
     price_change: Optional[Decimal]
     metadata: Dict = field(default_factory=dict)
-    created_at: datetime
+    created_at: datetime = field(default_factory=datetime.utcnow)
 
 
 @dataclass
@@ -131,7 +131,7 @@ class WinbackCampaign:
     attempts_count: int = 0
     last_attempt_at: Optional[datetime] = None
     metadata: Dict = field(default_factory=dict)
-    created_at: datetime
+    created_at: datetime = field(default_factory=datetime.utcnow)
 
 
 class DatabaseConnection:
