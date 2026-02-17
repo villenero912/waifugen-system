@@ -3,7 +3,7 @@
 # =============================================================================
 
 # Core framework and async support
-aiohttp==3.8.5
+aiohttp>=3.9.0
 asyncio-throttle==1.0.2
 
 # HTTP and API clients
@@ -43,8 +43,8 @@ croniter>=2.0.0
 APScheduler==3.10.4
 
 # Data analysis and utilities
-numpy==1.24.3
-pandas==2.0.3
+numpy>=1.26.4
+pandas>=2.2.0
 
 # AI / Generation (Optional but used in src)
 torch>=2.0.0
