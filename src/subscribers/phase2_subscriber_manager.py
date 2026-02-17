@@ -84,7 +84,7 @@ class TierHistory:
     is_upgrade: bool
     effective_date: datetime
     price_change: Optional[Decimal]
-    metadata: Dict
+    metadata: Dict = field(default_factory=dict)
     created_at: datetime
 
 
@@ -107,7 +107,7 @@ class EngagementMetrics:
     engagement_score: Decimal = Decimal("0.0000")
     active_session_count: int = 1
     last_activity: Optional[datetime] = None
-    metadata: Dict
+    metadata: Dict = field(default_factory=dict)
 
 
 @dataclass
@@ -130,7 +130,7 @@ class WinbackCampaign:
     status: str = "pending"
     attempts_count: int = 0
     last_attempt_at: Optional[datetime] = None
-    metadata: Dict
+    metadata: Dict = field(default_factory=dict)
     created_at: datetime
 
 
