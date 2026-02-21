@@ -33,7 +33,7 @@ class Phase2ContentGenerator:
         """Carga todas las configuraciones necesarias para la generación."""
         try:
             # Configuración de personajes
-            char_path = Path("C:/Users/Sebas/Downloads/package (1)/waifugen_system/config/avatars/elite8_characters.json")
+            char_path = Path(os.getenv("PROJECT_ROOT", "/app")) / "config/avatars/elite8_characters.json"
             if char_path.exists():
                 with open(char_path, "r", encoding="utf-8") as f:
                     self.characters = json.load(f)["characters"]
@@ -41,7 +41,7 @@ class Phase2ContentGenerator:
                 self.characters = {}
 
             # Escalada NSFW
-            esc_path = Path("C:/Users/Sebas/Downloads/package (1)/waifugen_system/config/funnels/nsfw_escalation.json")
+            esc_path = Path(os.getenv("PROJECT_ROOT", "/app")) / "config/funnels/nsfw_escalation.json"
             if esc_path.exists():
                 with open(esc_path, "r", encoding="utf-8") as f:
                     self.escalation = json.load(f)["escalation_levels"]
@@ -49,7 +49,7 @@ class Phase2ContentGenerator:
                 self.escalation = []
 
             # Registro de LoRAs Phase 2
-            lora_path = Path("C:/Users/Sebas/Downloads/package (1)/proyecto_waifugen/proyecto_analisis/jav_project_extracted/jav_project/config/phase2_lora_models.json")
+            lora_path = Path(os.getenv("PROJECT_ROOT", "/app")) / "config/phase2_lora_models.json"
             if lora_path.exists():
                 with open(lora_path, "r", encoding="utf-8") as f:
                     self.loras = json.load(f)["lora_registry"]

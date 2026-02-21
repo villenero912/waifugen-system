@@ -267,7 +267,7 @@ class SocialMediaManager:
                     )
                 elif platform == PlatformType.YOUTUBE:
                     result = await client.upload_video(
-                        asset, adapted_caption, "", adapted_tags, config
+                        asset, adapted_caption, adapted_tags, config
                     )
                 else:
                     result = await client.upload_video(asset, adapted_caption, adapted_tags)

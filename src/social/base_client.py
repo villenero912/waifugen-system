@@ -192,7 +192,7 @@ class SocialMediaClient(ABC):
     
     def _get_default_config_path(self) -> str:
         """Get default config path for this platform"""
-        base_path = os.getenv("SOCIAL_CONFIG_PATH", "/workspace/waifugen_system/config")
+        base_path = os.getenv("SOCIAL_CONFIG_PATH", "/app/config")
         return f"{base_path}/social/{self.platform.value}_config.json"
     
     def _get_default_config(self) -> Dict[str, Any]:

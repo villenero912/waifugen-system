@@ -22,8 +22,8 @@ class ComfyUIBridge:
     def __init__(self, config):
         self.config = config
         self.gpu_manager = GpuRentalManager(config)
-        self.workflow_dir = Path(config.get("comfy_workflow_dir", "c:/Users/Sebas/Downloads/package (1)/waifugen_system/config/comfyui_workflows"))
-        self.output_dir = Path(config.get("comfy_output_dir", "c:/Users/Sebas/Downloads/package (1)/waifugen_system/assets/output/comfyui"))
+        self.workflow_dir = Path(config.get("comfy_workflow_dir", os.getenv("PROJECT_ROOT", "/app") + "/config/comfyui_workflows"))
+        self.output_dir = Path(config.get("comfy_output_dir", os.getenv("PROJECT_ROOT", "/app") + "/assets/output/comfyui"))
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
     async def generate(self, character_data, prompt, workflow_name="basic_portrait"):

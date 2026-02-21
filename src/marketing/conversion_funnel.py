@@ -55,7 +55,8 @@ class PlatformTarget(Enum):
     YOUTUBE = "youtube"
     FACEBOOK = "facebook"
     TWITTER = "twitter"
-    DISCORD = "discord"
+    LINE = "line"
+    NICONICO = "niconico"
 
 
 @dataclass
@@ -502,7 +503,7 @@ def _get_default_stages() -> List[FunnelStep]:
             name="intent",
             stage=FunnelStage.INTENT.value,
             content_types=["promotional", "announcement"],
-            platforms=["instagram", "twitter", "discord"],
+            platforms=["instagram", "line", "niconico"],
             engagement_goal=3.0,
             conversion_rate=8.0,
             frequency_per_day=1,
@@ -513,7 +514,7 @@ def _get_default_stages() -> List[FunnelStep]:
             name="purchase",
             stage=FunnelStage.PURCHASE.value,
             content_types=["direct_promo", "limited_offer"],
-            platforms=["instagram", "email", "discord"],
+            platforms=["instagram", "email", "line"],
             engagement_goal=2.5,
             conversion_rate=15.0,
             frequency_per_day=1,
@@ -524,7 +525,7 @@ def _get_default_stages() -> List[FunnelStep]:
             name="loyalty",
             stage=FunnelStage.LOYALTY.value,
             content_types=["community_content", "exclusive"],
-            platforms=["discord", "email", "members_only"],
+            platforms=["line", "email", "members_only"],
             engagement_goal=8.0,
             conversion_rate=20.0,
             frequency_per_day=1,

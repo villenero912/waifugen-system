@@ -39,7 +39,10 @@ from .social import (
     EngagementMetrics,
     ProxyManager,
     check_proxy_status,
-    quick_post_all
+    quick_post_all,
+    TikTokClient,
+    InstagramClient,
+    YouTubeClient
 )
 
 # Monitoring modules - Phase 1 & 2
@@ -113,6 +116,9 @@ __all__ = [
     "ProxyManager",
     "check_proxy_status",
     "quick_post_all",
+    "TikTokClient",
+    "InstagramClient",
+    "YouTubeClient",
     
     # Monitoring - Phase 1 & 2
     "ProductionMonitor",

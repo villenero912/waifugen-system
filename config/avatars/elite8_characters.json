@@ -32,7 +32,7 @@
         "base_description": "Japanese woman with soft features, elegant style",
         "avatar_crop": "1:1",
         "aspect_ratios": {
-          "discord": "1:1",
+          "line": "9:16",
           "instagram": "1:1",
           "facebook": "1:1",
           "tiktok": "9:16",
@@ -169,12 +169,12 @@
             "facebook"
           ],
           "content_type": "lifestyle_photos",
-          "cta": "Join my Discord for exclusive content! 💕",
-          "link": "discord.gg/miyuki-sakura"
+          "cta": "Follow me on LINE for exclusive content! 💕",
+          "link": "line.me/ti/p/@miyuki-sakura"
         },
         "bof": {
           "platforms": [
-            "discord"
+            "line"
           ],
           "content_type": "direct_interaction",
           "conversion_goal": "phase2_subscription"
@@ -209,7 +209,7 @@
         "base_description": "Cyborg Japanese woman with cyber-kimono and heterochromia (different colored eyes), neon aesthetic",
         "avatar_crop": "1:1",
         "aspect_ratios": {
-          "discord": "1:1",
+          "line": "9:16",
           "instagram": "1:1",
           "facebook": "1:1",
           "tiktok": "9:16",
@@ -347,12 +347,12 @@
             "facebook"
           ],
           "content_type": "cyber_lifestyle",
-          "cta": "Join my digital realm on Discord! 👾",
-          "link": "discord.gg/airi-neo"
+          "cta": "Join my digital realm on LINE! 👾",
+          "link": "line.me/ti/p/@airi-neo"
         },
         "bof": {
           "platforms": [
-            "discord"
+            "line"
           ],
           "content_type": "tech_community",
           "conversion_goal": "premium_subscription"
@@ -387,7 +387,7 @@
         "base_description": "Japanese woman with minimalist style, soft lighting, elegant professional appearance",
         "avatar_crop": "1:1",
         "aspect_ratios": {
-          "discord": "1:1",
+          "line": "9:16",
           "instagram": "1:1",
           "facebook": "1:1",
           "tiktok": "9:16",
@@ -535,7 +535,7 @@
         },
         "bof": {
           "platforms": [
-            "discord",
+            "line",
             "telegram"
           ],
           "content_type": "mentorship_community",
@@ -570,7 +570,7 @@
         "base_description": "Japanese woman with hydro theme, blue glow aesthetic, beach/surfing vibes",
         "avatar_crop": "1:1",
         "aspect_ratios": {
-          "discord": "1:1",
+          "line": "9:16",
           "instagram": "1:1",
           "facebook": "1:1",
           "tiktok": "9:16",
@@ -713,12 +713,12 @@
             "facebook"
           ],
           "content_type": "lifestyle_aesthetic",
-          "cta": "Join the beach squad on Discord! 🌊",
-          "link": "discord.gg/rio-mizuno"
+          "cta": "Join the beach squad on LINE! 🌊",
+          "link": "line.me/ti/p/@rio-mizuno"
         },
         "bof": {
           "platforms": [
-            "discord"
+            "line"
           ],
           "content_type": "wellness_community",
           "conversion_goal": "premium_subscription"
@@ -752,7 +752,7 @@
         "base_description": "Japanese woman with floral spring aesthetic, white cotton dress, blue flowers, ethereal beauty",
         "avatar_crop": "1:1",
         "aspect_ratios": {
-          "discord": "1:1",
+          "line": "9:16",
           "instagram": "1:1",
           "facebook": "1:1",
           "tiktok": "9:16",
@@ -896,11 +896,11 @@
           ],
           "content_type": "romantic_lifestyle",
           "cta": "Join my garden community! 🌸",
-          "link": "discord.gg/hana-nakamura"
+          "link": "line.me/ti/p/@hana-nakamura"
         },
         "bof": {
           "platforms": [
-            "discord",
+            "line",
             "telegram"
           ],
           "content_type": "emotional_support",
@@ -935,7 +935,7 @@
         "base_description": "Japanese man with biker style, black leather jacket, vintage motorcycle, rugged masculine appearance",
         "avatar_crop": "1:1",
         "aspect_ratios": {
-          "discord": "1:1",
+          "line": "9:16",
           "instagram": "1:1",
           "facebook": "1:1",
           "tiktok": "9:16",
@@ -1077,12 +1077,12 @@
             "facebook"
           ],
           "content_type": "rugged_lifestyle",
-          "cta": "Join the crew on Discord! 🔥",
-          "link": "discord.gg/jin-kawasaki"
+          "cta": "Join the crew on LINE! 🔥",
+          "link": "line.me/ti/p/@jin-kawasaki"
         },
         "bof": {
           "platforms": [
-            "discord"
+            "line"
           ],
           "content_type": "biker_community",
           "conversion_goal": "premium_subscription"
@@ -1116,7 +1116,7 @@
         "base_description": "Japanese woman in shrine maiden attire, white and red hakama, serene mystical appearance",
         "avatar_crop": "1:1",
         "aspect_ratios": {
-          "discord": "1:1",
+          "line": "9:16",
           "instagram": "1:1",
           "facebook": "1:1",
           "tiktok": "9:16",
@@ -1259,11 +1259,11 @@
           ],
           "content_type": "spiritual_content",
           "cta": "Join my shrine community! 🏮⛩️",
-          "link": "discord.gg/chiyo-sasaki"
+          "link": "line.me/ti/p/@chiyo-sasaki"
         },
         "bof": {
           "platforms": [
-            "discord",
+            "line",
             "telegram"
           ],
           "content_type": "spiritual_community",
@@ -1298,7 +1298,7 @@
         "base_description": "Japanese man with modern architect aesthetic, smart glasses, charcoal turtleneck, sophisticated urban appearance",
         "avatar_crop": "1:1",
         "aspect_ratios": {
-          "discord": "1:1",
+          "line": "9:16",
           "instagram": "1:1",
           "facebook": "1:1",
           "tiktok": "9:16",
@@ -1437,11 +1437,11 @@
           ],
           "content_type": "urban_fashion",
           "cta": "Join the city squad! 🏢✨",
-          "link": "discord.gg/ren-ohashi"
+          "link": "line.me/ti/p/@ren-ohashi"
         },
         "bof": {
           "platforms": [
-            "discord"
+            "line"
           ],
           "content_type": "urban_community",
           "conversion_goal": "premium_subscription"
@@ -1477,7 +1477,7 @@
         "base_description": "Mixed-race woman with striking features, bold makeup, attention-grabbing style, changeable hair colors",
         "avatar_crop": "1:1",
         "aspect_ratios": {
-          "discord": "1:1",
+          "line": "9:16",
           "instagram": "1:1",
           "facebook": "1:1",
           "tiktok": "9:16",
@@ -1648,12 +1648,12 @@
         },
         "mof": {
           "platforms": [
-            "discord",
+            "line",
             "twitter"
           ],
           "content_type": "suggestive_teasers",
           "cta": "Join for exclusive content you won't see anywhere else 👀💕",
-          "link": "discord.gg/aurelia-viral"
+          "link": "line.me/ti/p/@aurelia-viral"
         },
         "bof": {
           "platforms": [

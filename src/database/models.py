@@ -1,13 +1,16 @@
 """
 Database Models for Elite 8 AI Video Generation System
 
-This module provides comprehensive database management using SQLite
+This module provides comprehensive database management using PostgreSQL
 for tracking jobs, campaigns, users, and system state.
+FIX v2: migrado de SQLite a PostgreSQL.
 """
 
 import os
 import json
 import sqlite3
+import psycopg2
+from psycopg2.extras import RealDictCursor
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -183,9 +186,9 @@ class DatabaseManager:
             # Enable foreign keys
             self._local.connection.execute("PRAGMA foreign_keys = ON")
             # Return rows as dictionaries
-            self._local.connection.row_factory = sqlite3.Row
+            # psycopg2 uses RealDictCursor for dict-like rows
             # Enable WAL mode for better concurrency
-            self._local.connection.execute("PRAGMA journal_mode=WAL")
+            # WAL no aplica a PostgreSQL
         
         return self._local.connection
     

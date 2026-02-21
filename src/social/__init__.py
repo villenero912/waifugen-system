@@ -13,17 +13,13 @@ from .social_manager import (
     SocialMediaManager,
     PostingConfig,
     PostCampaign,
-    ContentScheduler,
-    quick_post_all,
-    check_all_platforms
+    quick_post_all
 )
 from .proxy_manager import (
     ProxyManager,
     ProxyCredentials,
     ProxyStats,
     BudgetAlert,
-    SmartProxyRouter,
-    quick_proxy_request,
     check_proxy_status
 )
 
@@ -41,14 +37,10 @@ __all__ = [
     "SocialMediaManager",
     "PostingConfig",
     "PostCampaign",
-    "ContentScheduler",
     "quick_post_all",
-    "check_all_platforms",
     "ProxyManager",
     "ProxyCredentials",
     "ProxyStats",
     "BudgetAlert",
-    "SmartProxyRouter",
-    "quick_proxy_request",
     "check_proxy_status"
 ]

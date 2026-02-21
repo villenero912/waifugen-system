@@ -346,7 +346,7 @@ class XVideosPornhubFunnel(ConversionFunnel):
                     "Link in bio",
                     "Linktree hub",
                     "Teaser clips on Twitter",
-                    "Discord announcements"
+                    "LINE announcements"
                 ]
             }
         }

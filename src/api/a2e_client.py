@@ -1049,7 +1049,7 @@ async def quick_generate(
     """
     config_path = os.getenv(
         "A2E_CONFIG_PATH",
-        "/workspace/waifugen_system/config/avatars/pro_plan_optimized.json"
+        os.getenv("A2E_CONFIG_PATH", "/app/config/avatars/pro_plan_optimized.json")
     )
     
     async with A2EClient(config_path=config_path) as client:
@@ -1079,7 +1079,7 @@ async def check_balance() -> Dict[str, Any]:
     """Quick check of credit balance"""
     config_path = os.getenv(
         "A2E_CONFIG_PATH",
-        "/workspace/waifugen_system/config/avatars/pro_plan_optimized.json"
+        os.getenv("A2E_CONFIG_PATH", "/app/config/avatars/pro_plan_optimized.json")
     )
     
     async with A2EClient(config_path=config_path) as client:

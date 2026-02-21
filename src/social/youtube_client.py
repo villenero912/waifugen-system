@@ -246,8 +246,7 @@ class YouTubeClient(SocialMediaClient):
     async def upload_video(
         self,
         asset: MediaAsset,
-        title: str,
-        description: str = "",
+        caption: str,
         tags: List[str] = None,
         config: YouTubeShortConfig = None
     ) -> PostResult:
@@ -256,8 +255,7 @@ class YouTubeClient(SocialMediaClient):
         
         Args:
             asset: Media asset containing video file
-            title: Video title
-            description: Video description
+            caption: Video caption (used as title)
             tags: List of tags
             config: Additional YouTube-specific configuration
             
@@ -277,8 +275,8 @@ class YouTubeClient(SocialMediaClient):
         if config is None:
             config = YouTubeShortConfig()
         
-        # Build metadata
-        metadata = self._build_metadata(title, description, tags, config)
+        # Build metadata (caption is used as title, description is empty)
+        metadata = self._build_metadata(caption, "", tags, config)
         
         # Upload the video
         result = await self._upload_short(asset, metadata, config)

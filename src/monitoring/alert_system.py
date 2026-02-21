@@ -27,7 +27,7 @@ from typing import Dict, Any, Optional, List, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 from collections import deque
-import sqlite3
+import sqlite3  # Usado para caché local de métricas (no datos críticos)
 
 # Configure logging
 logging.basicConfig(

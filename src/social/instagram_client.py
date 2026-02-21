@@ -17,6 +17,7 @@ from pathlib import Path
 import aiohttp
 
 from .base_client import SocialMediaClient, PlatformType, PostResult, EngagementMetrics, MediaAsset, SocialMediaError
+from ..utils.file_uploader import FileUploader
 
 # Configure logging
 logging.basicConfig(
@@ -256,17 +257,21 @@ class InstagramClient(SocialMediaClient):
         file_size = os.path.getsize(asset.file_path)
         
         # [CRITICAL] Instagram Graph API requires a PUBLIC URL for video_url.
-        # Local paths (like C:\... or /home/...) will not be accessible by Meta's servers.
+        # If local path, upload to temporary public storage
+        video_url = asset.file_path
         if not asset.file_path.startswith(('http://', 'https://')):
-            logger.error(f"Instagram upload requires a public URL, but got local path: {asset.file_path}")
-            raise SocialMediaError(
-                "Instagram Graph API requires a publicly accessible URL for video uploads. "
-                "Local file paths (C:\\... or /workspace/...) are not supported. "
-                "Please host the video on a temporary public server (e.g. S3, Cloudinary, etc.) "
-                "before attempting to publish to Instagram.",
-                self.platform,
-                error_code="LOCAL_PATH_NOT_SUPPORTED"
-            )
+            logger.info(f"Local file detected. Uploading to temporary public storage: {asset.file_path}")
+            video_url = await FileUploader.upload_to_public_url(asset.file_path)
+            
+            if not video_url:
+                raise SocialMediaError(
+                    "Failed to upload video to temporary public storage. "
+                    "Instagram Graph API requires a publicly accessible URL for video uploads.",
+                    self.platform,
+                    error_code="UPLOAD_TO_PUBLIC_STORAGE_FAILED"
+                )
+            
+            logger.info(f"Video uploaded to temporary public URL: {video_url}")
             
         # Build caption with hashtags
         full_caption = caption
@@ -278,7 +283,7 @@ class InstagramClient(SocialMediaClient):
         container_url = f"{self.BASE_URL}/{self.instagram_business_account_id}/media"
         
         container_data = {
-            "video_url": asset.file_path,  # URL-based upload or use file
+            "video_url": video_url,  # URL-based upload or use file
             "caption": full_caption[:self.config.get("caption_max_length", 2200)],
             "media_type": "REELS",
             "is_reshare_disabled": config.is_reshare,

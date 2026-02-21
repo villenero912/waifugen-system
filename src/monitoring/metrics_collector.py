@@ -29,7 +29,7 @@ from typing import Dict, Any, Optional, List, AsyncGenerator
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 import uuid
-import sqlite3
+import sqlite3  # Usado para caché local de métricas (no datos críticos)
 from collections import defaultdict
 
 # Configure logging

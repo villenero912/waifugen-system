@@ -7,7 +7,7 @@ import logging
 from pathlib import Path
 
 # Add project root to sys.path
-PROJECT_ROOT = Path("c:/Users/Sebas/Downloads/package (1)/waifugen_system")
+PROJECT_ROOT = Path(os.getenv("PROJECT_ROOT", "/app"))
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 from processing.gpu_rental_manager import GpuRentalManager, GpuInstance, GpuRentalProvider

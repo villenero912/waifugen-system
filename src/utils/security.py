@@ -12,7 +12,9 @@ class SecureVault:
     
     def __init__(self, master_key: str = None):
         if master_key is None:
-            master_key = os.getenv("ENCRYPTION_KEY", "WaifuGen_Insecure_Fallback_Key_2026!")
+            master_key = os.getenv("ENCRYPTION_KEY")
+            if not master_key:
+                raise RuntimeError("ENCRYPTION_KEY no configurada en .env")
         
         # Derivar una clave segura de 32 bytes usando PBKDF2
         salt = b'waifugen_salt_production' # En producción idealmente se guardaría aparte

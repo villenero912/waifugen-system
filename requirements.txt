@@ -1,6 +1,5 @@
 # Elite 8 System - Python Dependencies
-# Generated for production deployment on VPS
-# =============================================================================
+# FIX v2: añadidas dependencias faltantes
 
 # Core framework and async support
 aiohttp>=3.9.0
@@ -22,21 +21,27 @@ psycopg2-binary>=2.9.0
 
 # Caching and task queues
 redis>=4.5.0
-celery>=5.3.0  # UPDATED: fixed version not found error
+celery>=5.3.0
 
 # Monitoring and metrics
 prometheus-client==0.17.1
 psutil==5.9.5
 
-# Web framework (Chat API)
+# Web frameworks
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 python-multipart==0.0.6
+flask>=3.0.0          # FIX: necesario para platform_poster, thumbnail_service, karaoke_generator
+werkzeug>=3.0.0       # FIX: necesario para secure_filename en karaoke_generator
+
+# Security / Encryption
+cryptography>=41.0.0  # FIX: necesario para security.py (AES-256 Fernet)
 
 # Video and audio processing
 moviepy==1.0.3
 Pillow>=10.0.1,<11.0.0
 opencv-python==4.8.0.76
+ffmpeg-python>=0.2.0  # FIX: wrapper Python para FFmpeg
 
 # Scheduling and automation
 croniter>=2.0.0
@@ -46,7 +51,7 @@ APScheduler==3.10.4
 numpy>=1.26.4
 pandas>=2.2.0
 
-# AI / Generation (Optional but used in src)
+# AI / Generation
 torch>=2.0.0
 diffusers>=0.21.0
 transformers>=4.30.0
@@ -59,8 +64,13 @@ python-telegram-bot>=20.0
 # Phase 2 - Stealth Upload and Browser Automation
 playwright>=1.40.0
 playwright-stealth>=1.0.6
+selenium>=4.15.0       # FIX: necesario para send_dm.py
 
 # YouTube and Google API dependencies
 google-api-python-client==2.95.0
 google-auth-oauthlib==1.0.0
 google-auth-httplib2==0.1.0
+
+# Japanese text processing
+pykakasi>=2.2.0        # FIX: romaji/karaoke japonés
+jaconv>=0.3.0          # FIX: conversión hiragana↔katakana

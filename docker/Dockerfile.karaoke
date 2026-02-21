@@ -59,15 +59,19 @@ COPY --from=builder /install /usr/local
 COPY --chown=appuser:appgroup . /app
 
 # Create directories for output with proper permissions
-RUN mkdir -p /app/karaoke_lyrics \
+RUN mkdir -p /app/assets && mkdir -p /app/karaoke_lyrics \
     /app/karaoke_voices \
     /app/karaoke_mixed \
     /app/karaoke_videos \
     /app/karaoke_lipsync \
     /app/music_library \
+    /app/assets \
+    /app/assets/output \
+    /app/assets/output/karaoke \
     /app/assets/output/phase1 \
     /app/assets/output/phase2 \
-    && chown -R appuser:appgroup /app
+    && chown -R appuser:appgroup /app \
+    && chmod -R 775 /app/assets
 
 # Set working directory
 WORKDIR /app

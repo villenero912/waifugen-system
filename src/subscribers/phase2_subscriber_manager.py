@@ -161,7 +161,7 @@ class DatabaseConnection:
                 port=self.db_config.get("port", os.getenv("DB_PORT", 5432)),
                 database=self.db_config.get("database", os.getenv("DB_NAME", "jav_automation")),
                 user=self.db_config.get("user", os.getenv("DB_USER", "postgres")),
-                password=self.db_config.get("password", os.getenv("DB_PASSWORD", "postgres")),
+                password=self.db_config.get("password", os.getenv("DB_PASSWORD")),
                 connect_timeout=10
             )
             yield conn
@@ -930,8 +930,8 @@ if __name__ == "__main__":
         "host": "localhost",
         "port": 5432,
         "database": "jav_automation",
-        "user": "postgres",
-        "password": "postgres"
+        "user": os.getenv("DB_USER", "waifugen_user"),
+        "password": os.getenv("DB_PASSWORD")
     }
     
     db = DatabaseConnection(db_config)

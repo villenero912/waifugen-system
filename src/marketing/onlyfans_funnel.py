@@ -80,7 +80,7 @@ class OnlyFansFunnel(ConversionFunnel):
     
     Funnel Flow:
     1. Viral Hook (TikTok/Instagram) → Drive traffic
-    2. Discord Nurture → Build community
+    2. LINE Nurture → Build community
     3. OF Free/Preview → Soft conversion
     4. OF Basic ($9.99) → First monetization
     5. OF Premium ($24.99) → Upsell
@@ -133,16 +133,16 @@ class OnlyFansFunnel(ConversionFunnel):
                 target_audience=["viral_viewers", "casual_fans"]
             ),
             FunnelStep(
-                name="discord_nurture",
+                name="line_nurture",
                 stage="interest",
                 content_types=["cosplay_tease", "grwm", "behind_scenes"],
-                platforms=["discord", "telegram"],
+                platforms=["line", "telegram"],
                 engagement_goal=6.0,
                 conversion_rate=15.0,
                 frequency_per_day=2,
                 duration_hours=48,
                 metrics={"nsfw_level": 2, "cta": "Join OF for exclusive 💕"},
-                target_audience=["discord_members", "engaged_followers"]
+                target_audience=["line_followers", "engaged_followers"]
             ),
             FunnelStep(
                 name="of_preview",
@@ -202,7 +202,7 @@ class OnlyFansFunnel(ConversionFunnel):
             target_revenue=5000.0,
             kpi_targets={
                 "viral_views_monthly": 100000,
-                "discord_joins_monthly": 5000,
+                "line_joins_monthly": 5000,
                 "of_subscribers_monthly": 750,
                 "basic_to_premium_rate": 25,
                 "premium_to_vip_rate": 20,
@@ -211,7 +211,7 @@ class OnlyFansFunnel(ConversionFunnel):
             },
             audience_segments=[
                 {"name": "viral_audience", "size": 100000, "conversion_rate": 5.0},
-                {"name": "discord_community", "size": 5000, "conversion_rate": 15.0},
+                {"name": "line_community", "size": 5000, "conversion_rate": 15.0},
                 {"name": "of_subscribers", "size": 750, "conversion_rate": 100.0}
             ]
         )

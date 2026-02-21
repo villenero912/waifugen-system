@@ -13,7 +13,7 @@ class DatasetGenerator:
     """
     def __init__(self, character_config):
         self.character = character_config
-        self.output_dir = Path(f"c:/Users/Sebas/Downloads/package (1)/waifugen_system/lora_training/datasets/{self.character['id']}")
+        self.output_dir = Path(os.getenv("PROJECT_ROOT", "/app")) / "lora_training" / "datasets" / self.character['id']
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
     async def generate_training_set(self):

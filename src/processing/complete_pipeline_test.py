@@ -41,7 +41,8 @@ class Platform(Enum):
     INSTAGRAM_REELS = "instagram_reels"
     YOUTUBE_SHORTS = "youtube_shorts"
     FACEBOOK = "facebook"
-    DISCORD = "discord"
+    LINE = "line"
+    NICONICO = "niconico"
     ONLYFANS = "onlyfans"
 
 

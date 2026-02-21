@@ -53,7 +53,7 @@
             "category": "Suggestive (Teasing)",
             "description": "Mildly suggestive content, still platform-compliant",
             "allowed_platforms": [
-                "discord",
+                "line",
                 "twitter",
                 "reddit",
                 "telegram"
@@ -86,7 +86,7 @@
                 "soft lighting",
                 "posed"
             ],
-            "funnel_position": "discord_nurture",
+            "funnel_position": "line_nurture",
             "conversion_goal": "onlyfans_preview"
         },
         "level_4": {
@@ -300,7 +300,7 @@
         },
         "bridge_platforms": {
             "platforms": [
-                "discord",
+                "line",
                 "twitter",
                 "reddit",
                 "telegram"
@@ -429,7 +429,7 @@
         "week_2-3": {
             "level": 2,
             "focus": "Suggestive teasers",
-            "goal": "discord_community_building"
+            "goal": "line_community_building"
         },
         "week_4-6": {
             "level": 4,

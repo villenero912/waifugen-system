@@ -25,6 +25,8 @@ import uuid
 import time
 from functools import wraps
 from flask import Flask, request, jsonify, send_file
+
+app = Flask(__name__)
 from werkzeug.utils import secure_filename
 from pathlib import Path
 
@@ -32,7 +34,7 @@ from pathlib import Path
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-from scripts.advanced_karaoke import AdvancedLyricsGenerator, AudienceProfile, LyricStyle
+from advanced_karaoke import AdvancedLyricsGenerator, AudienceProfile, LyricStyle
 
 # SECURITY CONFIGURATION
 # =============================================================================

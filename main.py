@@ -142,7 +142,7 @@ class Elite8System:
             },
             "phase1": {
                 "daily_video_target": 4,
-                "platforms": ["tiktok", "instagram", "youtube"],
+                "platforms": ["tiktok", "instagram", "youtube", "facebook", "line", "niconico"],
                 "characters": ["yuki-chan", "aurelia-viral", "haruka-chan"]
             },
             "phase2": {
@@ -259,7 +259,7 @@ class Elite8System:
         
         logger.info("Stopping ELITE 8 System...")
         
- # Stop scheduler
+        # Stop scheduler
         if self.scheduler:
             await self.scheduler.stop()
         

@@ -84,7 +84,7 @@ async def test_upload():
     # Ejemplo de uso para Aiko
     uploader = StealthUploader("xvideos")
     await uploader.upload_xvideos(
-        video_path="c:/Users/Sebas/Downloads/package (1)/waifugen_system/assets/videos/aiko_hq_sample.mp4",
+        video_path="/app/assets/videos/aiko_hq_sample.mp4",
         title="Aiko Hayashi - Corporate Secrets (4K)",
         tags=["japanese", "office", "glasses", "professional"]
     )

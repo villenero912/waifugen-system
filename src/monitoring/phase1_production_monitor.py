@@ -57,7 +57,8 @@ class Platform(Enum):
     INSTAGRAM = "instagram"
     YOUTUBE_SHORTS = "youtube_shorts"
     FACEBOOK = "facebook"
-    DISCORD = "discord"
+    LINE = "line"
+    NICONICO = "niconico"
 
 
 @dataclass

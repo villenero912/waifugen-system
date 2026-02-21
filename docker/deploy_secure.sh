@@ -428,10 +428,13 @@ YOUTUBE_CLIENT_SECRET=your_youtube_client_secret
 FACEBOOK_API_KEY=your_facebook_api_key
 FACEBOOK_SECRET=your_facebook_secret
 
-# Discord
-DISCORD_BOT_TOKEN=your_discord_bot_token
-DISCORD_CLIENT_ID=your_discord_client_id
-DISCORD_CLIENT_SECRET=your_discord_client_secret
+# LINE (Japan - 98M users)
+LINE_CHANNEL_ACCESS_TOKEN=your_line_channel_access_token
+LINE_CHANNEL_SECRET=your_line_channel_secret
+
+# Niconico (Japan)
+NICONICO_CLIENT_ID=your_niconico_client_id
+NICONICO_CLIENT_SECRET=your_niconico_client_secret
 
 #===============================================================================
 # PROXY CONFIGURATION
@@ -514,6 +517,47 @@ AUTO_ENGAGEMENT_ENABLED=true
 # DATA PATHS
 #===============================================================================
 DATA_PATH=./data
+PROJECT_ROOT=/app
+
+#===============================================================================
+# SECURITY EXTRAS (requeridos por fixes v2)
+#===============================================================================
+ENCRYPTION_SALT=${SECURE_ENCRYPTION_KEY}2
+INTERNAL_API_KEY=$(openssl rand -hex 32)
+PLATFORM_POSTER_API_KEY=$(openssl rand -hex 32)
+THUMBNAIL_SERVICE_API_KEY=$(openssl rand -hex 32)
+KARAOKE_API_KEY=$(openssl rand -hex 32)
+PIPER_API_KEY=$(openssl rand -hex 32)
+
+#===============================================================================
+# REPLICATE - MUSIC GENERATION
+#===============================================================================
+REPLICATE_API_TOKEN=your_replicate_api_token_here
+MUSICGEN_MODEL_VERSION=671ac64540ef4c2514605978c45480e34c919d36371728cce7183e8460662d51
+
+#===============================================================================
+# A2E EXTRA VARS
+#===============================================================================
+A2E_API_ID=your_a2e_api_id_here
+VIDEO_A2E_API_KEY=\${A2E_API_KEY}
+
+#===============================================================================
+# TELEGRAM
+#===============================================================================
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+TELEGRAM_ADMIN_CHAT_ID=your_telegram_chat_id
+
+#===============================================================================
+# FASE 2 - PLATAFORMAS ADULTAS (configurar cuando llegues a 50K seguidores)
+#===============================================================================
+FANTIA_ACCESS_TOKEN=your_fantia_access_token
+FC2_ACCESS_TOKEN=your_fc2_access_token
+FANVUE_API_KEY=your_fanvue_api_key
+
+#===============================================================================
+# GPU RENTAL (Phase 3 - no necesario hasta 50K seguidores)
+#===============================================================================
+# RUNPOD_API_KEY=your_runpod_api_key_when_ready
 EOF
     
     log_info "Environment file created: ${ENV_FILE}"
