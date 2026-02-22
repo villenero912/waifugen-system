@@ -128,7 +128,7 @@ services:
       - METRICS_PORT=9090
 
     volumes:
-      - app_data:/app/data
+      - ./data:/app/data
       - app_logs:/app/logs
       - ./config:/app/config:ro
       - ./assets:/app/assets:ro
@@ -162,7 +162,7 @@ services:
       target: runtime
     container_name: ${PROJECT_NAME:-waifugen}_worker
     restart: unless-stopped
-    command: python -m celery -A core worker -l info
+    command: python -m celery -A main worker -l info
     environment:
       - PYTHONUNBUFFERED=1
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
@@ -207,8 +207,9 @@ services:
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_ADMIN_CHAT_ID=${TELEGRAM_ADMIN_CHAT_ID}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
     volumes:
-      - app_data:/app/data
+      - ./data:/app/data
       - app_logs:/app/logs
       - ./assets:/app/assets:ro
     networks:
@@ -449,6 +450,7 @@ services:
       - KARAOKE_API_KEY=${KARAOKE_API_KEY}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_ADMIN_CHAT_ID=${TELEGRAM_ADMIN_CHAT_ID}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
       - PLATFORM_POSTER_API_KEY=${PLATFORM_POSTER_API_KEY}
       - N8N_SECURE_COOKIE=false
       - N8N_PROXY_HOPS=${N8N_PROXY_HOPS:-1}
