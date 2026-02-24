@@ -193,6 +193,32 @@ class JobScheduler:
             function_name="rotate_characters",
             enabled=True
         )
+
+        # WF09 IMPROVEMENT: Smart metrics polling
+        # Every 15 minutes for the first 2 hours after a post (golden window for algorithms)
+        self.add_task(
+            task_type=ScheduleType.METRICS_REPORT,
+            cron_expression="*/15 * * * *",
+            function_name="poll_recent_post_metrics",
+            enabled=True,
+            parameters={"mode": "recent", "max_age_hours": 2}
+        )
+        # Every 6 hours for older posts
+        self.add_task(
+            task_type=ScheduleType.METRICS_REPORT,
+            cron_expression="0 */6 * * *",
+            function_name="poll_all_account_metrics",
+            enabled=True,
+            parameters={"mode": "full"}
+        )
+        # Phase 2 activation check: verify 50K threshold every 6 hours
+        self.add_task(
+            task_type=ScheduleType.CHARACTER_ROTATION,
+            cron_expression="0 */6 * * *",
+            function_name="check_phase2_activation_threshold",
+            enabled=True,
+            parameters={"follower_threshold": 50000}
+        )
     
     def add_task(
         self,

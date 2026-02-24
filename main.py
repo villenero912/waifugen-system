@@ -368,26 +368,29 @@ class Elite8System:
         return result
     
     async def run_phase1(self):
-        """Run Phase 1 operations (social media automation)"""
-        logger.info("Running Phase 1 operations...")
-        
+        """Run Phase 1 - PARALLEL generation per character (WF01 improvement)"""
+        logger.info("Running Phase 1 with parallel generation...")
+
         phase1_config = self.config.get("phase1", {})
         characters = phase1_config.get("characters", ["yuki-chan"])
         platforms = phase1_config.get("platforms", ["tiktok", "instagram", "youtube"])
         target_videos = phase1_config.get("daily_video_target", 4)
-        
-        for i in range(target_videos):
+
+        async def generate_for_character(i):
             character_id = characters[i % len(characters)]
             platform = platforms[i % len(platforms)]
-            
-            # Generate video
-            await self.generate_video(
-                character_id=character_id,
-                prompt=f"Generate karaoke content for {character_id}",
-                platform=platform
-            )
-        
-        logger.info(f"Phase 1 operations completed: {target_videos} videos queued")
+            try:
+                await self.generate_video(
+                    character_id=character_id,
+                    prompt=f"Generate karaoke content for {character_id}",
+                    platform=platform
+                )
+                logger.info(f"[PARALLEL] Queued {character_id} on {platform}")
+            except Exception as e:
+                logger.error(f"[PARALLEL] Failed for {character_id}: {e}")
+
+        await asyncio.gather(*[generate_for_character(i) for i in range(target_videos)])
+        logger.info(f"Phase 1 completed: {target_videos} videos queued in parallel")
     
     async def run_phase2(self):
         """Run Phase 2 operations (marketing and expansion)"""
