@@ -1,0 +1,272 @@
+{
+  "version": "3.0.0",
+  "last_updated": "2026-01-22",
+  "plan_name": "A2E_PRO_CORRECTED_PRICING",
+  "description": "A2E Pro Plan optimized configuration with REAL pricing: 1 credit per second",
+  "pricing_analysis": {
+    "a2e_plans": {
+      "free": {
+        "monthly_cost": 0,
+        "daily_bonus_credits": 30,
+        "monthly_bonus_credits": 0,
+        "total_monthly_credits": 900,
+        "watermark": true,
+        "max_resolution": "720p",
+        "custom_avatars": 10
+      },
+      "pro": {
+        "monthly_cost": 9.90,
+        "daily_bonus_credits": 60,
+        "monthly_bonus_credits": 1800,
+        "total_monthly_credits": 3600,
+        "watermark": false,
+        "max_resolution": "4k",
+        "custom_avatars": 50,
+        "api_access": true,
+        "recommended_for": "4-8 daily reels (15-30s each)"
+      },
+      "max": {
+        "monthly_cost": 49.00,
+        "daily_bonus_credits": 90,
+        "monthly_bonus_credits": 2700,
+        "total_monthly_credits": 5400,
+        "watermark": false,
+        "max_resolution": "4k",
+        "custom_avatars": 200,
+        "high_priority": true,
+        "unlimited_tools": true,
+        "recommended_for": "High volume production (10+ daily reels)"
+      }
+    },
+    "credit_costs": {
+      "ai_avatar_video": "1 credit per second",
+      "image_to_video": "30 credits per 5s video",
+      "face_swap_video": "1 credit per second",
+      "face_swap_image": "1 credit per image",
+      "subtitle_removal": "1 credit per second",
+      "voice_clone": "free (pay for output length)",
+      "studio_avatar": "100 credits per avatar",
+      "eye_contact": "100 credits per avatar"
+    },
+    "topup_pricing": {
+      "small": {
+        "credits": 1800,
+        "cost_usd": 19.90,
+        "cost_per_credit": 0.0111
+      },
+      "large": {
+        "credits": 16000,
+        "cost_usd": 80.00,
+        "cost_per_credit": 0.005
+      }
+    }
+  },
+  "phase1_strategy": {
+    "target_daily_reels": 4,
+    "reel_duration_seconds": 15,
+    "credits_per_reel": 15,
+    "daily_credits_needed": 60,
+    "monthly_credits_needed": 1800,
+    "recommended_plan": "pro",
+    "monthly_investment": 9.90,
+    "topup_needed": false,
+    "production_capacity": {
+      "with_daily_bonus_only": {
+        "reels_per_day": 4,
+        "credits_used": 60,
+        "monthly_reels": 120,
+        "cost_per_reel": 0.0825,
+        "monthly_cost": 9.90,
+        "credits_buffer": 1800
+      },
+      "using_full_allowance": {
+        "reels_per_day": 8,
+        "credits_used": 120,
+        "monthly_reels": 240,
+        "cost_per_reel": 0.04125,
+        "monthly_cost": 9.90,
+        "credits_buffer": 0
+      }
+    },
+    "cost_comparison": {
+      "15s_reel": {
+        "credits": 15,
+        "cost_usd": 0.0825,
+        "note": "Using Pro plan daily bonus"
+      },
+      "30s_reel": {
+        "credits": 30,
+        "cost_usd": 0.165,
+        "note": "Double credits, still within budget"
+      },
+      "60s_reel": {
+        "credits": 60,
+        "cost_usd": 0.33,
+        "note": "Maximum recommended length"
+      }
+    }
+  },
+  "daily_schedule": {
+    "reel_1_morning": {
+      "time": "08:00_JST",
+      "character": "miyuki_sakura",
+      "duration_seconds": 15,
+      "credits_used": 15,
+      "platform": "tiktok",
+      "style": "energetic_upbeat"
+    },
+    "reel_2_afternoon": {
+      "time": "12:00_JST",
+      "character": "hana_nakamura",
+      "duration_seconds": 15,
+      "credits_used": 15,
+      "platform": "instagram",
+      "style": "emotional_soft"
+    },
+    "reel_3_evening": {
+      "time": "18:00_JST",
+      "character": "airi_neo",
+      "duration_seconds": 15,
+      "credits_used": 15,
+      "platform": "youtube",
+      "style": "cyber_energetic"
+    },
+    "reel_4_night": {
+      "time": "21:00_JST",
+      "character": "aiko_hayashi",
+      "duration_seconds": 15,
+      "credits_used": 15,
+      "platform": "tiktok",
+      "style": "professional_elegant"
+    },
+    "daily_totals": {
+      "total_credits": 60,
+      "total_duration": 60,
+      "daily_bonus_available": 60,
+      "buffer_remaining": 0,
+      "cost_per_day": 0.33
+    }
+  },
+  "optimization_strategies": {
+    "credit_efficiency": {
+      "optimal_duration": "15 seconds per reel",
+      "batch_generation": "Generate 4 reels in one session",
+      "reuse_avatars": "Cache character base avatars",
+      "smart_scheduling": "Spread across day for engagement"
+    },
+    "cost_savings": {
+      "vs_previous_estimate": {
+        "old_estimate": 50.00,
+        "new_real_cost": 9.90,
+        "savings": 40.10,
+        "savings_percent": 80.2
+      },
+      "scalability": {
+        "double_production": "8 reels/day still fits in Pro plan",
+        "additional_cost": 0,
+        "new_cost_per_reel": 0.04125
+      }
+    }
+  },
+  "budget_scenarios": {
+    "conservative": {
+      "plan": "pro",
+      "reels_per_day": 4,
+      "monthly_cost": 9.90,
+      "reels_per_month": 120,
+      "buffer_credits": 1800,
+      "emergency_capacity": "Can do 8 reels/day if needed"
+    },
+    "aggressive": {
+      "plan": "pro",
+      "reels_per_day": 8,
+      "monthly_cost": 9.90,
+      "reels_per_month": 240,
+      "buffer_credits": 0,
+      "note": "Max out Pro plan capacity"
+    },
+    "phase2_ready": {
+      "plan": "max",
+      "reels_per_day": 12,
+      "monthly_cost": 49.00,
+      "reels_per_month": 360,
+      "buffer_credits": 1800,
+      "note": "Scales for Phase 2 NSFW content"
+    }
+  },
+  "quality_settings": {
+    "standard_reel": {
+      "resolution": "720p",
+      "duration": 15,
+      "face_consistency_threshold": 0.95,
+      "lora_strength": 0.8,
+      "cfg_scale": 1.5,
+      "credits": 15
+    },
+    "premium_reel": {
+      "resolution": "1080p",
+      "duration": 15,
+      "face_consistency_threshold": 0.98,
+      "lora_strength": 0.9,
+      "cfg_scale": 1.7,
+      "credits": 15,
+      "note": "Same credits, better quality with Pro features"
+    }
+  },
+  "monitoring": {
+    "daily_alerts": {
+      "credits_warning": "Alert if daily usage > 70 credits",
+      "budget_exceeded": "Alert if monthly projection > 2000 credits",
+      "quality_check": "Alert if face_consistency < 0.95"
+    },
+    "weekly_reports": {
+      "credits_used": "Total credits consumed",
+      "reels_produced": "Total reels generated",
+      "cost_per_reel": "Average cost per reel",
+      "quality_average": "Average quality score"
+    }
+  },
+  "next_steps": {
+    "immediate": [
+      "Sign up for A2E Pro plan ($9.90/month)",
+      "Configure API key in environment",
+      "Test generation with 1 reel",
+      "Verify credit consumption (should be 15 credits)"
+    ],
+    "week_1": [
+      "Setup automated scheduler for 4 daily reels",
+      "Configure monitoring and alerts",
+      "Establish baseline quality metrics",
+      "Test all 4 characters"
+    ],
+    "week_2": [
+      "Optimize batch generation workflow",
+      "Fine-tune character prompts",
+      "Setup social media posting automation",
+      "Monitor engagement metrics"
+    ],
+    "month_1": [
+      "Evaluate Pro plan efficiency",
+      "Consider scaling to 6-8 reels/day",
+      "Prepare for Phase 2 expansion",
+      "Plan Max plan upgrade if needed"
+    ]
+  },
+  "roi_analysis": {
+    "investment": {
+      "monthly_cost": 9.90,
+      "annual_cost": 118.80
+    },
+    "production_capacity": {
+      "monthly_reels": 120,
+      "annual_reels": 1440,
+      "cost_per_reel": 0.0825
+    },
+    "scalability": {
+      "max_capacity_pro": 240,
+      "max_capacity_max": 360,
+      "upgrade_cost": 39.10,
+      "additional_capacity": 120
+    }
+  }
+}

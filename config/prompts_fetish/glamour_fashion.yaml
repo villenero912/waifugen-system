@@ -1,0 +1,295 @@
+# ============================================
+# GLAMOUR & FASHION PROMPTS - Organized by Platform
+# Characters: Mika Kobayashi, Zara Chen, Sofia Rossi, Shota Hayashi
+# Categories: Glamour, Lingerie, Fashion, Luxury
+# ============================================
+
+# --- FANTAIA (Gravure Idol, High Production) ---
+
+Mika_Kobayashi_Fantia_Glamour:
+  platform: Fantia
+  category: glamour
+  prompt: |
+    masterpiece, best quality, ultra highres, mika kobayashi professional fashion model, 
+    25 years old, long silky honey blonde hair flowing over shoulders, flawless luminous skin,
+    elegant striking hazel eyes, wearing luxury designer black lace lingerie set, 
+    delicate gold jewelry, soft studio lighting with beauty dish, seamless white background,
+    professional photoshoot pose, confident alluring expression, glossy lips, 8k resolution,
+    gravure idol aesthetic, detailed fabric texture, shallow depth of field, cinematic post-processing
+  seed: 2201001
+
+Mika_Kobayashi_Fantia_Fashion:
+  platform: Fantia
+  category: fashion
+  prompt: |
+    masterpiece, best quality, mika kobayashi haute couture fashion model, 
+    25 years old, wearing avant-garde designer gown with intricate beading,
+    honey blonde hair styled in elegant updo, sharp winged eyeliner, powerful runway pose,
+    paris fashion week venue, dramatic runway lighting with flash photography,
+    high fashion editorial style, 8k uhd, detailed costume embroidery, professional camera quality
+  seed: 2201002
+
+Zara_Chen_Fantia_Luxury:
+  platform: Fantia
+  category: luxury
+  prompt: |
+    masterpiece, best quality, zara chen international fashion model, 26 years old,
+    sleek shoulder-length black hair with subtle wave, sharp elegant features,
+    wearing high-end designer black mini dress with gold accents, luxury hotel rooftop bar,
+    city lights background, sophisticated evening photography, 8k resolution,
+    cosmopolitan luxury aesthetic, powerful confident expression
+  seed: 2213001
+
+Zara_Chen_Fantia_Fashion:
+  platform: Fantia
+  category: fashion
+  prompt: |
+    haute couture fashion, zara chen, 26 years old, avant-garde designer piece,
+    runway or fashion show setting, professional runway lighting, dramatic fashion pose,
+    8k resolution, international fashion model aesthetic, sophisticated luxury
+  seed: 2213002
+
+Sofia_Rossi_Fantia_Glamour:
+  platform: Fantia
+  category: glamour
+  prompt: |
+    glamorous portrait, sofia rossi, 29 years old, wearing luxury lingerie or gown,
+    sophisticated expression, soft dramatic lighting, seamless background,
+    professional glamour photography, 8k resolution, mediterranean beauty,
+    elegant sensual aesthetic
+  seed: 2215003
+
+Sofia_Rossi_Fantia_Italian:
+  platform: Fantia
+  category: glamour
+  prompt: |
+    masterpiece, best quality, sofia rossi italian fashion influencer, 29 years old,
+    long rich brunette hair with sun-kissed highlights in glamorous waves,
+    warm expressive hazel eyes, naturally radiant skin with golden tan,
+    wearing flowing emerald green silk evening gown, delicate gold italian jewelry,
+    dramatic soft studio lighting, luxury fashion editorial, 8k resolution,
+    mediterranean beauty aesthetic, sophisticated luxury elegance
+  seed: 2215001
+
+Shota_Hayashi_Fantia_Streetwear:
+  platform: Fantia
+  category: streetwear
+  prompt: |
+    masterpiece, best quality, shota hayashi streetwear model, 22 years old,
+    trendy two-block haircut with shaved sides, ash brown longer top, small hoop earring,
+    wearing designer oversized beige trench coat over casual outfit, urban city street background,
+    stylish street fashion, professional fashion photography, 8k resolution,
+    trendy youthful aesthetic, confident fashion expression
+  seed: 2208001
+
+Shota_Hayashi_Fantia_Fashion:
+  platform: Fantia
+  category: fashion
+  prompt: |
+    high fashion editorial, shota hayashi, 22 years old, standing at intersection of trendy district,
+    full outfit of the day with vintage sneakers and oversized hoodie, layered necklaces,
+    colorful shop windows background, street style photography, 35mm lens,
+    8k resolution, vibrant urban colors, professional street style photography
+  seed: 2208002
+
+# --- TWITTER/X (Amateur, Candid, Smartphone) ---
+
+Mika_Kobayashi_Twitter_Glamour:
+  platform: Twitter
+  category: glamour
+  prompt: |
+    casual photo of mika kobayashi, 25 years old, wearing oversized white shirt,
+    honey blonde hair in messy bun, natural morning look, bedroom selfie,
+    soft natural window light, front facing phone camera, no makeup, authentic,
+    cozy aesthetic, relatable influencer daily post, grainy quality
+  seed: 2201005
+
+Zara_Chen_Twitter_Fashion:
+  platform: Twitter
+  category: fashion
+  prompt: |
+    fashion post, zara chen, 26 years old, ootd with designer pieces,
+    mirror selfie with luxury items, ring light, iphone quality,
+    authentic fashion influencer content, luxury fashion aesthetic
+  seed: 2213005
+
+Sofia_Rossi_Twitter_Italian:
+  platform: Twitter
+  category: lifestyle
+  prompt: |
+    italian life post, sofia rossi, 29 years old, authentic italian location,
+    casual elegant clothes, enjoying italian food or coffee, amateur phone camera,
+    authentic mediterranean life, italian influencer content, warm aesthetic
+  seed: 2215004
+
+Shota_Hayashi_Twitter_Streetwear:
+  platform: Twitter
+  category: streetwear
+  prompt: |
+    outfit of the day post, shota hayashi, 22 years old, standing at mirror,
+    showing outfit detail, ring light reflection visible, stylish clothes,
+    iphone selfie quality, authentic fashion influencer content, trendy streetwear,
+    amateur fashion documentation, real outfit post
+  seed: 2208004
+
+# --- XHAMSTER (Thumbnail Style, High Contrast, Provocative) ---
+
+Mika_Kobayashi_Xhamster_Glamour:
+  platform: Xhamster
+  category: glamour
+  prompt: |
+    cinematic thumbnail, mika kobayashi, 25 years old, intense seductive expression,
+    wearing provocative lingerie, dynamic angle from below, high contrast red lighting,
+    action pose with hair flying, dramatic shadows, video thumbnail composition,
+    optimized for click-through rate, bold title text placement area,
+    provocative gaze, glossy lips, professional adult entertainment style
+  seed: 2201007
+
+Zara_Chen_Xhamster_Luxury:
+  platform: Xhamster
+  category: luxury
+  prompt: |
+    luxury female thumbnail, zara chen, 26 years old, sophisticated glamorous content,
+    selective exposure luxury setting, adult luxury aesthetic, professional thumbnail,
+    cosmopolitan beauty, premium adult presentation
+  seed: 2213007
+
+Sofia_Rossi_Xhamster_Glamour:
+  platform: Xhamster
+  category: glamour
+  prompt: |
+    mediterranean female thumbnail, sofia rossi, 29 years old, sophisticated elegant content,
+    selective exposure luxury setting, adult mediterranean beauty, professional thumbnail,
+    italian elegance, sensual european aesthetic
+  seed: 2215007
+
+# --- PORNHUB (Professional Studio, Diverse Scenarios) ---
+
+Mika_Kobayashi_Pornhub_Glamour:
+  platform: Pornhub
+  category: glamour
+  prompt: |
+    professional adult content, mika kobayashi, 25 years old, couple lifestyle scenario,
+    beautiful couple in romantic hotel room, natural lighting from windows,
+    realistic intimate moment, high production value, tasteful erotic content,
+    authentic passionate expression, diverse couple representation, professional studio quality
+  seed: 2201010
+
+Zara_Chen_Pornhub_Luxury:
+  platform: Pornhub
+  category: luxury
+  prompt: |
+    luxury adult content, zara chen in sophisticated setting, tasteful intimate scenario,
+    high production quality, professional studio, cosmopolitan elegant aesthetic,
+    tasteful adult luxury content, international beauty adult presentation
+  seed: 2213010
+
+Sofia_Rossi_Pornhub_Glamour:
+  platform: Pornhub
+  category: glamour
+  prompt: |
+    italian adult content, sofia rossi, romantic mediterranean scenario,
+    tasteful intimate content, high production quality, professional studio,
+    mediterranean beauty adult presentation, elegant european aesthetic
+  seed: 2215010
+
+# --- XVIDEOS (European Style, Artistic, Cinematic) ---
+
+Mika_Kobayashi_XVideos_Glamour:
+  platform: XVideos
+  category: glamour
+  prompt: |
+    artistic adult content, mika kobayashi, european cinematic style,
+    tasteful erotic photography, museum or gallery setting, dramatic lighting,
+    artistic composition, sensual movement, professional french adult film aesthetic,
+    elegant seductive content, high art quality, 4k resolution
+  seed: 2201013
+
+Zara_Chen_XVideos_Luxury:
+  platform: XVideos
+  category: luxury
+  prompt: |
+    european luxury adult content, zara chen, artistic sophisticated scenario,
+    tasteful erotic luxury content, professional production quality,
+    european film style, cosmopolitan elegant aesthetic
+  seed: 2213013
+
+Sofia_Rossi_XVideos_Glamour:
+  platform: XVideos
+  category: glamour
+  prompt: |
+    european italian adult content, sofia rossi, artistic mediterranean scenario,
+    tasteful erotic italian content, professional production quality,
+    european film style, mediterranean beauty aesthetic
+  seed: 2215013
+
+# --- LINE (Intimate Portrait, Girlfriend POV, Front Camera) ---
+
+Mika_Kobayashi_LINE_Glamour:
+  platform: LINE
+  category: glamour
+  prompt: |
+    intimate portrait mode, mika kobayashi, 25 years old, front facing camera,
+    close up selfie style, wearing casual oversized shirt, natural no makeup look,
+    sweet girlfriend expression, soft bedroom lighting, personal intimate content,
+    direct eye contact as if talking to partner, casual romantic aesthetic,
+    ring light reflection visible, authentic personal photo
+  seed: 2201016
+
+Zara_Chen_LINE_Luxury:
+  platform: LINE
+  category: luxury
+  prompt: |
+    luxury chat companion, zara chen as cosmopolitan friend character,
+    designer clothes, sophisticated expression, chat integration area,
+    luxury companion vibe, cosmopolitan conversational style
+  seed: 2213017
+
+Sofia_Rossi_LINE_Glamour:
+  platform: LINE
+  category: glamour
+  prompt: |
+    italian chat companion, sofia rossi as mediterranean friend character,
+    elegant casual clothes, warm friendly expression, chat integration area,
+    mediterranean companion vibe, elegant conversational style
+  seed: 2215017
+
+# --- ONLYFANS (Premium Glamour, Ring Light, Bedroom, Teaser) ---
+
+Mika_Kobayashi_OnlyFans_Glamour:
+  platform: OnlyFans
+  category: glamour
+  prompt: |
+    premium onlyfans content, mika kobayashi, 25 years old, luxurious lingerie,
+    standing in bedroom with fairy lights, professional ring light setup,
+    glamorous selfie aesthetic, expensive bedroom setting, teaser quality,
+    premium subscriber exclusive, high production value, seductive expression,
+    professional content creation quality
+  seed: 2201019
+
+Zara_Chen_OnlyFans_Luxury:
+  platform: OnlyFans
+  category: luxury
+  prompt: |
+    exclusive luxury content, zara chen, premium travel or lifestyle preview,
+    high production quality, exclusive subscriber luxury content,
+    cosmopolitan lifestyle aesthetic, sophisticated presentation
+  seed: 2213019
+
+Sofia_Rossi_OnlyFans_Glamour:
+  platform: OnlyFans
+  category: glamour
+  prompt: |
+    exclusive glamour content, sofia rossi, elegant lingerie preview,
+    premium glamour content, high production quality, exclusive subscriber content,
+    sophisticated mediterranean beauty, elegant sensual presentation
+  seed: 2215021
+
+Shota_Hayashi_OnlyFans_Fashion:
+  platform: OnlyFans
+  category: fashion
+  prompt: |
+    exclusive fashion content, shota hayashi, premium outfit preview,
+    designer fashion showcase, high production quality,
+    exclusive subscriber fashion content, stylish premium aesthetic
+  seed: 2208019

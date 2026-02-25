@@ -1,0 +1,20 @@
+{
+    "enabled": true,
+    "bot_token": "YOUR_TELEGRAM_BOT_TOKEN_HERE",
+    "admin_chat_ids": [
+        123456789
+    ],
+    "monitoring_chat_ids": [
+        123456789
+    ],
+    "webhook_url": "",
+    "webhook_secret": "",
+    "notify_on_video_complete": true,
+    "notify_on_video_failed": true,
+    "notify_on_upload_complete": true,
+    "notify_on_upload_failed": true,
+    "notify_on_credit_warning": true,
+    "daily_summary_enabled": true,
+    "daily_summary_time": "20:00",
+    "command_prefix": "/"
+}

@@ -1,0 +1,425 @@
+{
+    "name": "08 - Branding Kit Generator (Avatar & Banner)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "generate-branding",
+                "options": {}
+            },
+            "id": "webhook-branding",
+            "name": "Webhook (Generate Branding)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1.1,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "SELECT * FROM characters WHERE id = $1 LIMIT 1",
+                "options": {},
+                "additionalFields": {
+                    "queryParameters": "={{ JSON.stringify([$json.body.character_id]) }}"
+                }
+            },
+            "id": "get-character-branding",
+            "name": "Get Character Data",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                450,
+                300
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.replicate.com/v1/predictions",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "version",
+                            "value": "da77403487f90cbd56bcc580f124c6e9196b6bf09d8d6467362f6bcc1b90f488"
+                        },
+                        {
+                            "name": "input",
+                            "value": "={{ { 'prompt': 'Extreme close up portrait of ' + $json.name + ', ' + $json.style + ', high detail, beautiful eyes, professional makeup, simple blurred background, 8k resolution, masterpiece, profile photo style', 'negative_prompt': 'nsfw, low quality, blurry, watermark', 'width': 1024, 'height': 1024 } }}"
+                        }
+                    ]
+                }
+            },
+            "id": "gen-avatar",
+            "name": "Generate Profile Avatar (HD)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                700,
+                200
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "replicate_api_token",
+                    "name": "Replicate API Token"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.replicate.com/v1/predictions",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "version",
+                            "value": "da77403487f90cbd56bcc580f124c6e9196b6bf09d8d6467362f6bcc1b90f488"
+                        },
+                        {
+                            "name": "input",
+                            "value": "={{ { 'prompt': 'Cinematic landscape banner featuring ' + $json.name + ' in a background matching her persona: ' + $json.personality + ', ' + $json.style + ', wide angle, epic composition, beautiful lighting, 8k resolution, minimalist design', 'negative_prompt': 'nsfw, text, blurry, low quality', 'width': 1024, 'height': 256 } }}"
+                        }
+                    ]
+                }
+            },
+            "id": "gen-banner",
+            "name": "Generate Profile Banner (Wide)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                700,
+                400
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "replicate_api_token",
+                    "name": "Replicate API Token"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMediaGroup",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "media",
+                            "value": "={{ JSON.stringify([ { 'type': 'photo', 'media': $('Poll Avatar Status').item.json.output[0], 'caption': '🎨 *Branding Kit: ' + $('Get Character Data').item.json.name + '*\\n\\n1. Profile Photo (Avatar)' }, { 'type': 'photo', 'media': $('Poll Banner Status').item.json.output[0], 'caption': '2. Social Media Banner' } ]) }}"
+                        }
+                    ]
+                }
+            },
+            "id": "send-branding-telegram",
+            "name": "Send Kit to Telegram",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1750,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "amount": 10
+            },
+            "id": "wait-avatar",
+            "name": "Wait Avatar (10s)",
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1,
+            "position": [
+                950,
+                150
+            ]
+        },
+        {
+            "parameters": {
+                "method": "GET",
+                "url": "=https://api.replicate.com/v1/predictions/{{ $('Generate Profile Avatar (HD)').item.json.id }}",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "options": {}
+            },
+            "id": "poll-avatar",
+            "name": "Poll Avatar Status",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1150,
+                150
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "replicate_api_token",
+                    "name": "Replicate API Token"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "string": [
+                        {
+                            "value1": "={{ $json.status }}",
+                            "operation": "equals",
+                            "value2": "succeeded"
+                        }
+                    ]
+                }
+            },
+            "id": "check-avatar-ready",
+            "name": "Avatar Ready?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                1350,
+                150
+            ]
+        },
+        {
+            "parameters": {
+                "amount": 10
+            },
+            "id": "wait-banner",
+            "name": "Wait Banner (10s)",
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1,
+            "position": [
+                950,
+                450
+            ]
+        },
+        {
+            "parameters": {
+                "method": "GET",
+                "url": "=https://api.replicate.com/v1/predictions/{{ $('Generate Profile Banner (Wide)').item.json.id }}",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "options": {}
+            },
+            "id": "poll-banner",
+            "name": "Poll Banner Status",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1150,
+                450
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "replicate_api_token",
+                    "name": "Replicate API Token"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "string": [
+                        {
+                            "value1": "={{ $json.status }}",
+                            "operation": "equals",
+                            "value2": "succeeded"
+                        }
+                    ]
+                }
+            },
+            "id": "check-banner-ready",
+            "name": "Banner Ready?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                1350,
+                450
+            ]
+        },
+        {
+            "parameters": {
+                "mode": "waitForAll",
+                "clashHandling": {
+                    "values": {
+                        "resolveClash": "preferInput1"
+                    }
+                }
+            },
+            "id": "merge-branding",
+            "name": "Merge Avatar + Banner",
+            "type": "n8n-nodes-base.merge",
+            "typeVersion": 2.1,
+            "position": [
+                1550,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook (Generate Branding)": {
+            "main": [
+                [
+                    {
+                        "node": "Get Character Data",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Character Data": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Profile Avatar (HD)",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Generate Profile Banner (Wide)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Profile Avatar (HD)": {
+            "main": [
+                [
+                    {
+                        "node": "Wait Avatar (10s)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait Avatar (10s)": {
+            "main": [
+                [
+                    {
+                        "node": "Poll Avatar Status",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Poll Avatar Status": {
+            "main": [
+                [
+                    {
+                        "node": "Avatar Ready?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Avatar Ready?": {
+            "main": [
+                [
+                    {
+                        "node": "Merge Avatar + Banner",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Wait Avatar (10s)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Profile Banner (Wide)": {
+            "main": [
+                [
+                    {
+                        "node": "Wait Banner (10s)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait Banner (10s)": {
+            "main": [
+                [
+                    {
+                        "node": "Poll Banner Status",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Poll Banner Status": {
+            "main": [
+                [
+                    {
+                        "node": "Banner Ready?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Banner Ready?": {
+            "main": [
+                [
+                    {
+                        "node": "Merge Avatar + Banner",
+                        "type": "main",
+                        "index": 1
+                    }
+                ],
+                [
+                    {
+                        "node": "Wait Banner (10s)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Merge Avatar + Banner": {
+            "main": [
+                [
+                    {
+                        "node": "Send Kit to Telegram",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1",
+        "saveManualExecutions": true,
+        "saveExecutionProgress": true,
+        "callerPolicy": "workflowsFromSameOwner"
+    },
+    "staticData": null,
+    "meta": {
+        "instanceId": "waifugen_production"
+    }
+}

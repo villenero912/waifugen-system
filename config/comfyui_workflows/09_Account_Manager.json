@@ -1,0 +1,313 @@
+{
+    "name": "09 - Account Manager [48 Accounts: 8 Characters × 6 Platforms]",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "register-account",
+                "options": {}
+            },
+            "id": "webhook-register",
+            "name": "Webhook (Register Account)",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1.1,
+            "position": [
+                200,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours",
+                            "hoursInterval": 6
+                        }
+                    ]
+                }
+            },
+            "id": "schedule-health-check",
+            "name": "Schedule Health Check (every 6h)",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.1,
+            "position": [
+                200,
+                500
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const body = $json.body;\n// Validate required fields\nconst required = ['character_id', 'platform', 'account_username', 'account_id', 'access_token'];\nconst missing = required.filter(f => !body[f]);\nif (missing.length > 0) throw new Error('Missing fields: ' + missing.join(', '));\n\nconst validPlatforms = ['tiktok', 'instagram', 'youtube', 'niconico', 'facebook', 'line'];\nif (!validPlatforms.includes(body.platform)) {\n  throw new Error('Invalid platform. Must be one of: ' + validPlatforms.join(', '));\n}\n\nreturn {\n  character_id: parseInt(body.character_id),\n  platform: body.platform,\n  account_username: body.account_username,\n  account_id: body.account_id,\n  access_token: body.access_token,\n  refresh_token: body.refresh_token || null,\n  extra_config: body.extra_config ? JSON.stringify(body.extra_config) : null\n};"
+            },
+            "id": "validate-account-data",
+            "name": "Validate Account Data",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                450,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "INSERT INTO social_accounts \n  (character_id, platform, account_username, account_id, access_token, refresh_token, extra_config, is_active, daily_post_count, created_at)\nVALUES ($1, $2, $3, $4, $5, $6, $7, true, 0, NOW())\nON CONFLICT (character_id, platform) \nDO UPDATE SET \n  account_username = EXCLUDED.account_username,\n  account_id = EXCLUDED.account_id,\n  access_token = EXCLUDED.access_token,\n  refresh_token = EXCLUDED.refresh_token,\n  extra_config = EXCLUDED.extra_config,\n  updated_at = NOW()\nRETURNING *;",
+                "additionalFields": {
+                    "queryParameters": "={{ JSON.stringify([$json.character_id, $json.platform, $json.account_username, $json.account_id, $json.access_token, $json.refresh_token, $json.extra_config]) }}"
+                }
+            },
+            "id": "upsert-account",
+            "name": "Upsert Account in DB",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                700,
+                200
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "SELECT \n  sa.*,\n  c.name as character_name,\n  c.id as char_id\nFROM social_accounts sa\nJOIN characters c ON sa.character_id = c.id\nWHERE sa.is_active = true\nORDER BY sa.platform, c.name"
+            },
+            "id": "get-all-accounts",
+            "name": "Get All Active Accounts",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                450,
+                500
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "const accounts = $input.all().map(i => i.json);\n\n// Real characters from DB\nconst characters = [\n  { id: 1,  name: 'Miyuki Sakura' },\n  { id: 16, name: 'Hana Nakamura' },\n  { id: 10, name: 'Airi Neo' },\n  { id: 5,  name: 'Aiko Hayashi' },\n  { id: 19, name: 'Rio Mizuno' },\n  { id: 15, name: 'Chiyo Sasaki' },\n  { id: 20, name: 'Mika Sweet' },\n  { id: 21, name: 'Momoka AV' }\n];\nconst platforms = ['tiktok', 'instagram', 'youtube', 'niconico', 'facebook', 'line'];\n\n// Build lookup\nconst existing = new Set(accounts.map(a => a.character_id + '_' + a.platform));\n\nconst missing = [];\nfor (const char of characters) {\n  for (const plat of platforms) {\n    if (!existing.has(char.id + '_' + plat)) {\n      missing.push({ character_id: char.id, character: char.name, platform: plat });\n    }\n  }\n}\n\nconst totalExpected = characters.length * platforms.length; // 48\nconst totalConfigured = accounts.length;\nconst nowHour = new Date().getUTCHours();\n\nreturn {\n  total_configured: totalConfigured,\n  total_expected: totalExpected,\n  coverage_pct: Math.round((totalConfigured / totalExpected) * 100),\n  missing_accounts: missing,\n  missing_count: missing.length,\n  should_reset_daily_counts: (nowHour === 0)\n};"
+            },
+            "id": "analyze-coverage",
+            "name": "Analyze Account Coverage",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                700,
+                500
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "boolean": [
+                        {
+                            "value1": "={{ $json.should_reset_daily_counts }}",
+                            "value2": true
+                        }
+                    ]
+                }
+            },
+            "id": "check-midnight-reset",
+            "name": "Is Midnight Reset?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                950,
+                500
+            ]
+        },
+        {
+            "parameters": {
+                "operation": "executeQuery",
+                "query": "UPDATE social_accounts SET daily_post_count = 0 WHERE is_active = true;"
+            },
+            "id": "reset-daily-counts",
+            "name": "Reset Daily Post Counts",
+            "type": "n8n-nodes-base.postgres",
+            "typeVersion": 2.4,
+            "position": [
+                1150,
+                400
+            ],
+            "credentials": {
+                "postgres": {
+                    "id": "waifugen_postgres",
+                    "name": "WaifuGen PostgreSQL"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "parse_mode",
+                            "value": "HTML"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=📊 <b>Account Health Report</b>\n\n✅ Configured: {{ $json.total_configured }}/{{ $json.total_expected }} ({{ $json.coverage_pct }}%)\n\n{{ $json.missing_count > 0 ? '⚠️ Missing ' + $json.missing_count + ' accounts:\\n' + $json.missing_accounts.map(m => '• ' + m.character + ' → ' + m.platform).join('\\n') : '🎉 All 48 accounts configured!' }}\n\n⏰ {{ new Date().toISOString() }}"
+                        }
+                    ]
+                }
+            },
+            "id": "notify-health-report",
+            "name": "Send Health Report (Telegram)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1150,
+                600
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "chat_id",
+                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
+                        },
+                        {
+                            "name": "parse_mode",
+                            "value": "HTML"
+                        },
+                        {
+                            "name": "text",
+                            "value": "=✅ <b>Account Registered</b>\n\n👤 Character ID: {{ $json.character_id }}\n📱 Platform: {{ $json.platform }}\n🆔 Username: {{ $json.account_username }}\n🔗 Account ID: {{ $json.account_id }}"
+                        }
+                    ]
+                }
+            },
+            "id": "notify-registered",
+            "name": "Confirm Registration (Telegram)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                950,
+                200
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook (Register Account)": {
+            "main": [
+                [
+                    {
+                        "node": "Validate Account Data",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Validate Account Data": {
+            "main": [
+                [
+                    {
+                        "node": "Upsert Account in DB",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Upsert Account in DB": {
+            "main": [
+                [
+                    {
+                        "node": "Confirm Registration (Telegram)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Schedule Health Check (every 6h)": {
+            "main": [
+                [
+                    {
+                        "node": "Get All Active Accounts",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get All Active Accounts": {
+            "main": [
+                [
+                    {
+                        "node": "Analyze Account Coverage",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Analyze Account Coverage": {
+            "main": [
+                [
+                    {
+                        "node": "Is Midnight Reset?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Is Midnight Reset?": {
+            "main": [
+                [
+                    {
+                        "node": "Reset Daily Post Counts",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Send Health Report (Telegram)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Reset Daily Post Counts": {
+            "main": [
+                [
+                    {
+                        "node": "Send Health Report (Telegram)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1",
+        "saveManualExecutions": true,
+        "saveExecutionProgress": true
+    }
+}

@@ -1,0 +1,159 @@
+# ============================================
+# PHASE 2 PROMPTS INDEX - Fetish Categories & Platforms
+# ============================================
+
+# This index file lists all organized prompt files by category
+
+FILES:
+  glamour_fashion.yaml:
+    description: Glamour, lingerie, fashion, and luxury content
+    characters:
+      - Mika Kobayashi (fashion model, 25yo)
+      - Zara Chen (international, 26yo)
+      - Sofia Rossi (italian, 29yo)
+      - Shota Hayashi (streetwear, 22yo)
+    platforms:
+      - Fantia (gravure, high quality)
+      - Twitter (amateur, candid)
+      - Xhamster (thumbnail, provocative)
+      - Pornhub (professional studio)
+      - XVideos (european artistic)
+      - LINE (intimate, girlfriend POV)
+      - OnlyFans (premium, exclusive)
+
+  cosplay_anime.yaml:
+    description: Anime, cosplay, VTuber, gaming, and fantasy content
+    characters:
+      - Luna Tsukino (VTuber, 21yo)
+      - Kaito Shirakawa (anime otaku, 25yo)
+      - Jin Kawasaki (cyberpunk gaming, 26yo)
+    platforms:
+      - Fantia (detailed costumes)
+      - Twitter (convention, amateur)
+      - Xhamster (provocative anime)
+      - Pornhub (roleplay scenarios)
+      - XVideos (european style)
+      - LINE (stickers, chat)
+      - OnlyFans (exclusive content)
+
+  mature_elegant.yaml:
+    description: Traditional, academic, executive, and mature content
+    characters:
+      - Chiyo Sasaki (traditional, 65yo)
+      - Minato Sakamoto (academic, 34yo)
+      - Victor Williams (executive, 38yo)
+    platforms:
+      - Fantia (dignified, high quality)
+      - Twitter (wisdom sharing)
+      - Xhamster (mature category)
+      - Pornhub (sophisticated)
+      - XVideos (european artistic)
+      - LINE (wisdom stickers)
+      - OnlyFans (exclusive premium)
+
+  athletic_fitness.yaml:
+    description: Military, survival, motorsport, and fitness content
+    characters:
+      - Takumi Endou (military tactical, 31yo)
+      - Kai Morita (survival wilderness, 33yo)
+      - Natsuki Taniguchi (motorsport racing, 28yo)
+    platforms:
+      - Fantia (action poses)
+      - Twitter (gym, training)
+      - Xhamster (action, power)
+      - Pornhub (professional scenarios)
+      - XVideos (european style)
+      - LINE (fitness stickers)
+      - OnlyFans (exclusive behind scenes)
+
+  cultural_lifestyle.yaml:
+    description: Tropical, latino, college, kawaii, and travel content
+    characters:
+      - Rio Mizuno (tropical beach, 23yo)
+      - Mateo Garcia (latino cultural, 27yo)
+      - Aya Tomita (college kawaii, 19yo)
+    platforms:
+      - Fantia (vibrant high quality)
+      - Twitter (casual authentic)
+      - Xhamster (provocative tropical)
+      - Pornhub (tasteful romantic)
+      - XVideos (european artistic)
+      - LINE (stickers, companions)
+      - OnlyFans (exclusive premium)
+
+SEEDS_RANGE:
+  glamour_fashion: 2201001-2213021
+  cosplay_anime: 2211001-2214020
+  mature_elegant: 2205001-2214020
+  athletic_fitness: 2202001-2209020
+  cultural_lifestyle: 2203001-2219016
+
+CATEGORY_FETISH_TAGS:
+  glamour: lingerie, silk, luxury, designer, elegant, seductive
+  fashion: streetwear, designer, ootd, trend, runway, editorial
+  anime: shonen, manga, otaku, hero, action, protagonist
+  cosplay: costume, character, convention, detailed, wings, LED
+  vtuber: virtual, avatar, streaming, fairy, magical, wings
+  cyberpunk: neon, LED, futuristic, dystopian, sci-fi, tactical
+  gaming: rgb, setup, stream, triple monitor, headset, PC
+  traditional: kimono, tea ceremony, cultural, japanese, elegant
+  mature: elderly, wisdom, sophisticated, dignified, classic
+  academic: professor, lecture, library, scholarly, intellectual
+  executive: corporate, leadership, business, suit, office
+  military: tactical, combat, gear, special forces, desert
+  survival: wilderness, bushcraft, shelter, fire, mountain
+  motorsport: racing, formula, pit lane, car, track, sport
+  fitness: gym, workout, muscle, training, athletic, physique
+  tropical: beach, bikini, vacation, resort, island, sun
+  latino: cultural, market, cooking, family, warm, vibrant
+  college: student, university, study, textbook, cozy, kawaii
+  kawaii: cute, adorable, plushies, pastel, fluffy, innocent
+  travel: vacation, destination, exploration, wanderlust, journey
+
+PLATFORM_AESTHETICS:
+  Fantia:
+    style: high quality, studio lighting, detailed, gravure idol
+    aspect: 16:9 banner, portrait profile
+    quality: 8k, ultra highres, masterpiece
+    
+  Twitter:
+    style: amateur, iphone, candid, authentic, grainy
+    aspect: various, often square or 16:9
+    quality: smartphone camera aesthetic
+    
+  Xhamster:
+    style: high contrast, provocative, bold colors, thumbnail optimized
+    aspect: 16:9 thumbnail, 4:3 sometimes
+    quality: professional adult thumbnail
+    
+  Pornhub:
+    style: professional studio, diverse scenarios, high production
+    aspect: 16:9 cinematic
+    quality: 4k, professional
+    
+  XVideos:
+    style: european artistic, cinematic, tasteful
+    aspect: 16:9
+    quality: 4k, artistic
+    
+  LINE:
+    style: intimate, front camera, girlfriend POV, ring light
+    aspect: 9:16 vertical for stickers/headers
+    quality: personal selfie aesthetic
+    
+  OnlyFans:
+    style: premium, ring light, fairy lights, bedroom, teaser
+    aspect: various, often vertical
+    quality: professional but personal
+
+TOTAL_ENTRIES:
+  glamour_fashion: 55 entries
+  cosplay_anime: 72 entries
+  mature_elegant: 66 entries
+  athletic_fitness: 84 entries
+  cultural_lifestyle: 90 entries
+  banners: 16 entries
+  total: 383 entries
+
+VERSION: 1.0
+DATE: 2026-01-20

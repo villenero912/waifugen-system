@@ -1,0 +1,2651 @@
+# Phase 2 Character Platform Prompts - Organized by Fetish Categories
+# Platform-optimized variants with seeds for AI image generation
+# Characters: 16 Phase 2 characters across 7 platforms
+
+# ============================================
+# CHARACTER: MIKA KOBAYASHI
+# Base: Fashion Model, 25yo, Glamorous
+# Categories: Glamour, Fashion, Luxury, Lingerie
+# ============================================
+
+Mika_Kobayashi:
+  # --- PLATFORM: FANTAIA ---
+  # Focus: Gravure idol aesthetic, high production value, soft lighting
+  Fantia_Glamour:
+    prompt: |
+      masterpiece, best quality, ultra highres, mika kobayashi professional fashion model, 
+      25 years old, long silky honey blonde hair flowing over shoulders, flawless luminous skin,
+      elegant striking hazel eyes, wearing luxury designer black lace lingerie set, 
+      delicate gold jewelry, soft studio lighting with beauty dish, seamless white background,
+      professional photoshoot pose, confident alluring expression, glossy lips, 8k resolution,
+      gravure idol aesthetic, detailed fabric texture, shallow depth of field, cinematic post-processing
+    seed: 2201001
+  Fantia_Fashion:
+    prompt: |
+      masterpiece, best quality, mika kobayashi haute couture fashion model, 
+      25 years old, wearing avant-garde designer gown with intricate beading,
+      honey blonde hair styled in elegant updo, sharp winged eyeliner, powerful runway pose,
+      paris fashion week venue, dramatic runway lighting with flash photography,
+      high fashion editorial style, 8k uhd, detailed costume embroidery, professional camera quality
+    seed: 2201002
+  Fantia_Seductive:
+    prompt: |
+      nsfw, masterpiece, best quality, mika kobayashi seductive lingerie model, 
+      25 years old, wearing premium silk and lace erotic underwear set, provocative pose,
+      honey blonde hair disheveled, intense seductive gaze, soft bedroom lighting with candles,
+      luxurious hotel suite background, tasteful erotic photography, glossy skin texture,
+      8k resolution, professional adult modeling, seductive allure, artistic nude aesthetic
+    seed: 2201003
+
+  # --- PLATFORM: TWITTER/X: Amateur aesthetic, candid, ---
+  # Focus smartphone quality, relatable
+  Twitter_BehindScenes:
+    prompt: |
+      photo of mika kobayashi, backstage fashion show, iphone selfie, messy hair,
+      wearing robe before outfit change, natural no makeup face, candid moment,
+      poor lighting, grainy smartphone camera, authentic behind scenes content,
+      realistic skin texture, amateur aesthetic, relatable influencer style
+    seed: 2201004
+  Twitter_DailyLife:
+    prompt: |
+      casual photo of mika kobayashi, 25 years old, wearing oversized white shirt,
+      honey blonde hair in messy bun, natural morning look, bedroom selfie,
+      soft natural window light, front facing phone camera, no makeup, authentic,
+      cozy aesthetic, relatable influencer daily post, grainy quality
+    seed: 2201005
+  Twitter_Outfit:
+    prompt: |
+      ootd post of mika kobayashi, standing at mirror, fashion outfit of the day,
+      wearing stylish streetwear outfit, designer accessories visible, 
+      mirror selfie angle, ring light reflection, aesthetic background,
+      influencer fashion content, casual trendy look, amateur photography
+    seed: 2201006
+
+  # --- PLATFORM: XHAMSTER ---
+  # Focus: Thumbnail style, high contrast, provocative, video thumbnail optimized
+  Xhamster_Thumbnail_Action:
+    prompt: |
+      cinematic thumbnail, mika kobayashi, 25 years old, intense seductive expression,
+      wearing provocative lingerie, dynamic angle from below, high contrast red lighting,
+      action pose with hair flying, dramatic shadows, video thumbnail composition,
+      optimized for click-through rate, bold title text placement area,
+      provocative gaze, glossy lips, professional adult entertainment style
+    seed: 2201007
+  Xhamster_Couple:
+    prompt: |
+      adult scene thumbnail, mika kobayashi with attractive male partner,
+      couple in intimate pose, luxury bedroom setting, soft ambient lighting,
+      sensual expression, suggestive scenario, thumbnail optimized composition,
+      high contrast colors, dramatic lighting ratio, adult content thumbnail style
+    seed: 2201008
+  Xhamster_Solo:
+    prompt: |
+      solo female thumbnail, mika kobayashi, 25 years old, confident seductive pose,
+      wearing sexy lingerie, direct camera eye contact, intimate setting,
+      soft pink lighting, professional studio quality, provocative expression,
+      optimized for adult video thumbnail, high click conversion style
+    seed: 2201009
+
+  # --- PLATFORM: PORNHUB ---
+  # Focus: Professional studio quality, diverse scenarios, mass appeal
+  Pornhub_Lifestyle:
+    prompt: |
+      professional adult content, mika kobayashi, 25 years old, couple lifestyle scenario,
+      beautiful couple in romantic hotel room, natural lighting from windows,
+      realistic intimate moment, high production value, tasteful erotic content,
+      authentic passionate expression, diverse couple representation, professional studio quality
+    seed: 2201010
+  Pornhub_Fantasy:
+    prompt: |
+      adult fantasy scenario, mika kobayashi as seductive character, roleplay costume,
+      provocative fantasy outfit, dramatic studio lighting, professional adult set,
+      cinematic quality, engaging scenario narrative, high production value content
+    seed: 2201011
+  Pornhub_Solo:
+    prompt: |
+      professional solo female content, mika kobayashi, 25 years old,
+      confident sensual expression, premium lingerie set, luxury bedroom aesthetic,
+      professional studio lighting, 4k quality, tasteful erotic modeling,
+      solo performance style, high production value
+    seed: 2201012
+
+  # --- PLATFORM: XVIDEOS ---
+  # Focus: European style, artistic, cinematic, diverse categories
+  XVideos_Artistic:
+    prompt: |
+      artistic adult content, mika kobayashi, european cinematic style,
+      tasteful erotic photography, museum or gallery setting, dramatic lighting,
+      artistic composition, sensual movement, professional french adult film aesthetic,
+      elegant seductive content, high art quality, 4k resolution
+    seed: 2201013
+  XVideos_Amateur:
+    prompt: |
+      amateur style adult content, mika kobayashi, first person POV perspective,
+      girlfriend experience aesthetic, natural lighting, authentic amateur look,
+      personal intimate content style, genuine expression, realistic scenario,
+      amateur production quality with professional lighting
+    seed: 2201014
+  XVideos_Fetish:
+    prompt: |
+      fetish category adult content, mika kobayashi, specific fetish scenario,
+      roleplay element, costume and setting appropriate to category,
+      professional studio environment, high production fetish content,
+      artistic and tasteful execution, diverse content category style
+    seed: 2201015
+
+  # --- PLATFORM: LINE ---
+  # Focus: Intimate portrait, girlfriend POV, front camera, casual
+  LINE_Portrait_Intimate:
+    prompt: |
+      intimate portrait mode, mika kobayashi, 25 years old, front facing camera,
+      close up selfie style, wearing casual oversized shirt, natural no makeup look,
+      sweet girlfriend expression, soft bedroom lighting, personal intimate content,
+      direct eye contact as if talking to partner, casual romantic aesthetic,
+      ring light reflection visible, authentic personal photo
+    seed: 2201016
+  LINE_Message_Sticker:
+    prompt: |
+      cute message sticker of mika kobayashi, expressive face, various emotions,
+      kawaii aesthetic, simple background, optimized for chat use, animated style,
+      playful expressions, hand gestures, chat sticker format, relatable cute character
+    seed: 2201017
+  LINE_Conversation:
+    prompt: |
+      casual conversation style image, mika kobayashi as chatting companion,
+      wearing cozy home clothes, relaxed expression, mid conversation pause,
+      chat bubble integration area, intimate personal aesthetic,
+      girlfriend text companion vibe, authentic everyday look
+    seed: 2201018
+
+  # --- PLATFORM: ONLYFANS ---
+  # Focus: Premium glamour, ring light, bedroom setting, teaser content
+  OnlyFans_Premium_Solo:
+    prompt: |
+      premium onlyfans content, mika kobayashi, 25 years old, luxurious lingerie,
+      standing in bedroom with fairy lights, professional ring light setup,
+      glamorous selfie aesthetic, expensive bedroom setting, teaser quality,
+      premium subscriber exclusive, high production value, seductive expression,
+      professional content creation quality
+    seed: 2201019
+  OnlyFans_Premium_PPV:
+    prompt: |
+      exclusive ppv content teaser, mika kobayashi, provocative premium lingerie,
+      seductive intense gaze, professional bedroom studio setup, high end production,
+      exclusive premium aesthetic, ring light with purple tint, expensive looking setting,
+      teaser image for paid content, professional adult influencer style
+    seed: 2201020
+  OnlyFans_Bundles:
+    prompt: |
+      bundle preview content, mika kobayashi, multiple outfit preview,
+      standing in rotation showing different sexy outfits, professional setup,
+      premium subscription value showcase, diverse looks in one set,
+      professional photography, cohesive premium aesthetic
+    seed: 2201021
+
+# ============================================
+# CHARACTER: TAKUMI ENDO
+# Base: Military/Tactical, 31yo, Rugged
+# Categories: Military, Tactical, Survival, Fitness
+# ============================================
+
+Takumi_Endou:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Military:
+    prompt: |
+      masterpiece, best quality, takumi endou japanese special forces operator,
+      31 years old, short military crew cut, intense determined eyes, tactical beard,
+      wearing full tactical gear with plate carrier, night vision goggles on helmet,
+      dramatic desert training ground lighting, action military photography,
+      realistic tactical equipment, 8k resolution, shonen military aesthetic
+    seed: 2202001
+  Fantia_Tactical:
+    prompt: |
+      masterpiece, takumi endou tactical warrior, 31 years old, in full combat uniform,
+      weapon in hand, serious combat ready expression, dramatic battlefield lighting,
+      smoke and dust atmosphere, action movie poster style, military realism,
+      detailed gear and equipment, cinematic composition, powerful warrior aesthetic
+    seed: 2202002
+  Fantia_Survival:
+    prompt: |
+      survivalist aesthetic, takumi endou, 31 years old, rugged wilderness setting,
+      tactical beard, torn tactical clothing, building shelter in wilderness,
+      harsh natural lighting, survival reality show aesthetic, masculine rugged content,
+      outdoor adventure theme, realistic survival scenario, 8k resolution
+    seed: 2202003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Gym:
+    prompt: |
+      gym selfie of takumi endou, 31 years old, tank top showing muscles,
+      chalk dust on hands, intense post workout expression, gym bathroom mirror,
+      harsh fluorescent lighting, raw authentic fitness content, muscle definition visible,
+      fitness influencer style, realistic training documentation
+    seed: 2202004
+  Twitter_Training:
+    prompt: |
+      training content, takumi endou working out in outdoor gym,
+      pull up bar exercise, intense effort expression, natural daylight,
+      amateur phone camera, authentic military fitness training,
+      rugged masculine aesthetic, real world training context
+    seed: 2202005
+  Twitter_Camo:
+    prompt: |
+      military style photo, takumi endou in tactical clothing,
+      camouflage pattern visible, outdoor military surplus store context,
+      candid casual military aesthetic, realistic everyday military life,
+      iphone photo quality, authentic military influencer content
+    seed: 2202006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Military_Fantasy:
+    prompt: |
+      military fantasy adult thumbnail, takumi endou as tactical warrior character,
+      wearing tactical gear with selective exposure, dramatic combat setting,
+      intense action pose, masculine power fantasy, adult military roleplay scenario,
+      professional thumbnail composition, provocative military aesthetic
+    seed: 2202007
+  Xhamster_Action:
+    prompt: |
+      action scene thumbnail, takumi endou in intense combat scenario,
+      dramatic explosion backdrop, tactical equipment, high contrast lighting,
+      action movie poster style, masculine power content, optimized thumbnail,
+      military action aesthetic
+    seed: 2202008
+  Xhamster_Fitness:
+    prompt: |
+      masculine fitness thumbnail, takumi endou, muscular athletic build,
+      intense workout setting, gym environment, sweaty training content,
+      action fitness aesthetic, masculine power presentation
+    seed: 2202009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Military:
+    prompt: |
+      military scenario adult content, takumi endou as tactical operator character,
+      military uniform with selective exposure, realistic military roleplay,
+      dramatic combat setting, high production military fantasy content,
+      masculine power fantasy, professional studio quality
+    seed: 2202010
+  Pornhub_Fitness:
+    prompt: |
+      fitness couple scenario, takumi endou with female partner,
+      gym setting with intimate moment, athletic romantic content,
+      muscular physique on display, high production adult fitness content,
+      tasteful erotic fitness scenario
+    seed: 2202011
+  Pornhub_Fetish_Military:
+    prompt: |
+      military fetish category, takumi endou in specialized military roleplay,
+      costume and scenario appropriate to category, professional studio,
+      high production fetish content, masculine military aesthetic
+    seed: 2202012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Tactical:
+    prompt: |
+      european style tactical content, takumi endou, realistic military scenario,
+      cinematic combat setting, professional adult production quality,
+      tasteful military roleplay, masculine power aesthetic, dramatic lighting
+    seed: 2202013
+  XVideos_Solo_Male:
+    prompt: |
+      solo male content, takumi endou, 31 years old, muscular athletic build,
+      confident masculine expression, premium gym or bedroom setting,
+      solo male performance style, high production quality, tasteful execution
+    seed: 2202014
+  XVideos_Couple_Military:
+    prompt: |
+      couple scenario military roleplay, takumi endou with female partner,
+      tactical setting with intimate moment, romantic combat aesthetic,
+      european adult film style, professional production quality
+    seed: 2202015
+
+  # --- PLATFORM: LINE ---
+  LINE_Motivation:
+    prompt: |
+      motivational fitness message image, takumi endou, gym workout context,
+      inspirational fitness quote overlay, intense workout expression,
+      ring light aesthetic, personal training companion style,
+      athletic masculine aesthetic, motivational content format
+    seed: 2202016
+  LINE_Chat:
+    prompt: |
+      chat companion style, takumi endou as workout buddy character,
+      casual gym clothes, relaxed friendly expression, chat integration area,
+      conversational aesthetic, fitness friend companion vibe
+    seed: 2202017
+  LINE_Sticker:
+    prompt: |
+      fitness sticker pack, takumi endou, various exercise expressions,
+      workout motivation stickers, muscle flex poses, gym aesthetic,
+      chat sticker format, masculine fitness character
+    seed: 2202018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Fitness:
+    prompt: |
+      premium fitness content, takumi endou, muscular physique on display,
+      gym setting with professional lighting, premium subscriber exclusive,
+      athletic masculine content, high production fitness modeling,
+      workout footage teaser, professional fitness influencer style
+    seed: 2202019
+  OnlyFans_Military:
+    prompt: |
+      exclusive military fantasy content, takumi endou in tactical gear,
+      selective exposure premium content, bedroom studio with tactical props,
+      premium military roleplay aesthetic, exclusive subscriber content
+    seed: 2202020
+  OnlyFans_Freetalk:
+    prompt: |
+      personal freetime content, takumi endou casual shirt no makeup,
+      bedroom setting personal vlog style, intimate personal aesthetic,
+      authentic behind scenes content, premium exclusive personal content
+    seed: 2202021
+
+# ============================================
+# CHARACTER: RIO MIZUNO
+# Base: Tropical/Travel, 23yo, Beach
+# Categories: Beach, Tropical, Travel, Bikini
+# ============================================
+
+Rio_Mizuno:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Beach:
+    prompt: |
+      masterpiece, best quality, rio mizuno tropical beach model, 23 years old,
+      sun-bleached beach wavy hair, glowing golden tan skin, wearing colorful tropical bikini,
+      pristine tropical beach setting, crystal clear turquoise water background,
+      harsh bright tropical sunlight, golden hour beach aesthetic, professional photoshoot,
+      8k resolution, detailed swimwear texture, vacation paradise mood
+    seed: 2203001
+  Fantia_Tropical:
+    prompt: |
+      masterpiece, rio mizuno island vacation model, 23 years old,
+      wearing elegant tropical print dress, flower crown with hibiscus,
+      standing at infinity pool overlooking ocean, resort luxury setting,
+      warm sunset lighting, professional travel photography, 8k uhd,
+      tropical paradise aesthetic, influencer vacation content
+    seed: 2203002
+  Fantia_Swimwear:
+    prompt: |
+      professional swimwear photoshoot, rio mizuno, 23 years old,
+      wearing premium designer bikini with gold accents, beach pose,
+      dramatic tropical sunset background, professional lighting setup,
+      detailed swimwear design visible, 8k resolution, luxury swimwear advertising style
+    seed: 2203003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Vacation:
+    prompt: |
+      vacation photo of rio mizuno, 23 years old, instagram story style,
+      tropical beach in background, wearing cute sundress, messy beach hair,
+      natural happy expression, smartphone camera quality, authentic travel content,
+      real vacation moment, amateur travel photography aesthetic
+    seed: 2203004
+  Twitter_Swim:
+    prompt: |
+      beach day post, rio mizuno at beach, wearing casual swimwear,
+      beach selfie with ocean background, natural sunlight, candid happy moment,
+      iphone photo quality, authentic beach day content, summer vacation vibe
+    seed: 2203005
+  Twitter_Travel:
+    prompt: |
+      travelgram post, rio mizuno exploring tropical destination,
+      landmark in background, travel outfit of the day, happy tourist expression,
+      casual tourist photo, amateur travel photography, authentic journey content
+    seed: 2203006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Tropical_Solo:
+    prompt: |
+      tropical beach solo female thumbnail, rio mizuno, 23 years old,
+      bikini beach setting, provocative beach pose, tropical vacation erotic content,
+      suggestive expression, optimized thumbnail with tropical colors,
+      adult beach fantasy aesthetic, professional studio quality
+    seed: 2203007
+  Xhamster_Resort:
+    prompt: |
+      resort fantasy thumbnail, rio mizuno in luxurious hotel setting,
+      tropical location, intimate resort scenario, seductive vacation aesthetic,
+      premium resort setting, provocative tropical content, high contrast thumbnail
+    seed: 2203008
+  Xhamster_Swimwear:
+    prompt: |
+      swimwear category thumbnail, rio mizuno, premium bikini content,
+      beach or pool setting, suggestive swimwear poses, adult swimwear modeling,
+      tropical colors, professional thumbnail quality
+    seed: 2203009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Beach:
+    prompt: |
+      tropical beach adult scenario, rio mizuno, beach vacation intimate moment,
+      scenic tropical setting, natural daylight intimate content, tasteful erotic beach fantasy,
+      couple or solo scenario, high production tropical content, professional adult quality
+    seed: 2203010
+  Pornhub_Resort:
+    prompt: |
+      resort vacation adult content, rio mizuno, luxurious hotel room or poolside,
+      romantic tropical scenario, high production resort fantasy, tasteful erotic content,
+      professional adult studio quality, vacation fantasy aesthetic
+    seed: 2203011
+  Pornhub_Swimwear:
+    prompt: |
+      premium swimwear adult content, rio mizuno, elaborate bikini or swimwear,
+      professional studio beach set, tasteful erotic swimwear modeling,
+      high production value, professional adult swimwear category
+    seed: 2203012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Tropical:
+    prompt: |
+      european tropical adult content, rio mizuno, artistic beach setting,
+      tasteful erotic beach photography, natural sunlight, professional production,
+      romantic tropical scenario, high quality adult content, european film aesthetic
+    seed: 2203013
+  XVideos_Vacation:
+    prompt: |
+      vacation fantasy adult content, rio mizuno, travel scenario with intimate twist,
+      first person perspective possible, authentic vacation romance aesthetic,
+      amateur style with professional lighting, tasteful erotic content
+    seed: 2203014
+  XVideos_Fetish_Travel:
+    prompt: |
+      travel fetish category, rio mizuno, specific travel or location fetish scenario,
+      professional studio setting with travel elements, high production fetish content
+    seed: 2203015
+
+  # --- PLATFORM: LINE ---
+  LINE_Vacation:
+    prompt: |
+      vacation sticker of rio mizuno, tropical beach theme, happy expressions,
+      summer vacation aesthetic, cute travel companion character,
+      chat sticker format, vacation mood enhancement
+    seed: 2203016
+  LINE_Chat_Beach:
+    prompt: |
+      beach vacation chat companion, rio mizuno as travel buddy character,
+      casual beach clothes, happy travel expression, chat integration area,
+      tropical vacation companion vibe, casual everyday aesthetic
+    seed: 2203017
+  LINE_Photo_Message:
+    prompt: |
+      vacation photo message style, rio mizuno sending travel photo,
+      beach background, casual selfie style, personal travel update aesthetic,
+      intimate photo message format, girlfriend vacation companion
+    seed: 2203018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Beach:
+    prompt: |
+      exclusive beach content, rio mizuno, tropical beach photoshoot preview,
+      premium bikini content, luxury beach setting, professional ring light,
+      vacation themed premium content, high production beach aesthetic,
+      exclusive subscriber tropical content
+    seed: 2203019
+  OnlyFans_Travel:
+    prompt: |
+      premium travel content, rio mizuno on luxury vacation,
+      resort preview content, exclusive vacation aesthetic,
+      high production travel teaser, premium subscriber exclusive,
+      luxury travel lifestyle content
+    seed: 2203020
+  OnlyFans_Swimwear:
+    prompt: |
+      premium swimwear preview, rio mizuno, multiple bikini outfit preview,
+      luxury poolside setting, professional swimwear photography,
+      high production swimwear content, exclusive subscriber content
+    seed: 2203021
+
+# ============================================
+# CHARACTER: JIN KAWASAKI
+# Base: Cyberpunk/Gaming, 26yo, Futuristic
+# Categories: Cyberpunk, Gaming, Cosplay, LED
+# ============================================
+
+Jin_Kawasaki:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Cyberpunk:
+    prompt: |
+      masterpiece, best quality, jin kawasaki cyberpunk aesthetic, 26 years old,
+      shaved sides with silver slicked hair, visible LED tattoo strips glowing blue on neck,
+      wearing high-tech tactical jacket with glowing circuit patterns, cyberpunk city background,
+      dramatic neon pink and blue lighting, futuristic dystopian aesthetic, 8k resolution,
+      detailed cybernetic arm prosthetic, sci-fi warrior aesthetic
+    seed: 2204001
+  Fantia_Gaming:
+    prompt: |
+      professional gaming setup photo, jin kawasaki, 26 years old,
+      rgb lighting in green and blue, triple monitor setup, gaming headset,
+      intense gaming concentration, streaming setup aesthetic, professional content,
+      gaming influencer style, high end PC setup visible
+    seed: 2204002
+  Fantia_Cosplay:
+    prompt: |
+      detailed cosplay photoshoot, jin kawasaki as cyberpunk character,
+      full cyberpunk costume with LED accessories, elaborate makeup with cybernetic details,
+      studio lighting emphasizing neon elements, convention center background,
+      detailed cosplay craftsmanship, 8k resolution, professional cosplay photography
+    seed: 2204003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Stream:
+    prompt: |
+      streaming snapshot, jin kawasaki during gaming stream,
+      face cam visible, reaction expression, messy gaming room background,
+      phone camera quality, authentic streamer moment, gaming influencer content,
+      live stream screenshot aesthetic, realistic streaming context
+    seed: 2204004
+  Twitter_Setup:
+    prompt: |
+      battlestation post, jin kawasaki showing gaming setup,
+      rgb lighting visible, messy cable management, gaming peripherals,
+      iphone photo quality, authentic gamer setup content, relatable gaming aesthetic
+    seed: 2204005
+  Twitter_Cosplay:
+    prompt: |
+      convention photo, jin kawasaki cosplay, casual convention selfie,
+      partial cosplay visible, anime convention background, happy convention attendee,
+      amateur phone camera, authentic cosplay community content
+    seed: 2204006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Cyberpunk_Fantasy:
+    prompt: |
+      cyberpunk adult fantasy thumbnail, jin kawasaki as futuristic warrior,
+      neon glow effects, tactical gear with selective exposure, dramatic lighting,
+      sci-fi power fantasy, optimized thumbnail with neon colors,
+      adult cyberpunk aesthetic, professional composition
+    seed: 2204007
+  Xhamster_Gaming_Fantasy:
+    prompt: |
+      gaming fantasy thumbnail, jin kawasaki in intense gaming scenario,
+      dramatic gaming setup lighting, action gaming pose, masculine power fantasy,
+      gaming enthusiast adult content, optimized thumbnail format
+    seed: 2204008
+  Xhamster_Cosplay_Adult:
+    prompt: |
+      adult cosplay thumbnail, jin kawasaki in provocative cyberpunk cosplay,
+      selective exposure costume, dramatic neon lighting, adult gaming cosplay category,
+      professional thumbnail quality, provocative cosplay aesthetic
+    seed: 2204009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Cyberpunk:
+    prompt: |
+      cyberpunk scenario adult content, jin kawasaki as futuristic character,
+      neon lit futuristic setting, tactical uniform with selective exposure,
+      high production sci-fi adult content, tasteful futuristic roleplay,
+      professional studio quality, masculine power fantasy
+    seed: 2204010
+  Pornhub_Gaming_Fantasy:
+    prompt: |
+      gaming fantasy adult scenario, jin kawasaki in game-inspired roleplay,
+      realistic gaming scenario with intimate twist, high production gaming fantasy,
+      tasteful adult content, professional studio quality
+    seed: 2204011
+  Pornhub_Cosplay:
+    prompt: |
+      cosplay category adult content, jin kawasaki in roleplay costume,
+      scenario appropriate to character, professional studio setting,
+      high production cosplay content, tasteful adult execution
+    seed: 2204012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Cyberpunk:
+    prompt: |
+      european cyberpunk adult content, jin kawasaki, artistic futuristic setting,
+      tasteful neon aesthetic, professional production quality, dramatic lighting,
+      sci-fi romantic scenario, high quality adult content, european film aesthetic
+    style: 2204013
+  XVideos_Gaming:
+    prompt: |
+      gaming scenario adult content, jin kawasaki, first person or couple gaming fantasy,
+      authentic gaming room setting, tasteful erotic content, amateur style production,
+      european adult film approach, high quality gaming fantasy
+    seed: 2204014
+  XVideos_Fetish_Cyber:
+    prompt: |
+      cyberpunk fetish category, jin kawasaki, specific futuristic or gaming fetish,
+      professional studio with cyber elements, high production fetish content
+    seed: 2204015
+
+  # --- PLATFORM: LINE ---
+  LINE_Gaming:
+    prompt: |
+      gaming companion sticker, jin kawasaki, various gaming expressions,
+      victory pose, rage face, level up celebration, chat sticker format,
+      gaming aesthetic stickers, masculine gamer character
+    seed: 2204016
+  LINE_Chat_Gamer:
+    prompt: |
+      gaming chat companion, jin kawasaki as online gaming friend,
+      casual gaming clothes, relaxed expression, chat integration area,
+      gaming buddy aesthetic, conversational companion style
+    seed: 2204017
+  LINE_Stream:
+    prompt: |
+      streaming companion image, jin kawasaki as stream watcher character,
+      watching stream together vibe, casual gaming context, intimate chat format
+    seed: 2204018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Gaming:
+    prompt: |
+      exclusive gaming content, jin kawasaki, stream preview or gaming footage,
+      personal gaming room setting, premium subscriber exclusive,
+      authentic gaming aesthetic, high production gaming content,
+      personal gaming moment teaser
+    seed: 2204019
+  OnlyFans_Cosplay:
+    prompt: |
+      exclusive cosplay content, jin kawasaki in detailed cyberpunk costume,
+      premium studio photoshoot, selective exposure teaser,
+      high production cosplay content, exclusive subscriber costume preview
+    seed: 2204020
+  OnlyFans_BehindScenes:
+    prompt: |
+      behind scenes personal content, jin kawasaki, casual gaming setup no makeup,
+      personal gaming session captured, intimate authentic aesthetic,
+      premium exclusive personal content, genuine gaming moment
+    seed: 2204021
+
+# ============================================
+# CHARACTER: CHIYO SASAKI
+# Base: Traditional/Elderly, 65yo, Wise
+# Categories: Traditional, Cultural, Elegant, Mature
+# ============================================
+
+Chiyo_Sasaki:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Traditional:
+    prompt: |
+      masterpiece, best quality, chiyo sasaki traditional japanese woman, 65 years old,
+      styled in formal navy blue silk kimono with subtle pattern, ornamental hair pins,
+      gentle wise kind eyes, serene garden setting with bamboo, soft diffused natural light,
+      traditional japanese portrait photography, 8k resolution, dignified graceful elderly beauty,
+      cultural heritage aesthetic, peaceful wise expression
+    seed: 2205001
+  Fantia_Tea:
+    prompt: |
+      masterpiece, chiyo sasaki performing traditional tea ceremony, 65 years old,
+      formal silk kimono, graceful elegant movements, soft shoji screen light,
+      tatami room setting, cultural documentary photography, detailed kimono texture,
+      8k resolution, serene peaceful atmosphere, traditional arts aesthetic
+    seed: 2205002
+  Fantia_Elegant:
+    prompt: |
+      elegant portrait, chiyo sasaki, 65 years old, wise dignified expression,
+      wearing luxurious traditional garment, delicate pearl earrings, professional studio lighting,
+      seamless background, sophisticated elderly beauty, high quality portrait photography,
+      8k resolution, timeless elegance, cultural heritage presentation
+    seed: 2205003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Cultural:
+    prompt: |
+      cultural post, chiyo sasaki sharing traditional craft, 65 years old,
+      hands performing origami or calligraphy, soft natural home lighting,
+      amateur phone camera, authentic cultural education content,
+      grandmother teaching tradition aesthetic, relatable cultural sharing
+    seed: 2205004
+  Twitter_Daily:
+    prompt: |
+      daily life photo, chiyo sasaki, 65 years old, casual traditional clothes,
+      home kitchen setting, natural expression, amateur photography,
+      authentic elderly daily life, relatable family content, warm domestic aesthetic
+    seed: 2205005
+  Twitter_Wisdom:
+    prompt: |
+      wisdom sharing post, chiyo sasaki, 65 years old, thoughtful expression,
+      philosophical quote overlay, meaningful life advice context,
+      amateur photo with depth, authentic elderly wisdom sharing,
+      inspirational senior content
+    seed: 2205006
+
+  # --- PLATFORM: XHAMSTER ---
+  # Note: Mature/elderly category on adult platforms - rare but exists for specific audiences
+  Xhamster_Mature_Solo:
+    prompt: |
+      mature solo female thumbnail, chiyo sasaki, 65 years old,
+      tasteful elegant lingerie, sophisticated mature aesthetic,
+      dignified seductive expression, professional studio quality,
+      mature adult content category, tasteful mature modeling
+    seed: 2205007
+  Xhamster_Mature_Couple:
+    prompt: |
+      mature couple thumbnail, chiyo sasaki with mature male partner,
+      elegant romantic scenario, sophisticated adult content,
+      mature relationship aesthetic, professional thumbnail quality,
+      mature adult category presentation
+    seed: 2205008
+  Xhamster_Fetish_Mature:
+    prompt: |
+      mature fetish category, chiyo sasaki, specific mature roleplay scenario,
+      professional studio, tasteful fetish content, high production quality
+    seed: 2205009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Mature:
+    prompt: |
+      mature adult content, chiyo sasaki, 65 years old, tasteful romantic scenario,
+      sophisticated elegant approach, mature couple fantasy,
+      professional studio quality, high production mature content,
+      mature adult category, dignified erotic content
+    seed: 2205010
+  Pornhub_Mature_Fantasy:
+    prompt: |
+      mature fantasy scenario, chiyo sasaki, specific roleplay with mature themes,
+      elegant setting appropriate to age, professional production,
+      tasteful mature adult content, sophisticated adult category
+    seed: 2205011
+  Pornhub_Cougar:
+    prompt: |
+      cougar category adult content, chiyo sasaki, confident mature seduction,
+      younger partner scenario possible, sophisticated mature fantasy,
+      professional adult quality, tasteful mature seduction aesthetic
+    seed: 2205012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Mature:
+    prompt: |
+      european mature adult content, chiyo sasaki, sophisticated romantic scenario,
+      artistic approach, tasteful erotic content, professional production,
+      mature beauty aesthetic, european film quality, elegant adult content
+    seed: 2205013
+  XVideos_Mature_Fantasy:
+    prompt: |
+      mature fantasy category, chiyo sasaki, specific roleplay scenario,
+      elegant setting, professional european production, tasteful fetish content
+    seed: 2205014
+  XVideos_Mature_Couple:
+    prompt: |
+      mature couple content, chiyo sasaki with partner, romantic mature scenario,
+      european adult film style, tasteful intimate content, professional quality
+    seed: 2205015
+
+  # --- PLATFORM: LINE ---
+  LINE_Wisdom:
+    prompt: |
+      wisdom sticker pack, chiyo sasaki, various wise expressions,
+      life advice stickers, philosophical quotes, chat sticker format,
+      wise elderly character, cultural wisdom companion
+    seed: 2205016
+  LINE_Cultural:
+    prompt: |
+      cultural chat companion, chiyo sasaki as traditional wisdom figure,
+      casual traditional clothes, friendly expression, chat integration area,
+      grandmotherly companion vibe, cultural conversational aesthetic
+    seed: 2205017
+  LINE_Message:
+    prompt: |
+      cultural message image, chiyo sasaki sharing traditional recipe or craft,
+      personal cultural update format, intimate cultural companion style
+    seed: 2205018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Mature_Glamour:
+    prompt: |
+      mature glamour content, chiyo sasaki, 65 years old, elegant lingerie,
+      sophisticated mature beauty, professional studio lighting,
+      premium mature modeling, tasteful elegant adult content,
+      exclusive subscriber mature glamour
+    seed: 2205019
+  OnlyFans_Mature_Couple:
+    prompt: |
+      mature couple content preview, chiyo sasaki with partner,
+      elegant romantic scenario, premium mature couple content,
+      exclusive subscriber preview, sophisticated adult content
+    seed: 2205020
+  OnlyFans_Wisdom:
+    prompt: |
+      personal wisdom sharing content, chiyo sasaki, mature life advice format,
+      exclusive mature content style, personal intimate aesthetic,
+      premium subscriber exclusive, authentic mature companion content
+    seed: 2205021
+
+# ============================================
+# CHARACTER: KAI MORITA
+# Base: Survival/Rugged, 33yo, Wilderness
+# Categories: Survival, Wilderness, Rugged, Outdoor
+# ============================================
+
+Kai_Morita:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Survival:
+    prompt: |
+      masterpiece, best quality, kai morita survivalist expert, 33 years old,
+      long tangled black hair tied back, thick unkempt beard, intense brown eyes,
+      wearing torn tank top showing muscular build, fire and smoke background,
+      harsh orange firelight, survival reality show aesthetic, 8k resolution,
+      rugged masculine content, intense survival atmosphere
+    seed: 2206001
+  Fantia_Wilderness:
+    prompt: |
+      wilderness survival photo, kai morita, 33 years old, climbing sheer rock cliff face,
+      tactical climbing gear, chalk dust on hands, intense concentration,
+      mountain wilderness background, dramatic mountain lighting, action survival photography,
+      8k resolution, extreme outdoor aesthetic, rugged adventurer content
+    seed: 2206002
+  Fantia_Bushcraft:
+    prompt: |
+      bushcraft survival content, kai morita, 33 years old, building survival shelter,
+      wilderness campsite setting, natural harsh lighting, survival skills documentation,
+      authentic outdoor content, 8k resolution, rugged masculine survival aesthetic
+    seed: 2206003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Outdoor:
+    prompt: |
+      outdoor adventure post, kai morita, 33 years old, hiking or camping photo,
+      wilderness background, casual outdoor clothes, authentic adventure moment,
+      amateur phone camera, real outdoor exploration content, rugged lifestyle aesthetic
+    seed: 2206004
+  Twitter_Survival:
+    prompt: |
+      survival skills post, kai morita demonstrating bushcraft technique,
+      wilderness setting, natural lighting, authentic survival content,
+      educational outdoor post, amateur survival documentation
+    seed: 2206005
+  Twitter_Camping:
+    prompt: |
+      camping trip photo, kai morita around campfire, wilderness campsite,
+      night lighting from fire, casual camping aesthetic, authentic outdoor life,
+      amateur photography, real camping experience
+    seed: 2206006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Survival_Fantasy:
+    prompt: |
+      survival fantasy thumbnail, kai morita as rugged wilderness survivor,
+      intense survival scenario, dramatic wilderness setting, masculine power fantasy,
+      adult survival roleplay, professional thumbnail quality, rugged aesthetic
+    seed: 2206007
+  Xhamster_Wilderness:
+    prompt: |
+      wilderness action thumbnail, kai morita in intense survival scenario,
+      dramatic outdoor setting, masculine power content, action survival aesthetic,
+      professional thumbnail composition
+    seed: 2206008
+  Xhamster_Fitness_Outdoor:
+    prompt: |
+      outdoor fitness thumbnail, kai morita, rugged athletic content,
+      wilderness workout setting, intense training expression,
+      masculine power fitness, professional outdoor fitness content
+    seed: 2206009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Survival:
+    prompt: |
+      survival scenario adult content, kai morita in wilderness roleplay,
+      realistic survival fantasy with intimate elements, high production survival content,
+      tasteful adult survival scenario, professional studio quality
+    seed: 2206010
+  Pornhub_Wilderness_Fantasy:
+    prompt: |
+      wilderness fantasy adult content, kai morita as rugged survivor character,
+      outdoor intimate scenario, tasteful natural setting adult content,
+      high production wilderness fantasy, professional adult quality
+    seed: 2206011
+  Pornhub_Outdoor_Fitness:
+    prompt: |
+      outdoor fitness adult scenario, kai morita with female partner,
+      wilderness workout with intimate moment, athletic romantic content,
+      high production outdoor fitness adult content, tasteful execution
+    seed: 2206012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Survival:
+    prompt: |
+      european survival adult content, kai morita, realistic wilderness scenario,
+      tasteful outdoor erotic content, professional production quality,
+      survival fantasy aesthetic, european film style adult content
+    seed: 2206013
+  XVideos_Wilderness:
+    prompt: |
+      wilderness romance adult content, kai morita in natural setting,
+      outdoor intimate scenario, tasteful natural lighting, professional production,
+      european adult film approach, romantic wilderness aesthetic
+    seed: 2206014
+  XVideos_Fetish_Survival:
+    prompt: |
+      survival fetish category, kai morita, specific wilderness or survival fetish,
+      professional studio with outdoor elements, high production fetish content
+    seed: 2206015
+
+  # --- PLATFORM: LINE ---
+  LINE_Survival:
+    prompt: |
+      survival sticker pack, kai morita, various outdoor expressions,
+      camping stickers, fire starting, shelter building, chat sticker format,
+      rugged outdoor character, masculine survival companion
+    seed: 2206016
+  LINE_Chat_Outdoor:
+    prompt: |
+      outdoor chat companion, kai morita as wilderness guide character,
+      casual outdoor clothes, rugged friendly expression, chat integration area,
+      adventure buddy aesthetic, survival companion style
+    seed: 2206017
+  LINE_Motivation:
+    prompt: |
+      motivational outdoor message, kai morita, adventure inspiration,
+      wilderness quote overlay, outdoor activity motivation, rugged aesthetic
+    seed: 2206018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Survival:
+    prompt: |
+      exclusive survival content, kai morita, wilderness adventure preview,
+      personal outdoor content, premium subscriber exclusive,
+      authentic rugged aesthetic, high production survival teaser,
+      exclusive wilderness adventure content
+    seed: 2206019
+  OnlyFans_Fitness_Outdoor:
+    prompt: |
+      exclusive outdoor fitness content, kai morita, rugged workout setting,
+      premium outdoor training preview, high production fitness content,
+      exclusive subscriber outdoor fitness content
+    seed: 2206020
+  OnlyFans_BehindScenes:
+    prompt: |
+      behind scenes personal content, kai morita, casual outdoor setting no makeup,
+      authentic rugged moment, intimate personal aesthetic,
+      premium exclusive personal content, genuine outdoor lifestyle
+    seed: 2206021
+
+# ============================================
+# CHARACTER: AYA TOMITA
+# Base: Cute/College, 19yo, Kawaii
+# Categories: Kawaii, College, Cozy, Cute
+# ============================================
+
+Aya_Tomita:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Cute:
+    prompt: |
+      masterpiece, best quality, aya tomita kawaii aesthetic, 19 years old,
+      messy bedhead brown hair with natural waves, large sleepy droopy eyes,
+      wearing oversized bear onesie pajamas, cozy bedroom with blankets and stuffed animals,
+      soft warm lamp lighting, sleepy just woke up expression, 8k resolution,
+      ultra relatable kawaii content, lazy morning cozy vibes, adorable aesthetic
+    seed: 2207001
+  Fantia_Cozy:
+    prompt: |
+      cozy aesthetic photo, aya tomita, 19 years old, sitting at desk surrounded by textbooks,
+      laptop open, fairy lights and desk lamp, late night study session,
+      oversized cozy hoodie, coffee mug with steam, warm amber lighting,
+      8k resolution, relatable student life, cozy study aesthetic
+    seed: 2207002
+  Fantia_Cute_Alternate:
+    prompt: |
+      adorable portrait, aya tomita, 19 years round cute face, big innocent eyes,
+      wearing cute oversized sweater with animal design, natural glowing skin,
+      bright happy expression showing teeth, soft natural lighting,
+      8k resolution, pure wholesome kawaii aesthetic, youthful fresh appearance
+    seed: 2207003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Morning:
+    prompt: |
+      morning selfie, aya tomita, 19 years old, still in pajamas, messy bedhead,
+      sleepy expression, bathroom mirror selfie, harsh bathroom lighting,
+      amateur phone camera, authentic just woke up moment, relatable morning content
+    seed: 2207004
+  Twitter_Study:
+    prompt: |
+      studygram post, aya tomita at desk, textbooks and laptop, coffee,
+      fairy lights aesthetic, late night study session, casual clothes,
+      amateur phone camera, authentic student life, relatable study content
+    seed: 2207005
+  Twitter_Casual:
+    prompt: |
+      casual daily post, aya tomita, 19 years old, oversized comfortable clothes,
+      home setting, natural expression, no makeup day, authentic everyday look,
+      amateur photography, relatable college student content
+    seed: 2207006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Cute_Solo:
+    prompt: |
+      cute solo female thumbnail, aya tomita, 19 years old, innocent appearance,
+      provocative college scenario, suggestive cute aesthetic, optimized thumbnail,
+      young adult content category, professional studio quality, cute provocative style
+    seed: 2207007
+  Xhamster_Cozy_Fantasy:
+    prompt: |
+      cozy bedroom fantasy thumbnail, aya tomita in intimate dorm room setting,
+      suggestive cozy scenario, adult college content, professional thumbnail,
+      cute college aesthetic, romantic intimate setting
+    seed: 2207008
+  Xhamster_Couple_College:
+    prompt: |
+      college couple thumbnail, aya tomita with male student partner,
+      dorm or apartment setting, suggestive college romance scenario,
+      young adult content, professional adult quality
+    seed: 2207009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Cute:
+    prompt: |
+      cute college adult content, aya tomita, 19 years old, tasteful intimate scenario,
+      young adult aesthetic, cute romantic content, high production quality,
+      professional adult studio, tasteful young adult content
+    seed: 2207010
+  Pornhub_Cozy_Fantasy:
+    prompt: |
+      cozy fantasy adult content, aya tomita in bedroom setting,
+      intimate romantic scenario, tasteful erotic content, high production,
+      professional adult quality, romantic cozy aesthetic
+    seed: 2207011
+  Pornhub_College_Fantasy:
+    prompt: |
+      college fantasy adult content, aya tomita as college student character,
+      dorm or campus scenario, romantic intimate content, high production,
+      tasteful adult content, professional studio quality
+    seed: 2207012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Cute:
+    prompt: |
+      european cute adult content, aya tomita, artistic romantic scenario,
+      tasteful erotic content, professional production quality, young adult aesthetic,
+      european film style, cute romantic presentation
+    seed: 2207013
+  XVideos_Cozy:
+    prompt: |
+      cozy bedroom adult content, aya tomita, intimate home setting,
+      tasteful romantic scenario, amateur style with professional lighting,
+      european adult approach, warm intimate aesthetic
+    seed: 2207014
+  XVideos_College:
+    prompt: |
+      college fantasy adult content, aya tomita, campus or dorm scenario,
+      tasteful romantic content, amateur authentic style, professional production,
+      european adult film style, college romance aesthetic
+    seed: 2207015
+
+  # --- PLATFORM: LINE ---
+  LINE_Cute_Sticker:
+    prompt: |
+      cute sticker pack, aya tomita, various kawaii expressions,
+      sleepy morning, happy, sad, excited, various emotions,
+      chat sticker format, ultra cute character design, kawaii aesthetic
+    seed: 2207016
+  LINE_Chat_Cute:
+    prompt: |
+      cute chat companion, aya tomita as kawaii girlfriend character,
+      casual clothes, sweet expressions, chat integration area,
+      cute conversational companion, kawaii aesthetic girlfriend
+    seed: 2207017
+  LINE_Morning:
+    prompt: |
+      morning message companion, aya tomita as good morning character,
+      sleepy cute expression, cozy bed setting, intimate morning aesthetic,
+      personal morning companion style
+    seed: 2207018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Cute:
+    prompt: |
+      exclusive cute content, aya tomita, 19 years old, cozy bedroom setting,
+      casual lingerie or pajamas, premium studio quality, cute aesthetic,
+      high production value, exclusive subscriber cute content
+    seed: 2207019
+  OnlyFans_Cozy:
+    prompt: |
+      exclusive cozy content, aya tomita, late night study or relaxation preview,
+      intimate bedroom aesthetic, premium personal content,
+      high production cozy teaser, exclusive subscriber content
+    seed: 2207020
+  OnlyFans_Premium_Cute:
+    prompt: |
+      premium cute preview, aya tomita, multiple outfit or scenario preview,
+      professional studio setting, high production quality,
+      exclusive subscriber premium content, cute aesthetic presentation
+    seed: 2207021
+
+# ============================================
+# CHARACTER: SHOTA HAYASHI
+# Base: Streetwear/Fashion, 22yo, Trendy
+# Categories: Streetwear, Fashion, Trendy, Urban
+# ============================================
+
+Shota_Hayashi:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Streetwear:
+    prompt: |
+      masterpiece, best quality, shota hayashi streetwear model, 22 years old,
+      trendy two-block haircut with shaved sides, ash brown longer top, small hoop earring,
+      wearing designer oversized beige trench coat over casual outfit, urban city street background,
+      stylish street fashion, professional fashion photography, 8k resolution,
+      trendy youthful aesthetic, confident fashion expression
+    seed: 2208001
+  Fantia_Fashion:
+    prompt: |
+      high fashion editorial, shota hayashi, 22 years old, standing at intersection of trendy district,
+      full outfit of the day with vintage sneakers and oversized hoodie, layered necklaces,
+      colorful shop windows background, street style photography, 35mm lens,
+      8k resolution, vibrant urban colors, professional street style photography
+    seed: 2208002
+  Fantia_Trendsetter:
+    prompt: |
+      fashion influencer photoshoot, shota hayashi, 22 years old,
+      wearing rare designer pieces, avant-garde fashion combination,
+      trendy urban setting, professional lighting, 8k resolution,
+      fashion trendsetter aesthetic, high quality fashion content
+    seed: 2208003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_OOTD:
+    prompt: |
+      outfit of the day post, shota hayashi, 22 years old, standing at mirror,
+      showing outfit detail, ring light reflection visible, stylish clothes,
+      iphone selfie quality, authentic fashion influencer content, trendy streetwear,
+      amateur fashion documentation, real outfit post
+    seed: 2208004
+  Twitter_Street:
+    prompt: |
+      street style photo, shota hayashi, 22 years old, urban city background,
+      casual trendy clothes, candid fashion shot, amateur phone camera,
+      authentic street style, real fashion moment, urban aesthetic
+    seed: 2208005
+  Twitter_Brand:
+    prompt: |
+      brand collaboration post, shota hayashi wearing specific streetwear brand,
+      brand name visible, casual influencer photo, amateur quality,
+      authentic brand partnership content, fashion influencer aesthetic
+    seed: 2208006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Fashion_Solo:
+    prompt: |
+      fashion thumbnail, shota hayashi, 22 years old, stylish urban content,
+      provocative fashion pose, trendy streetwear with selective exposure,
+      adult fashion aesthetic, professional thumbnail quality, modern masculine style
+    seed: 2208007
+  Xhamster_Streetwear:
+    prompt: |
+      streetwear category thumbnail, shota hayashi in trendy urban setting,
+      fashionable content with adult twist, professional studio quality,
+      provocative fashion aesthetic, optimized thumbnail
+    seed: 2208008
+  Xhamster_Fashion_Fantasy:
+    prompt: |
+      fashion fantasy thumbnail, shota hayashi in model scenario,
+      high fashion setting, masculine power presentation, professional adult quality
+    seed: 2208009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Fashion:
+    prompt: |
+      fashion scenario adult content, shota hayashi in stylish setting,
+      selective exposure fashion, tasteful adult fashion content,
+      high production quality, professional studio, masculine fashion fantasy
+    seed: 2208010
+  Pornhub_Streetwear:
+    prompt: |
+      streetwear fantasy adult content, shota hayashi as fashion model character,
+      trendy setting with intimate elements, tasteful adult content,
+      high production quality, professional studio, modern masculine aesthetic
+    seed: 2208011
+  Pornhub_Fashion_Couple:
+    prompt: |
+      fashion couple content, shota hayashi with female fashion partner,
+      stylish couple scenario, romantic fashion content, high production adult quality
+    seed: 2208012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Fashion:
+    prompt: |
+      european fashion adult content, shota hayashi, artistic fashion scenario,
+      tasteful erotic fashion, professional production quality, modern masculine aesthetic,
+      european film style, high quality fashion content
+    style: 2208013
+  XVideos_Streetwear:
+    prompt: |
+      streetwear adult content, shota hayashi, authentic urban setting,
+      amateur style with professional lighting, tasteful adult content,
+      european adult approach, modern masculine aesthetic
+    seed: 2208014
+  XVideos_Fetish_Fashion:
+    prompt: |
+      fashion fetish category, shota hayashi, specific fashion or roleplay fetish,
+      professional studio, high production fetish content, tasteful execution
+    seed: 2208015
+
+  # --- PLATFORM: LINE ---
+  LINE_Fashion_Sticker:
+    prompt: |
+      fashion sticker pack, shota hayashi, various stylish expressions,
+      pose stickers, outfit flex, trend expressions, chat sticker format,
+      stylish masculine character, fashion influencer aesthetic
+    seed: 2208016
+  LINE_Chat_Fashion:
+    prompt: |
+      fashion chat companion, shota hayashi as stylish friend character,
+      casual trendy clothes, friendly expression, chat integration area,
+      fashion buddy aesthetic, stylish conversational companion
+    seed: 2208017
+  LINE_Outfit:
+    prompt: |
+      outfit sharing companion, shota hayashi showing outfit of the day,
+      mirror selfie style, fashion update format, stylish companion aesthetic
+    seed: 2208018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Fashion:
+    prompt: |
+      exclusive fashion content, shota hayashi, premium outfit preview,
+      designer fashion showcase, high production quality,
+      exclusive subscriber fashion content, stylish premium aesthetic
+    seed: 2208019
+  OnlyFans_Streetwear:
+    prompt: |
+      exclusive streetwear content, shota hayashi, rare pieces preview,
+      premium fashion collection, high production quality,
+      exclusive subscriber streetwear content, trendy premium aesthetic
+    seed: 2208020
+  OnlyFans_BehindScenes:
+    prompt: |
+      behind scenes fashion content, shota hayashi, casual outfit planning,
+      personal fashion moment, intimate aesthetic, premium exclusive content,
+      authentic fashion companion content
+    seed: 2208021
+
+# ============================================
+# CHARACTER: NATSUKI TANIGUCHI
+# Base: Motorsport/Racing, 28yo, Athletic
+# Categories: Motorsport, Racing, Athletic, Fitness
+# ============================================
+
+Natsuki_Taniguchi:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Motorsport:
+    prompt: |
+      masterpiece, best quality, natsuki taniguchi japanese race car driver, 28 years old,
+      short sharp bob cut with undercut on one side, intense sharp eyes,
+      wearing fitted black leather racing suit with sponsor patches, race car pit lane background,
+      harsh fluorescent workshop lighting, intense competitive expression,
+      8k resolution, powerful female athlete aesthetic, motorsport photography
+    seed: 2209001
+  Fantia_Racing:
+    prompt: |
+      professional racing photo, natsuki taniguchi, 28 years old, sitting in Formula car on track,
+      helmet in hands, intense focused expression, race track pit lane with team crew blurred,
+      dramatic speed and motorsport atmosphere, action documentary photography,
+      8k resolution, competitive racing aesthetic, high energy motorsport content
+    seed: 2209002
+  Fantia_Fitness_Driving:
+    prompt: |
+      athletic fitness content, natsuki taniguchi, 28 years old, workout specific to racing fitness,
+      gym setting with racing elements, intense training expression,
+      professional fitness photography, 8k resolution, athletic racing driver aesthetic
+    seed: 2209003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Racing:
+    prompt: |
+      race day post, natsuki taniguchi, 28 years old, at race track,
+      racing suit partially visible, helmet in hand, casual track side photo,
+      amateur phone camera, authentic motorsport life, racing community content
+    seed: 2209004
+  Twitter_Gym:
+    prompt: |
+      training post, natsuki taniguchi, fitness routine specific to racing,
+      gym workout photo, intense training expression, amateur photography,
+      authentic racing driver fitness, relatable athlete content
+    seed: 2209005
+  Twitter_Event:
+    prompt: |
+      motorsport event attendance, natsuki taniguchi, 28 years old,
+      at race event or car show, casual racing themed clothes,
+      amateur photo, authentic motorsport enthusiast content
+    seed: 2209006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Motorsport_Solo:
+    prompt: |
+      motorsport female thumbnail, natsuki taniguchi, 28 years old,
+      racing suit with selective exposure, provocative racing pose,
+      adult motorsport fantasy, professional thumbnail quality, athletic power aesthetic
+    seed: 2209007
+  Xhamster_Racing_Fantasy:
+    prompt: |
+      racing fantasy thumbnail, natsuki taniguchi in intimate racing scenario,
+      pit lane or garage setting, suggestive motorsport content,
+      professional thumbnail composition, provocative racing aesthetic
+    seed: 2209008
+  Xhamster_Fitness_Racing:
+    prompt: |
+      athletic fitness thumbnail, natsuki taniguchi, muscular racing fitness,
+      gym setting, intense training expression, professional fitness content
+    seed: 2209009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Motorsport:
+    prompt: |
+      motorsport adult content, natsuki taniguchi as racing driver character,
+      racing scenario with intimate elements, high production quality,
+      tasteful adult motorsport fantasy, professional studio, powerful female athlete aesthetic
+    seed: 2209010
+  Pornhub_Racing_Fantasy:
+    prompt: |
+      racing fantasy adult content, natsuki taniguchi in romantic racing scenario,
+      garage or track setting, tasteful erotic content, high production,
+      professional adult quality, athletic racing aesthetic
+    seed: 2209011
+  Pornhub_Fitness_Racing:
+    prompt: |
+      athletic adult content, natsuki taniguchi with racing fitness theme,
+      gym setting with intimate moment, athletic romantic content,
+      high production fitness adult content, tasteful execution
+    seed: 2209012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Motorsport:
+    prompt: |
+      european motorsport adult content, natsuki taniguchi, artistic racing scenario,
+      tasteful erotic motorsport content, professional production quality,
+      european film style, powerful female athlete aesthetic
+    seed: 2209013
+  XVideos_Racing:
+    prompt: |
+      racing romance adult content, natsuki taniguchi in romantic racing scenario,
+      professional production quality, tasteful adult content, european approach
+    seed: 2209014
+  XVideos_Fetish_Racing:
+    prompt: |
+      racing fetish category, natsuki taniguchi, specific motorsport fetish,
+      professional studio with racing elements, high production fetish content
+    seed: 2209015
+
+  # --- PLATFORM: LINE ---
+  LINE_Racing_Sticker:
+    prompt: |
+      racing sticker pack, natsuki taniguchi, various racing expressions,
+      victory pose, concentration, celebration, chat sticker format,
+      competitive racing character, athletic aesthetic
+    seed: 2209016
+  LINE_Chat_Racing:
+    prompt: |
+      racing chat companion, natsuki taniguchi as racing friend character,
+      casual racing clothes, friendly competitive expression, chat integration area,
+      racing buddy aesthetic, competitive companion style
+    seed: 2209017
+  LINE_Motivation:
+    prompt: |
+      racing motivation message, natsuki taniguchi, competition inspiration,
+      racing quote overlay, athletic motivation, competitive aesthetic
+    seed: 2209018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Motorsport:
+    prompt: |
+      exclusive racing content, natsuki taniguchi, behind the scenes track preview,
+      premium racing content, high production quality, exclusive subscriber content,
+      professional racing driver aesthetic
+    seed: 2209019
+  OnlyFans_Fitness:
+    prompt: |
+      exclusive fitness content, natsuki taniguchi, racing fitness training preview,
+      premium athletic content, high production quality, exclusive subscriber content,
+      athletic racing driver aesthetic
+    seed: 2209020
+  OnlyFans_Personal:
+    prompt: |
+      personal content, natsuki taniguchi, casual racing life moments,
+      intimate personal aesthetic, premium exclusive content,
+      authentic racing driver life, personal companion content
+    seed: 2209021
+
+# ============================================
+# CHARACTER: MINATO SAKAMOTO
+# Base: Academic/Professor, 34yo, Intellectual
+# Categories: Academic, Intellectual, Professor, Professional
+# ============================================
+
+Minato_Sakamoto:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Academic:
+    prompt: |
+      masterpiece, best quality, minato sakamoto japanese professor, 34 years old,
+      neat professional short black hair with gray at temples, refined handsome features,
+      wearing tailored navy suit with pinstripe, standing in prestigious university library,
+      warm amber library lighting, academic professional photography, 8k resolution,
+      distinguished scholar aesthetic, thoughtful intelligent expression
+    seed: 2210001
+  Fantia_Lecture:
+    prompt: |
+      academic portrait, minato sakamoto, 34 years old, standing at lectern in grand lecture hall,
+      giving lecture to visible students, wearing tweed blazer with elbow patches,
+      chalkboard or presentation visible, educational documentary photography,
+      8k resolution, intellectual scholarly environment, learned professor aesthetic
+    seed: 2210002
+  Fantia_Professional:
+    prompt: |
+      professional executive photo, minato sakamoto, 34 years old, in modern office,
+      academic or business setting, formal business attire, confident leadership expression,
+      professional headshot style, 8k resolution, sophisticated professional aesthetic
+    seed: 2210003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Lecture:
+    prompt: |
+      lecture moment, minato sakamoto, 34 years old, classroom or lecture hall,
+      speaking to students, casual teaching photo, amateur phone camera,
+      authentic academic life, relatable professor content, educational content
+    seed: 2210004
+  Twitter_Book:
+    prompt: |
+      book recommendation post, minato sakamoto holding academic book,
+      thoughtful expression, casual office setting, amateur photography,
+      authentic intellectual sharing, academic influencer content
+    seed: 2210005
+  Twitter_Wisdom:
+    prompt: |
+      wisdom sharing post, minato sakamoto, thoughtful academic expression,
+      quote overlay, intellectual content, amateur photo, authentic scholarly sharing
+    seed: 2210006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Academic_Solo:
+    prompt: |
+      professional thumbnail, minato sakamoto, 34 years old, selective exposure academic scenario,
+      adult academic fantasy, professional thumbnail quality, intellectual masculine aesthetic
+    seed: 2210007
+  Xhamster_Professor:
+    prompt: |
+      professor fantasy thumbnail, minato sakamoto in academic roleplay scenario,
+      suggestive academic content, professional thumbnail, intellectual power fantasy
+    seed: 2210008
+  Xhamster_Fantasy:
+    prompt: |
+      intellectual fantasy thumbnail, minato sakamoto in specific roleplay,
+      professional setting with adult twist, tasteful adult content, professional quality
+    seed: 2210009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Academic:
+    prompt: |
+      academic adult content, minato sakamoto as professor character,
+      office or classroom scenario with intimate elements, high production quality,
+      tasteful adult academic fantasy, professional studio, intellectual masculine aesthetic
+    seed: 2210010
+  Pornhub_Professor:
+    prompt: |
+      professor fantasy adult content, minato sakamoto in romantic academic scenario,
+      tasteful erotic content, high production, professional adult quality,
+      intellectual power fantasy aesthetic
+    seed: 2210011
+  Pornhub_Professional:
+    prompt: |
+      professional adult content, minato sakamoto in business setting,
+      selective exposure, tasteful adult content, high production quality,
+      professional masculine aesthetic
+    seed: 2210012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Academic:
+    prompt: |
+      european academic adult content, minato sakamoto, artistic academic scenario,
+      tasteful erotic content, professional production quality, european film style,
+      intellectual masculine aesthetic
+    seed: 2210013
+  XVideos_Professor:
+    prompt: |
+      professor fantasy adult content, minato sakamoto, romantic academic scenario,
+      amateur style with professional lighting, tasteful adult content,
+      european adult approach, intellectual aesthetic
+    seed: 2210014
+  XVideos_Fetish_Academic:
+    prompt: |
+      academic fetish category, minato sakamoto, specific academic or professional fetish,
+      professional studio, high production fetish content, tasteful execution
+    seed: 2210015
+
+  # --- PLATFORM: LINE ---
+  LINE_Wisdom_Sticker:
+    prompt: |
+      wisdom sticker pack, minato sakamoto, various intellectual expressions,
+      thinking, explaining, agreeing, chat sticker format, scholarly character,
+      intellectual companion aesthetic
+    seed: 2210016
+  LINE_Chat_Professor:
+    prompt: |
+      academic chat companion, minato sakamoto as wise professor character,
+      smart casual clothes, friendly scholarly expression, chat integration area,
+      intellectual companion vibe, scholarly conversational style
+    seed: 2210017
+  LINE_Education:
+    prompt: |
+      educational message companion, minato sakamoto as teacher character,
+      explaining something, academic setting, intellectual companion style
+    seed: 2210018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Academic:
+    prompt: |
+      exclusive academic content, minato sakamoto, lecture preview or academic discussion,
+      premium scholarly content, high production quality, exclusive subscriber content,
+      intellectual masculine aesthetic
+    seed: 2210019
+  OnlyFans_Professional:
+    prompt: |
+      exclusive professional content, minato sakamoto, office or academic setting preview,
+      premium professional content, high production quality, exclusive subscriber content,
+      sophisticated masculine aesthetic
+    seed: 2210020
+  OnlyFans_Personal:
+    prompt: |
+      personal content, minato sakamoto, casual academic life moments,
+      intimate personal aesthetic, premium exclusive content, authentic scholarly life
+    seed: 2210021
+
+# ============================================
+# CHARACTER: LUNA TSUKINO
+# Base: Fantasy/VTuber, 21yo, Magical
+# Categories: Fantasy, Magical Girl, VTuber, Anime
+# ============================================
+
+Luna_Tsukino:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Fantasy:
+    prompt: |
+      masterpiece, best quality, luna tsukino ethereal fantasy character, 21 years old,
+      long flowing silver hair with purple shimmer, large luminous purple eyes with star sparkle,
+      wearing flowing white fantasy gown with silver embroidery and crystal accents,
+      mystical enchanted forest background with fireflies and glowing mushrooms,
+      magical creature aesthetic, 8k resolution, fantasy elf fairy aesthetic
+    seed: 2211001
+  Fantia_VTuber:
+    prompt: |
+      professional VTuber avatar, luna tsukino, 21 years old, virtual streaming setup,
+      fairy wings visible, magical girl aesthetic, high quality avatar rendering,
+      streaming studio with ring light, virtual background, 8k resolution,
+      popular VTuber character design, magical streaming content
+    seed: 2211002
+  Fantia_Magical:
+    prompt: |
+      magical girl transformation, luna tsukino, 21 years old, elaborate fantasy costume,
+      large white wings, detailed prosthetic ears, flower crown with glowing elements,
+      magical particle effects around, dramatic fantasy lighting, 8k resolution,
+      immersive fantasy world aesthetic, professional cosplay photography
+    seed: 2211003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_VTuber:
+    prompt: |
+      VTuber live moment, luna tsukino, 21 years old, streaming screenshot,
+      virtual avatar visible, chat visible, reaction expression,
+      amateur screenshot quality, authentic VTuber content, anime community sharing
+    seed: 2211004
+  Twitter_Cosplay:
+    prompt: |
+      cosplay post, luna tsukino, 21 years old, fantasy or magical girl costume,
+      convention selfie or photos, amateur phone camera, authentic cosplay content,
+      anime community, relatable cosplayer aesthetic
+    seed: 2211005
+  Twitter_Fantasy:
+    prompt: |
+      fantasy aesthetic post, luna tsukino, magical girl character,
+      casual magical aesthetic, anime character vibe, amateur photography,
+      authentic fantasy content, anime enthusiast sharing
+    seed: 2211006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_VTuber:
+    prompt: |
+      VTuber adult fantasy thumbnail, luna tsukino, virtual character with selective exposure,
+      magical girl aesthetic, provocative virtual content, professional thumbnail quality,
+      anime adult content category, virtual character presentation
+    seed: 2211007
+  Xhamster_Fantasy_Adult:
+    prompt: |
+      fantasy adult thumbnail, luna tsukino in intimate magical scenario,
+      suggestive fantasy content, adult magical girl aesthetic,
+      professional thumbnail, virtual character adult presentation
+    seed: 2211008
+  Xhamster_Cosplay_Adult:
+    prompt: |
+      adult cosplay thumbnail, luna tsukino in provocative fantasy costume,
+      selective exposure, dramatic fantasy lighting, adult cosplay category,
+      professional quality, provocative virtual character
+    seed: 2211009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_VTuber:
+    prompt: |
+      VTuber adult content, luna tsukino as virtual character, fantasy scenario,
+      virtual intimate moment, high production virtual adult content,
+      tasteful adult virtual fantasy, professional studio quality
+    seed: 2211010
+  Pornhub_Fantasy:
+    prompt: |
+      fantasy adult content, luna tsukino in romantic magical scenario,
+      tasteful erotic fantasy, high production quality, professional studio,
+      magical girl adult aesthetic, virtual character presentation
+    seed: 2211011
+  Pornhub_Magical:
+    prompt: |
+      magical girl adult content, luna tsukino, specific magical roleplay scenario,
+      professional studio, high production magical content, tasteful adult execution
+    seed: 2211012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_VTuber:
+    prompt: |
+      european VTuber adult content, luna tsukino, artistic virtual scenario,
+      tasteful erotic virtual content, professional production quality,
+      european film style, virtual character adult presentation
+    seed: 2211013
+  XVideos_Fantasy:
+    prompt: |
+      fantasy adult content, luna tsukino, romantic magical scenario,
+      amateur style with professional lighting, tasteful adult content,
+      european adult approach, magical fantasy aesthetic
+    seed: 2211014
+  XVideos_Fetish_Magical:
+    prompt: |
+      magical fetish category, luna tsukino, specific fantasy or magical fetish,
+      professional studio with fantasy elements, high production fetish content
+    seed: 2211015
+
+  # --- PLATFORM: LINE ---
+  LINE_VTuber_Sticker:
+    prompt: |
+      VTuber sticker pack, luna tsukino, various magical girl expressions,
+      transformation pose, spell casting, happy excited, chat sticker format,
+      magical virtual character, anime sticker aesthetic
+    seed: 2211016
+  LINE_Chat_Magical:
+    prompt: |
+      magical chat companion, luna tsukino as VTuber friend character,
+      virtual aesthetic clothes, friendly magical expression, chat integration area,
+      virtual companion vibe, magical conversational style
+    seed: 2211017
+  LINE_Magical:
+    prompt: |
+      magical message companion, luna tsukino as magical girl character,
+      spell or magic related message format, magical companion aesthetic
+    seed: 2211018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_VTuber:
+    prompt: |
+      exclusive VTuber content, luna tsukino, stream preview or virtual performance,
+      premium virtual content, high production quality, exclusive subscriber content,
+      popular VTuber aesthetic, magical character presentation
+    seed: 2211019
+  OnlyFans_Fantasy:
+    prompt: |
+      exclusive fantasy content, luna tsukino, magical scenario preview,
+      premium fantasy content, high production quality, exclusive subscriber content,
+      elaborate fantasy costume teaser
+    seed: 2211020
+  OnlyFans_Personal:
+    prompt: |
+      personal VTuber content, luna tsukino, behind virtual scenes,
+      casual virtual life moment, intimate aesthetic, premium exclusive content,
+      authentic virtual character life
+    seed: 2211021
+
+# ============================================
+# CHARACTER: KAITO SHIRAKAWA
+# Base: Anime/Otaku, 25yo, Shonen
+# Categories: Anime, Shonen, Otaku, Hero
+# ============================================
+
+Kaito_Shirakawa:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Anime:
+    prompt: |
+      masterpiece, best quality, kaito shirakawa anime protagonist style, 25 years old,
+      spiky dramatic anime character hair dyed bright red with black roots, sharp intense eyes,
+      wearing high school anime protagonist uniform with loosened tie, dynamic action pose,
+      anime poster aesthetic, bold dramatic lighting with rim light, 8k resolution,
+      shonen anime aesthetic, heroic confident expression, iconic anime character photography
+    seed: 2212001
+  Fantia_Shonen:
+    prompt: |
+      shonen anime hero photo, kaito shirakawa, 25 years old, dramatic anime battle pose,
+      energy effects surrounding, anime action scene aesthetic with speed lines,
+      epic fantasy anime landscape background, dramatic lighting with sunset sky,
+      8k resolution, bold saturated anime colors, heroic shonen anime aesthetic
+    seed: 2212002
+  Fantia_Action:
+    prompt: |
+      anime action hero, kaito shirakawa, 25 years old, heroic power pose,
+      anime protagonist energy, dramatic backlighting, intense focused expression,
+      8k resolution, dynamic anime composition, masculine anime hero aesthetic
+    seed: 2212003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Anime:
+    prompt: |
+      anime fan moment, kaito shirakawa, 25 years old, anime merchandise visible,
+      watching anime or reading manga, excited expression, amateur phone camera,
+      authentic otaku content, anime community sharing, relatable anime fan aesthetic
+    seed: 2212004
+  Twitter_Reaction:
+    prompt: |
+      anime reaction post, kaito shirakawa, watching exciting anime scene,
+      intense reaction expression, amateur screenshot or photo, authentic anime reaction,
+      relatable otaku content, anime enthusiast aesthetic
+    seed: 2212005
+  Twitter_Collection:
+    prompt: |
+      anime collection post, kaito shirakawa showing manga or figures,
+      anime merchandise display, amateur photography, authentic collector content,
+      otaku community, anime collection sharing
+    seed: 2212006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Anime_Solo:
+    prompt: |
+      anime male thumbnail, kaito shirakawa, 25 years old, shonen hero aesthetic,
+      provocative anime male pose, adult anime male content, professional thumbnail,
+      masculine anime power fantasy, anime adult category
+    seed: 2212007
+  Xhamster_Shonen_Adult:
+    prompt: |
+      shonen fantasy adult thumbnail, kaito shirakawa in intimate anime scenario,
+      suggestive anime content, adult anime aesthetic, professional thumbnail quality
+    seed: 2212008
+  Xhamster_Anime_Fantasy:
+    prompt: |
+      anime fantasy thumbnail, kaito shirakawa as anime hero in adult scenario,
+      selective exposure, dramatic anime lighting, adult anime content category
+    seed: 2212009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Anime:
+    prompt: |
+      anime adult content, kaito shirakawa as anime character, fantasy scenario,
+      high production anime adult content, tasteful adult anime fantasy,
+      professional studio quality, masculine anime hero aesthetic
+    seed: 2212010
+  Pornhub_Shonen:
+    prompt: |
+      shonen fantasy adult content, kaito shirakawa in romantic anime scenario,
+      tasteful erotic anime content, high production quality, professional studio,
+      anime male adult aesthetic, shonen power fantasy
+    seed: 2212011
+  Pornhub_Anime_Fetish:
+    prompt: |
+      anime fetish category, kaito shirakawa, specific anime or otaku fetish,
+      professional studio with anime elements, high production fetish content
+    seed: 2212012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Anime:
+    prompt: |
+      european anime adult content, kaito shirakawa, artistic anime scenario,
+      tasteful erotic anime content, professional production quality,
+      european film style, anime male adult aesthetic
+    seed: 2212013
+  XVideos_Shonen:
+    prompt: |
+      shonen adult content, kaito shirakawa, romantic anime scenario,
+      amateur style with professional lighting, tasteful adult content,
+      european adult approach, anime male aesthetic
+    seed: 2212014
+  XVideos_Fetish_Anime:
+    prompt: |
+      anime fetish category, kaito shirakawa, specific anime or character fetish,
+      professional studio, high production fetish content, tasteful execution
+    seed: 2212015
+
+  # --- PLATFORM: LINE ---
+  LINE_Anime_Sticker:
+    prompt: |
+      anime sticker pack, kaito shirakawa, various anime expressions,
+      action pose, excited, serious, victory, chat sticker format,
+      anime protagonist character, shonen aesthetic stickers
+    seed: 2212016
+  LINE_Chat_Anime:
+    prompt: |
+      anime chat companion, kaito shirakawa as anime otaku friend character,
+      casual anime clothes, excited anime fan expression, chat integration area,
+      otaku companion vibe, anime conversational style
+    seed: 2212017
+  LINE_Reaction:
+    prompt: |
+      anime reaction companion, kaito shirakawa as anime reaction character,
+      various anime reaction expressions, chat integration format, anime aesthetic
+    seed: 2212018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Anime:
+    prompt: |
+      exclusive anime content, kaito shirakawa, anime review or reaction preview,
+      premium anime content, high production quality, exclusive subscriber content,
+      anime otaku aesthetic, passionate anime presentation
+    seed: 2212019
+  OnlyFans_Shonen:
+    prompt: |
+      exclusive shonen content, kaito shirakawa, anime fantasy preview,
+      premium anime content, high production quality, exclusive subscriber content,
+      shonen hero aesthetic teaser
+    seed: 2212020
+  OnlyFans_Personal:
+    prompt: |
+      personal anime content, kaito shirakawa, anime watching or reading moment,
+      casual anime life, intimate aesthetic, premium exclusive content,
+      authentic otaku life, personal anime companion
+    seed: 2212021
+
+# ============================================
+# CHARACTER: ZARA CHEN
+# Base: International/Luxury, 26yo, Cosmopolitan
+# Categories: Luxury, International, Fashion, Cosmopolitan
+# ============================================
+
+Zara_Chen:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Luxury:
+    prompt: |
+      masterpiece, best quality, zara chen international fashion model, 26 years old,
+      sleek shoulder-length black hair with subtle wave, sharp elegant features,
+      wearing high-end designer black mini dress with gold accents, luxury hotel rooftop bar,
+      city lights background, sophisticated evening photography, 8k resolution,
+      cosmopolitan luxury aesthetic, powerful confident expression
+    seed: 2213001
+  Fantia_Fashion:
+    prompt: |
+      haute couture fashion, zara chen, 26 years old, avant-garde designer piece,
+      runway or fashion show setting, professional runway lighting, dramatic fashion pose,
+      8k resolution, international fashion model aesthetic, sophisticated luxury
+    seed: 2213002
+  Fantia_Glamour:
+    prompt: |
+      glamorous portrait, zara chen, 26 years old, wearing luxury designer lingerie,
+      sophisticated elegant expression, soft studio lighting, seamless background,
+      professional glamour photography, 8k resolution, cosmopolitan beauty,
+      high fashion glamour aesthetic
+    seed: 2213003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Travel:
+    prompt: |
+      travel post, zara chen, 26 years old, at luxury destination,
+      instagram story style, designer vacation outfit, exotic location,
+      amateur phone camera, authentic luxury travel content, cosmopolitan lifestyle
+    seed: 2213004
+  Twitter_Fashion:
+    prompt: |
+      fashion post, zara chen, 26 years old, ootd with designer pieces,
+      mirror selfie with luxury items, ring light, iphone quality,
+      authentic fashion influencer content, luxury fashion aesthetic
+    seed: 2213005
+  Twitter_Luxury:
+    prompt: |
+      luxury lifestyle post, zara chen, expensive restaurant or hotel,
+      casual glamorous look, amateur photography, authentic luxury life,
+      cosmopolitan influencer content, aspirational lifestyle aesthetic
+    seed: 2213006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Luxury_Solo:
+    prompt: |
+      luxury female thumbnail, zara chen, 26 years old, sophisticated glamorous content,
+      selective exposure luxury setting, adult luxury aesthetic, professional thumbnail,
+      cosmopolitan beauty, premium adult presentation
+    seed: 2213007
+  Xhamster_Fashion_Adult:
+    prompt: |
+      fashion adult thumbnail, zara chen in provocative luxury fashion,
+      adult fashion category, professional thumbnail quality, high fashion erotic content
+    seed: 2213008
+  Xhamster_International:
+    prompt: |
+      international fantasy thumbnail, zara chen in romantic travel scenario,
+      adult travel fantasy, professional thumbnail, cosmopolitan seductive aesthetic
+    seed: 2213009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Luxury:
+    prompt: |
+      luxury adult content, zara chen in sophisticated setting, tasteful intimate scenario,
+      high production quality, professional studio, cosmopolitan elegant aesthetic,
+      tasteful adult luxury content, international beauty adult presentation
+    seed: 2213010
+  Pornhub_Fashion:
+    prompt: |
+      fashion adult content, zara chen in selective exposure designer fashion,
+      tasteful erotic fashion, high production quality, professional studio,
+      cosmopolitan fashion fantasy, luxury adult aesthetic
+    seed: 2213011
+  Pornhub_International:
+    prompt: |
+      international adult content, zara chen in romantic travel scenario,
+      tasteful erotic content, high production quality, professional studio,
+      cosmopolitan romantic fantasy, international beauty aesthetic
+    seed: 2213012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Luxury:
+    prompt: |
+      european luxury adult content, zara chen, artistic sophisticated scenario,
+      tasteful erotic luxury content, professional production quality,
+      european film style, cosmopolitan elegant aesthetic
+    seed: 2213013
+  XVideos_Fashion:
+    prompt: |
+      european fashion adult content, zara chen, artistic fashion scenario,
+      tasteful adult fashion, professional production, european approach,
+      cosmopolitan fashion aesthetic
+    seed: 2213014
+  XVideos_Fetish_Luxury:
+    prompt: |
+      luxury fetish category, zara chen, specific luxury or travel fetish,
+      professional studio with luxury elements, high production fetish content
+    seed: 2213015
+
+  # --- PLATFORM: LINE ---
+  LINE_Luxury_Sticker:
+    prompt: |
+      luxury sticker pack, zara chen, various sophisticated expressions,
+      glamorous poses, travel vibes, chat sticker format, cosmopolitan character,
+      luxury lifestyle aesthetic
+    seed: 2213016
+  LINE_Chat_Luxury:
+    prompt: |
+      luxury chat companion, zara chen as cosmopolitan friend character,
+      designer clothes, sophisticated expression, chat integration area,
+      luxury companion vibe, cosmopolitan conversational style
+    seed: 2213017
+  LINE_Travel:
+    prompt: |
+      travel companion message, zara chen as travel buddy character,
+      exotic location setting, luxury travel aesthetic, companion style
+    seed: 2213018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Luxury:
+    prompt: |
+      exclusive luxury content, zara chen, premium travel or lifestyle preview,
+      high production quality, exclusive subscriber luxury content,
+      cosmopolitan lifestyle aesthetic, sophisticated presentation
+    seed: 2213019
+  OnlyFans_Fashion:
+    prompt: |
+      exclusive fashion content, zara chen, designer outfit preview,
+      premium fashion content, high production quality, exclusive subscriber content,
+      cosmopolitan fashion aesthetic
+    seed: 2213020
+  OnlyFans_Premium:
+    prompt: |
+      exclusive premium content, zara chen, intimate luxury setting preview,
+      high production quality, exclusive subscriber premium content,
+      sophisticated intimate aesthetic, cosmopolitan beauty presentation
+    seed: 2213021
+
+# ============================================
+# CHARACTER: VICTOR WILLIAMS
+# Base: Executive/Business, 38yo, African-American
+# Categories: Business, Executive, Professional, Corporate
+# ============================================
+
+Victor_Williams:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Executive:
+    prompt: |
+      masterpiece, best quality, victor williams american executive, 38 years old,
+      neat professional short black hair with gray at temples, strong confident jawline,
+      wearing tailored charcoal business suit, standing in modern corporate office,
+      professional studio lighting, executive corporate photography, 8k resolution,
+      powerful leadership presence, successful corporate leader aesthetic
+    seed: 2214001
+  Fantia_Leadership:
+    prompt: |
+      corporate leadership photo, victor williams, 38 years old, standing at conference table,
+      giving presentation to executives visible, modern glass conference room with city view,
+      wearing premium tailored suit, confident commanding expression,
+      8k resolution, sophisticated business colors, leadership vision aesthetic
+    seed: 2214002
+  Fantia_Professional:
+    prompt: |
+      professional portrait, victor williams, 38 years old, executive headshot,
+      wearing premium suit, powerful expression, seamless corporate background,
+      professional studio lighting, 8k resolution, executive business aesthetic
+    seed: 2214003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Business:
+    prompt: |
+      business post, victor williams, 38 years old, sharing professional insight,
+      office setting, casual business attire, thoughtful expression,
+      amateur phone camera, authentic business content, corporate influencer style
+    seed: 2214004
+  Twitter_Leadership:
+    prompt: |
+      leadership post, victor williams, inspiring business quote overlay,
+      office background, professional but casual, authentic corporate life,
+      amateur photography, relatable executive content
+    seed: 2214005
+  Twitter_Event:
+    prompt: |
+      business event post, victor williams, 38 years old, at conference or meeting,
+      networking event, casual professional look, amateur photo,
+      authentic business event content, corporate community sharing
+    seed: 2214006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Executive_Solo:
+    prompt: |
+      professional male thumbnail, victor williams, 38 years old, selective exposure executive,
+      adult business fantasy, professional thumbnail quality, powerful masculine executive
+    seed: 2214007
+  Xhamster_Business_Adult:
+    prompt: |
+      business fantasy thumbnail, victor williams in adult corporate scenario,
+      suggestive business content, professional thumbnail, powerful executive fantasy
+    seed: 2214008
+  Xhamster_Legacy:
+    prompt: |
+      mature professional thumbnail, victor williams in specific professional fantasy,
+      adult mature business content, professional quality, powerful executive aesthetic
+    seed: 2214009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Executive:
+    prompt: |
+      executive adult content, victor williams as corporate leader character,
+      office scenario with intimate elements, high production quality,
+      tasteful adult corporate fantasy, professional studio, powerful executive aesthetic
+    seed: 2214010
+  Pornhub_Business:
+    prompt: |
+      business adult content, victor williams in romantic business scenario,
+      tasteful erotic content, high production quality, professional studio,
+      powerful masculine business aesthetic, executive fantasy
+    seed: 2214011
+  Pornhub_Mature_Executive:
+    prompt: |
+      mature executive adult content, victor williams, 38 years old,
+      sophisticated adult scenario, high production quality, professional studio,
+      mature professional aesthetic, powerful mature presentation
+    seed: 2214012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Executive:
+    prompt: |
+      european executive adult content, victor williams, artistic business scenario,
+      tasteful erotic executive content, professional production quality,
+      european film style, powerful masculine executive aesthetic
+    seed: 2214013
+  XVideos_Business:
+    prompt: |
+      business adult content, victor williams, romantic corporate scenario,
+      amateur style with professional lighting, tasteful adult content,
+      european adult approach, powerful executive aesthetic
+    seed: 2214014
+  XVideos_Fetish_Business:
+    prompt: |
+      business fetish category, victor williams, specific corporate or professional fetish,
+      professional studio with business elements, high production fetish content
+    seed: 2214015
+
+  # --- PLATFORM: LINE ---
+  LINE_Business_Sticker:
+    prompt: |
+      business sticker pack, victor williams, various executive expressions,
+      success, thinking, presenting, chat sticker format, professional character,
+      business leadership aesthetic
+    seed: 2214016
+  LINE_Chat_Executive:
+    prompt: |
+      business chat companion, victor williams as executive mentor character,
+      smart business clothes, confident friendly expression, chat integration area,
+      professional companion vibe, business conversational style
+    seed: 2214017
+  LINE_Leadership:
+    prompt: |
+      leadership message companion, victor williams as leadership mentor,
+      inspirational business message format, professional companion style
+    seed: 2214018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Business:
+    prompt: |
+      exclusive business content, victor williams, business advice or leadership preview,
+      premium business content, high production quality, exclusive subscriber content,
+      powerful executive aesthetic, leadership presentation
+    seed: 2214019
+  OnlyFans_Executive:
+    prompt: |
+      exclusive executive content, victor williams, behind business scenes preview,
+      premium professional content, high production quality, exclusive subscriber content,
+      sophisticated executive aesthetic
+    seed: 2214020
+  OnlyFans_Personal:
+    prompt: |
+      personal business content, victor williams, casual executive life moments,
+      intimate personal aesthetic, premium exclusive content, authentic business leader life
+    seed: 2214021
+
+# ============================================
+# CHARACTER: SOFIA ROSSI
+# Base: Italian/Mediterranean, 29yo, Elegant
+# Categories: Italian, Mediterranean, Luxury, Fashion
+# ============================================
+
+Sofia_Rossi:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Italian:
+    prompt: |
+      masterpiece, best quality, sofia rossi italian fashion influencer, 29 years old,
+      long rich brunette hair with sun-kissed highlights in glamorous waves,
+      warm expressive hazel eyes, naturally radiant skin with golden tan,
+      wearing flowing emerald green silk evening gown, delicate gold italian jewelry,
+      dramatic soft studio lighting, luxury fashion editorial, 8k resolution,
+      mediterranean beauty aesthetic, sophisticated luxury elegance
+    seed: 2215001
+  Fantia_Tuscany:
+    prompt: |
+      tuscany lifestyle photo, sofia rossi, 29 years old, terrace of historic villa,
+      flowing white linen dress, espadrilles, vineyard and rolling hills background,
+      golden hour warm light, elegant carefree wealthy aesthetic, travel fashion photography,
+      8k resolution, romantic luxury atmosphere, sophisticated wanderlust content
+    seed: 2215002
+  Fantia_Glamour:
+    prompt: |
+      glamorous portrait, sofia rossi, 29 years old, wearing luxury lingerie or gown,
+      sophisticated expression, soft dramatic lighting, seamless background,
+      professional glamour photography, 8k resolution, mediterranean beauty,
+      elegant sensual aesthetic
+    seed: 2215003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Italian:
+    prompt: |
+      italian life post, sofia rossi, 29 years old, authentic italian location,
+      casual elegant clothes, enjoying italian food or coffee, amateur phone camera,
+      authentic mediterranean life, italian influencer content, warm aesthetic
+    seed: 2215004
+  Twitter_Travel:
+    prompt: |
+      travel post, sofia rossi, 29 years old, exploring italian destination,
+      scenic location background, casual stylish outfit, happy traveler expression,
+      amateur photography, authentic luxury travel content, cosmopolitan influencer
+    seed: 2215005
+  Twitter_Fashion:
+    prompt: |
+      fashion post, sofia rossi, 29 years old, stylish italian outfit,
+      european street setting, ring light or natural light, amateur fashion photo,
+      authentic fashion influencer content, mediterranean style aesthetic
+    seed: 2215006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Italian_Solo:
+    prompt: |
+      mediterranean female thumbnail, sofia rossi, 29 years old, sophisticated elegant content,
+      selective exposure luxury setting, adult mediterranean beauty, professional thumbnail,
+      italian elegance, sensual european aesthetic
+    seed: 2215007
+  Xhamster_Tuscany_Fantasy:
+    prompt: |
+      tuscany fantasy thumbnail, sofia rossi in romantic italian scenario,
+      adult mediterranean fantasy, professional thumbnail, romantic luxury aesthetic
+    seed: 2215008
+  Xhamster_Fashion_Adult:
+    prompt: |
+      fashion adult thumbnail, sofia rossi in provocative mediterranean fashion,
+      adult fashion category, professional thumbnail quality, elegant seductive content
+    seed: 2215009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Italian:
+    prompt: |
+      italian adult content, sofia rossi, romantic mediterranean scenario,
+      tasteful intimate content, high production quality, professional studio,
+      mediterranean beauty adult presentation, elegant european aesthetic
+    seed: 2215010
+  Pornhub_Tuscany:
+    prompt: |
+      tuscany fantasy adult content, sofia rossi in romantic italian villa scenario,
+      tasteful erotic content, high production quality, professional studio,
+      romantic mediterranean aesthetic, luxury european fantasy
+    seed: 2215011
+  Pornhub_Fashion:
+    prompt: |
+      fashion adult content, sofia rossi in selective exposure designer fashion,
+      tasteful erotic fashion, high production quality, professional studio,
+      mediterranean fashion fantasy, luxury adult aesthetic
+    seed: 2215012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Italian:
+    prompt: |
+      european italian adult content, sofia rossi, artistic mediterranean scenario,
+      tasteful erotic italian content, professional production quality,
+      european film style, mediterranean beauty aesthetic
+    seed: 2215013
+  XVideos_Tuscany:
+    prompt: |
+      tuscany romance adult content, sofia rossi, romantic villa scenario,
+      amateur style with professional lighting, tasteful adult content,
+      european adult approach, romantic mediterranean aesthetic
+    seed: 2215014
+  XVideos_Fetish_Italian:
+    prompt: |
+      italian fetish category, sofia rossi, specific mediterranean or italian fetish,
+      professional studio with italian elements, high production fetish content
+    seed: 2215015
+
+  # --- PLATFORM: LINE ---
+  LINE_Italian_Sticker:
+    prompt: |
+      italian sticker pack, sofia rossi, various mediterranean expressions,
+      elegant poses, travel vibes, chat sticker format, cosmopolitan character,
+      mediterranean luxury aesthetic
+    seed: 2215016
+  LINE_Chat_Italian:
+    prompt: |
+      italian chat companion, sofia rossi as mediterranean friend character,
+      elegant casual clothes, warm friendly expression, chat integration area,
+      mediterranean companion vibe, elegant conversational style
+    seed: 2215017
+  LINE_Travel:
+    prompt: |
+      travel companion message, sofia rossi as italian travel buddy,
+      mediterranean location setting, elegant travel aesthetic, companion style
+    seed: 2215018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Italian:
+    prompt: |
+      exclusive italian content, sofia rossi, mediterranean lifestyle preview,
+      high production quality, exclusive subscriber italian lifestyle content,
+      elegant mediterranean aesthetic, sophisticated presentation
+    seed: 2215019
+  OnlyFans_Tuscany:
+    prompt: |
+      exclusive tuscany content, sofia rossi, villa or vineyard preview,
+      premium mediterranean content, high production quality, exclusive subscriber content,
+      romantic italian aesthetic, luxury lifestyle presentation
+    seed: 2215020
+  OnlyFans_Glamour:
+    prompt: |
+      exclusive glamour content, sofia rossi, elegant lingerie preview,
+      premium glamour content, high production quality, exclusive subscriber content,
+      sophisticated mediterranean beauty, elegant sensual presentation
+    seed: 2215021
+
+# ============================================
+# CHARACTER: MATEO GARCIA
+# Base: Latino/Latin American, 27yo, Warm
+# Categories: Latino, Latin American, Cultural, Food
+# ============================================
+
+Mateo_Garcia:
+  # --- PLATFORM: FANTAIA ---
+  Fantia_Latino:
+    prompt: |
+      masterpiece, best quality, mateo garcia latino content creator, 27 years old,
+      medium length curly black hair with natural volume, friendly warm brown eyes,
+      wearing casual white linen shirt over graphic t-shirt, outdoor cafe with warm sunlight,
+      relaxed lifestyle photography, 8k resolution, warm vibrant latin american colors,
+      welcoming friendly aesthetic, authentic approachable content style
+    seed: 2216001
+  Fantia_Cultural:
+    prompt: |
+      cultural photography, mateo garcia, 27 years old, at colorful traditional market,
+      wearing casual colorful local shirt, interacting with local vendor,
+      authentic cultural environment, documentary travel photography, 35mm lens,
+      8k resolution, vibrant market colors, genuine latin american aesthetic
+    seed: 2216002
+  Fantia_Food:
+    prompt: |
+      food content photo, mateo garcia, 27 years old, in kitchen with traditional ingredients,
+      cooking authentic family recipe, warm home lighting with steam from cooking,
+      passionate cooking expression, 8k resolution, authentic latin american cuisine,
+      warm family atmosphere, cultural culinary aesthetic
+    seed: 2216003
+
+  # --- PLATFORM: TWITTER/X ---
+  Twitter_Food:
+    prompt: |
+      food post, mateo garcia, 27 years old, cooking or enjoying latino food,
+      home kitchen or restaurant setting, casual cooking photo, amateur phone camera,
+      authentic food content, latino cuisine sharing, warm culinary aesthetic
+    seed: 2216004
+  Twitter_Cultural:
+    prompt: |
+      cultural post, mateo garcia, 27 years old, sharing latino culture,
+      cultural event or tradition, casual authentic photo, amateur photography,
+      authentic cultural content, latino community sharing, cultural pride aesthetic
+    seed: 2216005
+  Twitter_Daily:
+    prompt: |
+      daily life post, mateo garcia, 27 years old, casual everyday moment,
+      home or outdoor setting, natural expression, amateur phone camera,
+      authentic relatable content, warm friendly aesthetic, genuine daily life
+    seed: 2216006
+
+  # --- PLATFORM: XHAMSTER ---
+  Xhamster_Latino_Solo:
+    prompt: |
+      latino male thumbnail, mateo garcia, 27 years old, warm friendly appearance,
+      selective exposure latino content, adult latino aesthetic, professional thumbnail,
+      warm masculine presentation, authentic latin american beauty
+    seed: 2216007
+  Xhamster_Cultural_Adult:
+    prompt: |
+      cultural fantasy thumbnail, mateo garcia in adult latin american scenario,
+      suggestive cultural content, professional thumbnail, warm latino aesthetic
+    seed: 2216008
+  Xhamster_Food_Fantasy:
+    prompt: |
+      food fantasy thumbnail, mateo garcia in adult cooking or dining scenario,
+      suggestive culinary content, professional thumbnail, warm aesthetic
+    seed: 2216009
+
+  # --- PLATFORM: PORNHUB ---
+  Pornhub_Latino:
+    prompt: |
+      latino adult content, mateo garcia, 27 years old, romantic latin american scenario,
+      tasteful intimate content, high production quality, professional studio,
+      warm masculine adult presentation, authentic latino aesthetic
+    seed: 2216010
+  Pornhub_Cultural:
+    prompt: |
+      cultural adult content, mateo garcia in romantic cultural scenario,
+      tasteful erotic content, high production quality, professional studio,
+      warm latino aesthetic, authentic romantic cultural presentation
+    seed: 2216011
+  Pornhub_Food:
+    prompt: |
+      food adult content, mateo garcia in romantic culinary scenario,
+      tasteful intimate content, high production quality, professional studio,
+      warm masculine aesthetic, authentic romantic presentation
+    seed: 2216012
+
+  # --- PLATFORM: XVIDEOS ---
+  XVideos_Latino:
+    prompt: |
+      european latino adult content, mateo garcia, artistic romantic scenario,
+      tasteful erotic latino content, professional production quality,
+      european film style, warm masculine aesthetic
+    seed: 2216013
+  XVideos_Cultural:
+    prompt: |
+      cultural adult content, mateo garcia, romantic cultural scenario,
+      amateur style with professional lighting, tasteful adult content,
+      european adult approach, warm latino aesthetic
+    seed: 2216014
+  XVideos_Fetish_Latino:
+    prompt: |
+      latino fetish category, mateo garcia, specific latin american or cultural fetish,
+      professional studio with cultural elements, high production fetish content
+    seed: 2216015
+
+  # --- PLATFORM: LINE ---
+  LINE_Latino_Sticker:
+    prompt: |
+      latino sticker pack, mateo garcia, various warm expressions,
+      happy, cooking, dancing, celebrating, chat sticker format, warm character,
+      latin american cultural aesthetic
+    seed: 2216016
+  LINE_Chat_Latino:
+    prompt: |
+      latino chat companion, mateo garcia as warm latin friend character,
+      casual colorful clothes, friendly warm expression, chat integration area,
+      warm companion vibe, cultural conversational style
+    seed: 2216017
+  LINE_Food:
+    prompt: |
+      food message companion, mateo garcia as cooking friend character,
+      culinary related message format, warm food companion aesthetic
+    seed: 2216018
+
+  # --- PLATFORM: ONLYFANS ---
+  OnlyFans_Latino:
+    prompt: |
+      exclusive latino content, mateo garcia, cultural or lifestyle preview,
+      high production quality, exclusive subscriber latino content,
+      warm authentic aesthetic, cultural presentation
+    seed: 2216019
+  OnlyFans_Food:
+    prompt: |
+      exclusive food content, mateo garcia, cooking preview or recipe sharing,
+      premium culinary content, high production quality, exclusive subscriber content,
+      authentic latino cuisine, warm culinary presentation
+    seed: 2216020
+  OnlyFans_Personal:
+    prompt: |
+      personal content, mateo garcia, casual daily life moments,
+      intimate personal aesthetic, premium exclusive content, authentic warm personality
+    seed: 2216021
+
+# ============================================
+# BANNER VARIANTS BY PLATFORM
+# ============================================
+
+# Character banners tailored to each platform's aspect ratio and aesthetic requirements
+
+# FANTAIA BANNERS (16:9 widescreen, high quality)
+Mika_Kobayashi_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, ultra highres, mika kobayashi full body fashion model pose,
+    25 years old, wearing stunning designer gown, honey blonde hair flowing,
+    dramatic studio lighting with multiple lights, luxury venue background,
+    professional photoshoot, 8k resolution, high fashion editorial banner
+  seed: 2219001
+
+Takumi_Endou_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, takumi endou full body tactical warrior pose,
+    31 years old, wearing complete tactical gear, dramatic outdoor lighting,
+    desert or mountain background, action movie poster style, 8k resolution,
+    military action banner photography
+  seed: 2219002
+
+Rio_Mizuno_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, rio mizuno full body tropical beach pose,
+    23 years old, wearing elegant resort wear, standing at infinity pool,
+    dramatic sunset tropical background, luxury resort setting,
+    professional travel photography, 8k resolution, vacation paradise banner
+  seed: 2219003
+
+Jin_Kawasaki_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, jin kawasaki full body cyberpunk warrior pose,
+    26 years old, wearing complete cyberpunk costume with LED accessories,
+    dramatic neon city background at night, futuristic dystopian setting,
+    cinematic lighting, 8k resolution, cyberpunk banner photography
+  seed: 2219004
+
+Chiyo_Sasaki_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, chiyo sasaki full body traditional japanese pose,
+    65 years old, wearing formal silk kimono, serene japanese garden setting,
+    soft natural lighting, traditional architectural background,
+    cultural heritage photography, 8k resolution, elegant traditional banner
+  seed: 2219005
+
+Kai_Morita_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, kai morita full body wilderness survival pose,
+    33 years old, rugged outdoor setting, dramatic natural lighting,
+    mountain or forest background, survivalist aesthetic, 8k resolution,
+    rugged adventure banner photography
+  seed: 2219006
+
+Aya_Tomita_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, aya tomita full body cozy aesthetic pose,
+    19 years old, wearing cute casual clothes, cozy bedroom or study setting,
+    warm ambient lighting, fairy lights and stuffed animals visible,
+    kawaii aesthetic photography, 8k resolution, cute lifestyle banner
+  seed: 2219007
+
+Shota_Hayashi_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, shota hayashi full body streetwear fashion pose,
+    22 years old, wearing trendy designer outfit, urban city street background,
+    stylish street photography, 8k resolution, fashion influencer banner
+  seed: 2219008
+
+Natsuki_Taniguchi_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, natsuki taniguchi full body racing driver pose,
+    28 years old, wearing racing suit, standing next to race car,
+    race track background, dramatic motorsport lighting, 8k resolution,
+    motorsport action banner
+  seed: 2219009
+
+Minato_Sakamoto_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, minato sakamoto full body academic pose,
+    34 years old, wearing tailored suit, standing in grand library or lecture hall,
+    warm intellectual lighting, books or chalkboard visible, 8k resolution,
+    scholarly professional banner
+  seed: 2219010
+
+Luna_Tsukino_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, luna tsukino full body fantasy character pose,
+    21 years old, wearing elaborate fantasy costume with wings,
+    magical enchanted forest background, dramatic fantasy lighting,
+    8k resolution, magical fantasy banner photography
+  seed: 2219011
+
+Kaito_Shirakawa_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, kaito shirakawa full body anime hero pose,
+    25 years old, dynamic anime action pose, dramatic anime background,
+    energy effects and speed lines, bold anime colors, 8k resolution,
+    shonen anime banner photography
+  seed: 2219012
+
+Zara_Chen_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, zara chen full body luxury fashion pose,
+    26 years old, wearing designer gown, standing at luxury venue,
+    city lights or exotic background, sophisticated lighting, 8k resolution,
+    cosmopolitan luxury banner
+  seed: 2219013
+
+Victor_Williams_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, victor williams full body executive pose,
+    38 years old, wearing premium suit, standing in modern corporate office,
+    city view through glass windows, confident leadership expression,
+    8k resolution, corporate leadership banner
+  seed: 2219014
+
+Sofia_Rossi_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, sofia rossi full body mediterranean elegance pose,
+    29 years old, wearing flowing designer dress, standing at tuscan villa,
+    vineyard and rolling hills background, golden hour lighting,
+    8k resolution, romantic luxury banner
+  seed: 2219015
+
+Mateo_Garcia_Fantia_Banner:
+  prompt: |
+    masterpiece, best quality, mateo garcia full body latino cultural pose,
+    27 years old, wearing casual colorful latin american clothing,
+    authentic cultural setting like market or kitchen, warm natural lighting,
+    8k resolution, warm cultural banner
+  seed: 2219016
+
+# TWITTER/X BANNERS (3:1 aspect ratio, casual aesthetic)
+Mika_Kobayashi_Twitter_Banner:
+  prompt: |
+    photo, mika kobayashi, 25 years old, casual fashion look, standing at trendy location,
+    iphone camera aesthetic, candid shot, natural lighting, authentic influencer style,
+    twitter header format 3:1, amateur quality, real life moment
+  seed: 2219020
+
+Takumi_Endou_Twitter_Banner:
+  prompt: |
+    photo, takumi endou, 31 years old, casual gym or outdoor setting,
+    iphone camera aesthetic, candid authentic shot, natural daylight,
+    twitter header format 3:1, amateur quality, fitness lifestyle content
+  seed: 2219021
+
+Rio_Mizuno_Twitter_Banner:
+  prompt: |
+    photo, rio mizuno, 23 years old, travel vacation style, beach or destination background,
+    iphone camera aesthetic, happy tourist expression, casual travel shot,
+    twitter header format 3:1, authentic travel content
+  seed: 2219022
+
+# LINE BANNERS (9:16 vertical format for chat headers)
+Mika_Kobayashi_LINE_Banner:
+  prompt: |
+    vertical portrait, mika kobayashi, 25 years old, front facing camera,
+    intimate close up style, casual clothes, soft lighting,
+    line chat header format 9:16, girlfriend aesthetic, personal companion style
+  seed: 2219030
+
+Takumi_Endou_LINE_Banner:
+  prompt: |
+    vertical portrait, takumi endou, 31 years old, front facing camera,
+    casual workout or outdoor look, friendly expression,
+    line chat header format 9:16, fitness companion style
+  seed: 2219031
+
+# PORNHUB BANNERS (16:9 cinematic, high contrast)
+Mika_Kobayashi_Pornhub_Banner:
+  prompt: |
+    cinematic thumbnail, mika kobayashi, 25 years old, high contrast dramatic lighting,
+    premium setting, professional studio quality, suggestive expression,
+    pornhub banner format 16:9, optimized for click-through, tasteful adult aesthetic
+  seed: 2219040
+
+Takumi_Endou_Pornhub_Banner:
+  prompt: |
+    cinematic thumbnail, takumi endou, 31 years old, high contrast dramatic lighting,
+    masculine power aesthetic, professional studio quality, intense expression,
+    pornhub banner format 16:9, optimized for click-through, adult masculine content
+  seed: 2219041
+
+# XHAMSTER BANNERS (16:9 thumbnail style, bold colors)
+Mika_Kobayashi_Xhamster_Banner:
+  prompt: |
+    bold thumbnail, mika kobayashi, 25 years old, high saturation colors,
+    dramatic lighting, professional adult studio quality, provocative expression,
+    xhamster banner format 16:9, optimized thumbnail style, bold visual impact
+  seed: 2219050
+
+Takumi_Endou_Xhamster_Banner:
+  prompt: |
+    bold thumbnail, takumi endou, 31 years old, high saturation colors,
+    dramatic action pose, professional adult studio quality, intense expression,
+    xhamster banner format 16:9, optimized thumbnail style, masculine power visual
+  seed: 2219051
+
+# XVIDEOS BANNERS (16:9 European cinematic style)
+Mika_Kobayashi_XVideos_Banner:
+  prompt: |
+    artistic cinematic, mika kobayashi, 25 years old, european film aesthetic,
+    tasteful artistic composition, soft dramatic lighting, sophisticated expression,
+    xvideos banner format 16:9, european adult film style, elegant artistic quality
+  seed: 2219060
+
+Takumi_Endou_XVideos_Banner:
+  prompt: |
+    artistic cinematic, takumi endou, 31 years old, european film aesthetic,
+    tasteful artistic composition, soft dramatic lighting, powerful expression,
+    xvideos banner format 16:9, european adult film style, masculine artistic quality
+  seed: 2219061
+
+# ONLYFANS BANNERS (Personalized, premium aesthetic)
+Mika_Kobayashi_OnlyFans_Banner:
+  prompt: |
+    premium exclusive, mika kobayashi, 25 years old, luxurious bedroom setting,
+    professional ring light with purple tint, fairy lights visible,
+    personal intimate aesthetic, exclusive subscriber content style,
+    onlyfans banner quality, premium personal presentation
+  seed: 2219070
+
+Takumi_Endou_OnlyFans_Banner:
+  prompt: |
+    premium exclusive, takumi endou, 31 years old, personal gym or bedroom setting,
+    authentic personal moment, exclusive subscriber content style,
+    onlyfans banner quality, premium masculine presentation
+  seed: 2219071

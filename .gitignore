@@ -1,0 +1,25 @@
+# Entorno y Secretos
+.env
+*.env
+vault.json
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env/
+env/
+
+# Temp / Salidas
+data/assets/output/
+*.mp4
+*.zip
+tmp/
+temp/
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store

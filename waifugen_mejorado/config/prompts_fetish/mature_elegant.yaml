@@ -1,0 +1,366 @@
+# ============================================
+# MATURE & ELEGANT PROMPTS - Organized by Platform
+# Characters: Chiyo Sasaki, Minato Sakamoto, Victor Williams
+# Categories: Traditional, Academic, Executive, Mature
+# ============================================
+
+# --- FANTAIA (High Quality, Dignified) ---
+
+Chiyo_Sasaki_Fantia_Traditional:
+  platform: Fantia
+  category: traditional
+  prompt: |
+    masterpiece, best quality, chiyo sasaki traditional japanese woman, 65 years old,
+    styled in formal navy blue silk kimono with subtle pattern, ornamental hair pins,
+    gentle wise kind eyes, serene garden setting with bamboo, soft diffused natural light,
+    traditional japanese portrait photography, 8k resolution, dignified graceful elderly beauty,
+    cultural heritage aesthetic, peaceful wise expression
+  seed: 2205001
+
+Chiyo_Sasaki_Fantia_Tea:
+  platform: Fantia
+  category: traditional
+  prompt: |
+    masterpiece, chiyo sasaki performing traditional tea ceremony, 65 years old,
+    formal silk kimono, graceful elegant movements, soft shoji screen light,
+    tatami room setting, cultural documentary photography, detailed kimono texture,
+    8k resolution, serene peaceful atmosphere, traditional arts aesthetic
+  seed: 2205002
+
+Chiyo_Sasaki_Fantia_Elegant:
+  platform: Fantia
+  category: elegant
+  prompt: |
+    elegant portrait, chiyo sasaki, 65 years old, wise dignified expression,
+    wearing luxurious traditional garment, delicate pearl earrings, professional studio lighting,
+    seamless background, sophisticated elderly beauty, high quality portrait photography,
+    8k resolution, timeless elegance, cultural heritage presentation
+  seed: 2205003
+
+Minato_Sakamoto_Fantia_Academic:
+  platform: Fantia
+  category: academic
+  prompt: |
+    masterpiece, best quality, minato sakamoto japanese professor, 34 years old,
+    neat professional short black hair with gray at temples, refined handsome features,
+    wearing tailored navy suit with pinstripe, standing in prestigious university library,
+    warm amber library lighting, academic professional photography, 8k resolution,
+    distinguished scholar aesthetic, thoughtful intelligent expression
+  seed: 2210001
+
+Minato_Sakamoto_Fantia_Lecture:
+  platform: Fantia
+  category: academic
+  prompt: |
+    academic portrait, minato sakamoto, 34 years old, standing at lectern in grand lecture hall,
+    giving lecture to visible students, wearing tweed blazer with elbow patches,
+    chalkboard or presentation visible, educational documentary photography,
+    8k resolution, intellectual scholarly environment, learned professor aesthetic
+  seed: 2210002
+
+Victor_Williams_Fantia_Executive:
+  platform: Fantia
+  category: executive
+  prompt: |
+    masterpiece, best quality, victor williams american executive, 38 years old,
+    neat professional short black hair with gray at temples, strong confident jawline,
+    wearing tailored charcoal business suit, standing in modern corporate office,
+    professional studio lighting, executive corporate photography, 8k resolution,
+    powerful leadership presence, successful corporate leader aesthetic
+  seed: 2214001
+
+Victor_Williams_Fantia_Leadership:
+  platform: Fantia
+  category: executive
+  prompt: |
+    corporate leadership photo, victor williams, 38 years old, standing at conference table,
+    giving presentation to executives visible, modern glass conference room with city view,
+    wearing premium tailored suit, confident commanding expression,
+    8k resolution, sophisticated business colors, leadership vision aesthetic
+  seed: 2214002
+
+# --- TWITTER/X (Casual, Wisdom Sharing) ---
+
+Chiyo_Sasaki_Twitter_Cultural:
+  platform: Twitter
+  category: traditional
+  prompt: |
+    cultural post, chiyo sasaki sharing traditional craft, 65 years old,
+    hands performing origami or calligraphy, soft natural home lighting,
+    amateur phone camera, authentic cultural education content,
+    grandmother teaching tradition aesthetic, relatable cultural sharing
+  seed: 2205004
+
+Chiyo_Sasaki_Twitter_Daily:
+  platform: Twitter
+  category: traditional
+  prompt: |
+    daily life photo, chiyo sasaki, 65 years old, casual traditional clothes,
+    home kitchen setting, natural expression, amateur photography,
+    authentic elderly daily life, relatable family content, warm domestic aesthetic
+  seed: 2205005
+
+Chiyo_Sasaki_Twitter_Wisdom:
+  platform: Twitter
+  category: traditional
+  prompt: |
+    wisdom sharing post, chiyo sasaki, 65 years old, thoughtful expression,
+    philosophical quote overlay, meaningful life advice context,
+    amateur photo with depth, authentic elderly wisdom sharing,
+    inspirational senior content
+  seed: 2205006
+
+Minato_Sakamoto_Twitter_Lecture:
+  platform: Twitter
+  category: academic
+  prompt: |
+    lecture moment, minato sakamoto, 34 years old, classroom or lecture hall,
+    speaking to students, casual teaching photo, amateur phone camera,
+    authentic academic life, relatable professor content, educational content
+  seed: 2210004
+
+Minato_Sakamoto_Twitter_Book:
+  platform: Twitter
+  category: academic
+  prompt: |
+    book recommendation post, minato sakamoto holding academic book,
+    thoughtful expression, casual office setting, amateur photography,
+    authentic intellectual sharing, academic influencer content
+  seed: 2210005
+
+Victor_Williams_Twitter_Business:
+  platform: Twitter
+  category: executive
+  prompt: |
+    business post, victor williams, 38 years old, sharing professional insight,
+    office setting, casual business attire, thoughtful expression,
+    amateur phone camera, authentic business content, corporate influencer style
+  seed: 2214004
+
+Victor_Williams_Twitter_Leadership:
+  platform: Twitter
+  category: executive
+  prompt: |
+    leadership post, victor williams, inspiring business quote overlay,
+    office background, professional but casual, authentic corporate life,
+    amateur photography, relatable executive content
+  seed: 2214005
+
+# --- XHAMSTER (Mature Category, Sophisticated) ---
+
+Chiyo_Sasaki_Xhamster_Mature:
+  platform: Xhamster
+  category: mature
+  prompt: |
+    mature solo female thumbnail, chiyo sasaki, 65 years old,
+    tasteful elegant lingerie, sophisticated mature aesthetic,
+    dignified seductive expression, professional studio quality,
+    mature adult content category, tasteful mature modeling
+  seed: 2205007
+
+Chiyo_Sasaki_Xhamster_Couple:
+  platform: Xhamster
+  category: mature
+  prompt: |
+    mature couple thumbnail, chiyo sasaki with mature male partner,
+    elegant romantic scenario, sophisticated adult content,
+    mature relationship aesthetic, professional thumbnail quality,
+    mature adult category presentation
+  seed: 2205008
+
+Minato_Sakamoto_Xhamster_Academic:
+  platform: Xhamster
+  category: academic
+  prompt: |
+    professional thumbnail, minato sakamoto, 34 years old, selective exposure academic scenario,
+    adult academic fantasy, professional thumbnail quality, intellectual masculine aesthetic
+  seed: 2210007
+
+Victor_Williams_Xhamster_Executive:
+  platform: Xhamster
+  category: executive
+  prompt: |
+    professional male thumbnail, victor williams, 38 years old, selective exposure executive,
+    adult business fantasy, professional thumbnail quality, powerful masculine executive
+  seed: 2214007
+
+# --- PORNHUB (Professional, Sophisticated Scenarios) ---
+
+Chiyo_Sasaki_Pornhub_Mature:
+  platform: Pornhub
+  category: mature
+  prompt: |
+    mature adult content, chiyo sasaki, 65 years old, tasteful romantic scenario,
+    sophisticated elegant approach, mature couple fantasy,
+    professional studio quality, high production mature content,
+    mature adult category, dignified erotic content
+  seed: 2205010
+
+Chiyo_Sasaki_Pornhub_Mature_Fantasy:
+  platform: Pornhub
+  category: mature
+  prompt: |
+    mature fantasy scenario, chiyo sasaki, specific roleplay with mature themes,
+    elegant setting appropriate to age, professional production,
+    tasteful mature adult content, sophisticated adult category
+  seed: 2205011
+
+Minato_Sakamoto_Pornhub_Academic:
+  platform: Pornhub
+  category: academic
+  prompt: |
+    academic adult content, minato sakamoto as professor character,
+    office or classroom scenario with intimate elements, high production quality,
+    tasteful adult academic fantasy, professional studio, intellectual masculine aesthetic
+  seed: 2210010
+
+Victor_Williams_Pornhub_Executive:
+  platform: Pornhub
+  category: executive
+  prompt: |
+    executive adult content, victor williams as corporate leader character,
+    office scenario with intimate elements, high production quality,
+    tasteful adult corporate fantasy, professional studio, powerful executive aesthetic
+  seed: 2214010
+
+# --- XVIDEOS (European Artistic Style) ---
+
+Chiyo_Sasaki_XVideos_Mature:
+  platform: XVideos
+  category: mature
+  prompt: |
+    european mature adult content, chiyo sasaki, sophisticated romantic scenario,
+    artistic approach, tasteful erotic content, professional production,
+    mature beauty aesthetic, european film quality, elegant adult content
+  seed: 2205013
+
+Minato_Sakamoto_XVideos_Academic:
+  platform: XVideos
+  category: academic
+  prompt: |
+    european academic adult content, minato sakamoto, artistic academic scenario,
+    tasteful erotic content, professional production quality, european film style,
+    intellectual masculine aesthetic
+  seed: 2210013
+
+Victor_Williams_XVideos_Executive:
+  platform: XVideos
+  category: executive
+  prompt: |
+    european executive adult content, victor williams, artistic business scenario,
+    tasteful erotic executive content, professional production quality,
+    european film style, powerful masculine executive aesthetic
+  seed: 2214013
+
+# --- LINE (Wisdom Stickers, Chat Companions) ---
+
+Chiyo_Sasaki_LINE_Wisdom:
+  platform: LINE
+  category: traditional
+  prompt: |
+    wisdom sticker pack, chiyo sasaki, various wise expressions,
+    life advice stickers, philosophical quotes, chat sticker format,
+    wise elderly character, cultural wisdom companion
+  seed: 2205016
+
+Chiyo_Sasaki_LINE_Cultural:
+  platform: LINE
+  category: traditional
+  prompt: |
+    cultural chat companion, chiyo sasaki as traditional wisdom figure,
+    casual traditional clothes, friendly expression, chat integration area,
+    grandmotherly companion vibe, cultural conversational style
+  seed: 2205017
+
+Minato_Sakamoto_LINE_Wisdom:
+  platform: LINE
+  category: academic
+  prompt: |
+    wisdom sticker pack, minato sakamoto, various intellectual expressions,
+    thinking, explaining, agreeing, chat sticker format, scholarly character,
+    intellectual companion aesthetic
+  seed: 2210016
+
+Minato_Sakamoto_LINE_Chat:
+  platform: LINE
+  category: academic
+  prompt: |
+    academic chat companion, minato sakamoto as wise professor character,
+    smart casual clothes, friendly scholarly expression, chat integration area,
+    intellectual companion vibe, scholarly conversational style
+  seed: 2210017
+
+Victor_Williams_LINE_Business:
+  platform: LINE
+  category: executive
+  prompt: |
+    business sticker pack, victor williams, various executive expressions,
+    success, thinking, presenting, chat sticker format, professional character,
+    business leadership aesthetic
+  seed: 2214016
+
+Victor_Williams_LINE_Chat:
+  platform: LINE
+  category: executive
+  prompt: |
+    business chat companion, victor williams as executive mentor character,
+    smart business clothes, confident friendly expression, chat integration area,
+    professional companion vibe, business conversational style
+  seed: 2214017
+
+# --- ONLYFANS (Exclusive Premium, Sophisticated) ---
+
+Chiyo_Sasaki_OnlyFans_Mature_Glamour:
+  platform: OnlyFans
+  category: mature
+  prompt: |
+    mature glamour content, chiyo sasaki, 65 years old, elegant lingerie,
+    sophisticated mature beauty, professional studio lighting,
+    premium mature modeling, tasteful elegant adult content,
+    exclusive subscriber mature glamour
+  seed: 2205019
+
+Chiyo_Sasaki_OnlyFans_Mature_Couple:
+  platform: OnlyFans
+  category: mature
+  prompt: |
+    mature couple content preview, chiyo sasaki with partner,
+    elegant romantic scenario, premium mature couple content,
+    exclusive subscriber preview, sophisticated adult content
+  seed: 2205020
+
+Minato_Sakamoto_OnlyFans_Academic:
+  platform: OnlyFans
+  category: academic
+  prompt: |
+    exclusive academic content, minato sakamoto, lecture preview or academic discussion,
+    premium scholarly content, high production quality, exclusive subscriber content,
+    intellectual masculine aesthetic
+  seed: 2210019
+
+Minato_Sakamoto_OnlyFans_Professional:
+  platform: OnlyFans
+  category: academic
+  prompt: |
+    exclusive professional content, minato sakamoto, office or academic setting preview,
+    premium professional content, high production quality, exclusive subscriber content,
+    sophisticated masculine aesthetic
+  seed: 2210020
+
+Victor_Williams_OnlyFans_Business:
+  platform: OnlyFans
+  category: executive
+  prompt: |
+    exclusive business content, victor williams, business advice or leadership preview,
+    premium business content, high production quality, exclusive subscriber content,
+    powerful executive aesthetic, leadership presentation
+  seed: 2214019
+
+Victor_Williams_OnlyFans_Executive:
+  platform: OnlyFans
+  category: executive
+  prompt: |
+    exclusive executive content, victor williams, behind business scenes preview,
+    premium professional content, high production quality, exclusive subscriber content,
+    sophisticated executive aesthetic
+  seed: 2214020

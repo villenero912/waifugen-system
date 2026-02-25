@@ -1,0 +1,608 @@
+# ============================================
+# CULTURAL & LIFESTYLE PROMPTS - Organized by Platform
+# Characters: Rio Mizuno, Mateo Garcia, Aya Tomita
+# Categories: Tropical, Latino, College, Kawaii, Travel
+# ============================================
+
+# --- FANTAIA (High Quality, Vibrant) ---
+
+Rio_Mizuno_Fantia_Beach:
+  platform: Fantia
+  category: tropical
+  prompt: |
+    masterpiece, best quality, rio mizuno tropical beach model, 23 years old,
+    sun-bleached beach wavy hair, glowing golden tan skin, wearing colorful tropical bikini,
+    pristine tropical beach setting, crystal clear turquoise water background,
+    harsh bright tropical sunlight, golden hour beach aesthetic, professional photoshoot,
+    8k resolution, detailed swimwear texture, vacation paradise mood
+  seed: 2203001
+
+Rio_Mizuno_Fantia_Tropical:
+  platform: Fantia
+  category: tropical
+  prompt: |
+    masterpiece, rio mizuno island vacation model, 23 years old,
+    wearing elegant tropical print dress, flower crown with hibiscus,
+    standing at infinity pool overlooking ocean, resort luxury setting,
+    warm sunset lighting, professional travel photography, 8k uhd,
+    tropical paradise aesthetic, influencer vacation content
+  seed: 2203002
+
+Rio_Mizuno_Fantia_Swimwear:
+  platform: Fantia
+  category: tropical
+  prompt: |
+    professional swimwear photoshoot, rio mizuno, 23 years old,
+    wearing premium designer bikini with gold accents, beach pose,
+    dramatic tropical sunset background, professional lighting setup,
+    detailed swimwear design visible, 8k resolution, luxury swimwear advertising style
+  seed: 2203003
+
+Mateo_Garcia_Fantia_Latino:
+  platform: Fantia
+  category: latino
+  prompt: |
+    masterpiece, best quality, mateo garcia latino content creator, 27 years old,
+    medium length curly black hair with natural volume, friendly warm brown eyes,
+    wearing casual white linen shirt over graphic t-shirt, outdoor cafe with warm sunlight,
+    relaxed lifestyle photography, 8k resolution, warm vibrant latin american colors,
+    welcoming friendly aesthetic, authentic approachable content style
+  seed: 2216001
+
+Mateo_Garcia_Fantia_Cultural:
+  platform: Fantia
+  category: cultural
+  prompt: |
+    cultural photography, mateo garcia, 27 years old, at colorful traditional market,
+    wearing casual colorful local shirt, interacting with local vendor,
+    authentic cultural environment, documentary travel photography, 35mm lens,
+    8k resolution, vibrant market colors, genuine latin american aesthetic
+  seed: 2216002
+
+Mateo_Garcia_Fantia_Food:
+  platform: Fantia
+  category: food
+  prompt: |
+    food content photo, mateo garcia, 27 years old, in kitchen with traditional ingredients,
+    cooking authentic family recipe, warm home lighting with steam from cooking,
+    passionate cooking expression, 8k resolution, authentic latin american cuisine,
+    warm family atmosphere, cultural culinary aesthetic
+  seed: 2216003
+
+Aya_Tomita_Fantia_Cute:
+  platform: Fantia
+  category: kawaii
+  prompt: |
+    masterpiece, best quality, aya tomita kawaii aesthetic, 19 years old,
+    messy bedhead brown hair with natural waves, large sleepy droopy eyes,
+    wearing oversized bear onesie pajamas, cozy bedroom with blankets and stuffed animals,
+    soft warm lamp lighting, sleepy just woke up expression, 8k resolution,
+    ultra relatable kawaii content, lazy morning cozy vibes, adorable aesthetic
+  seed: 2207001
+
+Aya_Tomita_Fantia_Cozy:
+  platform: Fantia
+  category: kawaii
+  prompt: |
+    cozy aesthetic photo, aya tomita, 19 years old, sitting at desk surrounded by textbooks,
+    laptop open, fairy lights and desk lamp, late night study session,
+    oversized cozy hoodie, coffee mug with steam, warm amber lighting,
+    8k resolution, relatable student life, cozy study aesthetic
+  seed: 2207002
+
+# --- TWITTER/X (Casual, Authentic) ---
+
+Rio_Mizuno_Twitter_Vacation:
+  platform: Twitter
+  category: travel
+  prompt: |
+    vacation photo of rio mizuno, 23 years old, instagram story style,
+    tropical beach in background, wearing cute sundress, messy beach hair,
+    natural happy expression, smartphone camera quality, authentic travel content,
+    real vacation moment, amateur travel photography aesthetic
+  seed: 2203004
+
+Rio_Mizuno_Twitter_Swim:
+  platform: Twitter
+  category: tropical
+  prompt: |
+    beach day post, rio mizuno at beach, wearing casual swimwear,
+    beach selfie with ocean background, natural sunlight, candid happy moment,
+    iphone photo quality, authentic beach day content, summer vacation vibe
+  seed: 2203005
+
+Rio_Mizuno_Twitter_Travel:
+  platform: Twitter
+  category: travel
+  prompt: |
+    travelgram post, rio mizuno exploring tropical destination,
+    landmark in background, travel outfit of the day, happy tourist expression,
+    casual tourist photo, amateur travel photography, authentic journey content
+  seed: 2203006
+
+Mateo_Garcia_Twitter_Food:
+  platform: Twitter
+  category: food
+  prompt: |
+    food post, mateo garcia, 27 years old, cooking or enjoying latino food,
+    home kitchen or restaurant setting, casual cooking photo, amateur phone camera,
+    authentic food content, latino cuisine sharing, warm culinary aesthetic
+  seed: 2216004
+
+Mateo_Garcia_Twitter_Cultural:
+  platform: Twitter
+  category: cultural
+  prompt: |
+    cultural post, mateo garcia, 27 years old, sharing latino culture,
+    cultural event or tradition, casual authentic photo, amateur photography,
+    authentic cultural content, latino community sharing, cultural pride aesthetic
+  seed: 2216005
+
+Mateo_Garcia_Twitter_Daily:
+  platform: Twitter
+  category: lifestyle
+  prompt: |
+    daily life post, mateo garcia, 27 years old, casual everyday moment,
+    home or outdoor setting, natural expression, amateur phone camera,
+    authentic relatable content, warm friendly aesthetic, genuine daily life
+  seed: 2216006
+
+Aya_Tomita_Twitter_Morning:
+  platform: Twitter
+  category: college
+  prompt: |
+    morning selfie, aya tomita, 19 years old, still in pajamas, messy bedhead,
+    sleepy expression, bathroom mirror selfie, harsh bathroom lighting,
+    amateur phone camera, authentic just woke up moment, relatable morning content
+  seed: 2207004
+
+Aya_Tomita_Twitter_Study:
+  platform: Twitter
+  category: college
+  prompt: |
+    studygram post, aya tomita at desk, textbooks and laptop, coffee,
+    fairy lights aesthetic, late night study session, casual clothes,
+    amateur phone camera, authentic student life, relatable study content
+  seed: 2207005
+
+Aya_Tomita_Twitter_Casual:
+  platform: Twitter
+  category: college
+  prompt: |
+    casual daily post, aya tomita, 19 years old, oversized comfortable clothes,
+    home setting, natural expression, no makeup day, authentic everyday look,
+    amateur photography, relatable college student content
+  seed: 2207006
+
+# --- XHAMSTER (Provocative, Beach, College) ---
+
+Rio_Mizuno_Xhamster_Tropical:
+  platform: Xhamster
+  category: tropical
+  prompt: |
+    tropical beach solo female thumbnail, rio mizuno, 23 years old,
+    bikini beach setting, provocative beach pose, tropical vacation erotic content,
+    suggestive expression, optimized thumbnail with tropical colors,
+    adult beach fantasy aesthetic, professional studio quality
+  seed: 2203007
+
+Rio_Mizuno_Xhamster_Resort:
+  platform: Xhamster
+  category: tropical
+  prompt: |
+    resort fantasy thumbnail, rio mizuno in luxurious hotel setting,
+    tropical location, intimate resort scenario, seductive vacation aesthetic,
+    premium resort setting, provocative tropical content, high contrast thumbnail
+  seed: 2203008
+
+Mateo_Garcia_Xhamster_Latino:
+  platform: Xhamster
+  category: latino
+  prompt: |
+    latino male thumbnail, mateo garcia, 27 years old, warm friendly appearance,
+    selective exposure latino content, adult latino aesthetic, professional thumbnail,
+    warm masculine presentation, authentic latin american beauty
+  seed: 2216007
+
+Aya_Tomita_Xhamster_Cute:
+  platform: Xhamster
+  category: college
+  prompt: |
+    cute solo female thumbnail, aya tomita, 19 years old, innocent appearance,
+    provocative college scenario, suggestive cute aesthetic, optimized thumbnail,
+    young adult content category, professional studio quality, cute provocative style
+  seed: 2207007
+
+Aya_Tomita_Xhamster_Cozy:
+  platform: Xhamster
+  category: college
+  prompt: |
+    cozy bedroom fantasy thumbnail, aya tomita in intimate dorm room setting,
+    suggestive cozy scenario, adult college content, professional thumbnail,
+    cute college aesthetic, romantic intimate setting
+  seed: 2207008
+
+# --- PORNHUB (Tasteful, Romantic) ---
+
+Rio_Mizuno_Pornhub_Beach:
+  platform: Pornhub
+  category: tropical
+  prompt: |
+    tropical beach adult scenario, rio mizuno, beach vacation intimate moment,
+    scenic tropical setting, natural daylight intimate content, tasteful erotic beach fantasy,
+    couple or solo scenario, high production tropical content, professional adult quality
+  seed: 2203010
+
+Rio_Mizuno_Pornhub_Resort:
+  platform: Pornhub
+  category: tropical
+  prompt: |
+    resort vacation adult content, rio mizuno, luxurious hotel room or poolside,
+    romantic tropical scenario, high production resort fantasy, tasteful erotic content,
+    professional adult studio quality, vacation fantasy aesthetic
+  seed: 2203011
+
+Mateo_Garcia_Pornhub_Latino:
+  platform: Pornhub
+  category: latino
+  prompt: |
+    latino adult content, mateo garcia, 27 years old, romantic latin american scenario,
+    tasteful intimate content, high production quality, professional studio,
+    warm masculine adult presentation, authentic latino aesthetic
+  seed: 2216010
+
+Aya_Tomita_Pornhub_Cute:
+  platform: Pornhub
+  category: college
+  prompt: |
+    cute college adult content, aya tomita, 19 years old, tasteful intimate scenario,
+    young adult aesthetic, cute romantic content, high production quality,
+    professional adult studio, tasteful young adult content
+  seed: 2207010
+
+Aya_Tomita_Pornhub_Cozy:
+  platform: Pornhub
+  category: college
+  prompt: |
+    cozy fantasy adult content, aya tomita in bedroom setting,
+    intimate romantic scenario, tasteful erotic content, high production,
+    professional adult quality, romantic cozy aesthetic
+  seed: 2207011
+
+# --- XVIDEOS (European Artistic) ---
+
+Rio_Mizuno_XVideos_Tropical:
+  platform: XVideos
+  category: tropical
+  prompt: |
+    european tropical adult content, rio mizuno, artistic beach setting,
+    tasteful erotic beach photography, natural sunlight, professional production,
+    romantic tropical scenario, high quality adult content, european film aesthetic
+  seed: 2203013
+
+Rio_Mizuno_XVideos_Vacation:
+  platform: XVideos
+  category: travel
+  prompt: |
+    vacation fantasy adult content, rio mizuno, travel scenario with intimate twist,
+    first person perspective possible, authentic vacation romance aesthetic,
+    amateur style with professional lighting, tasteful erotic content
+  seed: 2203014
+
+Mateo_Garcia_XVideos_Latino:
+  platform: XVideos
+  category: latino
+  prompt: |
+    european latino adult content, mateo garcia, artistic romantic scenario,
+    tasteful erotic latino content, professional production quality,
+    european film style, warm masculine aesthetic
+  seed: 2216013
+
+Aya_Tomita_XVideos_Cute:
+  platform: XVideos
+  category: college
+  prompt: |
+    european cute adult content, aya tomita, artistic romantic scenario,
+    tasteful erotic content, professional production quality, young adult aesthetic,
+    european film style, cute romantic presentation
+  seed: 2207013
+
+Aya_Tomita_XVideos_Cozy:
+  platform: XVideos
+  category: college
+  prompt: |
+    cozy bedroom adult content, aya tomita, intimate home setting,
+    tasteful romantic scenario, amateur style with professional lighting,
+    european adult approach, warm intimate aesthetic
+  seed: 2207014
+
+# --- LINE (Stickers, Companions) ---
+
+Rio_Mizuno_LINE_Vacation:
+  platform: LINE
+  category: travel
+  prompt: |
+    vacation sticker of rio mizuno, tropical beach theme, happy expressions,
+    summer vacation aesthetic, cute travel companion character,
+    chat sticker format, vacation mood enhancement
+  seed: 2203016
+
+Rio_Mizuno_LINE_Chat:
+  platform: LINE
+  category: tropical
+  prompt: |
+    beach vacation chat companion, rio mizuno as travel buddy character,
+    casual beach clothes, happy travel expression, chat integration area,
+    tropical vacation companion vibe, casual everyday aesthetic
+  seed: 2203017
+
+Mateo_Garcia_LINE_Latino:
+  platform: LINE
+  category: latino
+  prompt: |
+    latino sticker pack, mateo garcia, various warm expressions,
+    happy, cooking, dancing, celebrating, chat sticker format, warm character,
+    latin american cultural aesthetic
+  seed: 2216016
+
+Mateo_Garcia_LINE_Chat:
+  platform: LINE
+  category: cultural
+  prompt: |
+    latino chat companion, mateo garcia as warm latin friend character,
+    casual colorful clothes, friendly warm expression, chat integration area,
+    warm companion vibe, cultural conversational style
+  seed: 2216017
+
+Aya_Tomita_LINE_Cute:
+  platform: LINE
+  category: college
+  prompt: |
+    cute sticker pack, aya tomita, various kawaii expressions,
+    sleepy morning, happy, sad, excited, various emotions,
+    chat sticker format, ultra cute character design, kawaii aesthetic
+  seed: 2207016
+
+Aya_Tomita_LINE_Chat:
+  platform: LINE
+  category: college
+  prompt: |
+    cute chat companion, aya tomita as kawaii girlfriend character,
+    casual clothes, sweet expressions, chat integration area,
+    cute conversational companion, kawaii aesthetic girlfriend
+  seed: 2207017
+
+Aya_Tomita_LINE_Morning:
+  platform: LINE
+  category: college
+  prompt: |
+    morning message companion, aya tomita as good morning character,
+    sleepy cute expression, cozy bed setting, intimate morning aesthetic,
+    personal morning companion style
+  seed: 2207018
+
+# --- ONLYFANS (Exclusive Premium) ---
+
+Rio_Mizuno_OnlyFans_Beach:
+  platform: OnlyFans
+  category: tropical
+  prompt: |
+    exclusive beach content, rio mizuno, tropical beach photoshoot preview,
+    premium bikini content, luxury beach setting, professional ring light,
+    vacation themed premium content, high production beach aesthetic,
+    exclusive subscriber tropical content
+  seed: 2203019
+
+Rio_Mizuno_OnlyFans_Travel:
+  platform: OnlyFans
+  category: travel
+  prompt: |
+    premium travel content, rio mizuno on luxury vacation,
+    resort preview content, exclusive vacation aesthetic,
+    high production travel teaser, premium subscriber exclusive,
+    luxury travel lifestyle content
+  seed: 2203020
+
+Mateo_Garcia_OnlyFans_Latino:
+  platform: OnlyFans
+  category: cultural
+  prompt: |
+    exclusive latino content, mateo garcia, cultural or lifestyle preview,
+    high production quality, exclusive subscriber latino content,
+    warm authentic aesthetic, cultural presentation
+  seed: 2216019
+
+Mateo_Garcia_OnlyFans_Food:
+  platform: OnlyFans
+  category: food
+  prompt: |
+    exclusive food content, mateo garcia, cooking preview or recipe sharing,
+    premium culinary content, high production quality, exclusive subscriber content,
+    authentic latino cuisine, warm culinary presentation
+  seed: 2216020
+
+Aya_Tomita_OnlyFans_Cute:
+  platform: OnlyFans
+  category: college
+  prompt: |
+    exclusive cute content, aya tomita, 19 years old, cozy bedroom setting,
+    casual lingerie or pajamas, premium studio quality, cute aesthetic,
+    high production value, exclusive subscriber cute content
+  seed: 2207019
+
+Aya_Tomita_OnlyFans_Cozy:
+  platform: OnlyFans
+  category: college
+  prompt: |
+    exclusive cozy content, aya tomita, late night study or relaxation preview,
+    intimate bedroom aesthetic, premium personal content,
+    high production cozy teaser, exclusive subscriber content
+  seed: 2207020
+
+# ============================================
+# BANNER VARIANTS BY CATEGORY
+# ============================================
+
+# Glamour & Fashion Banners (16:9)
+Mika_Kobayashi_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, ultra highres, mika kobayashi full body fashion model pose,
+    25 years old, wearing stunning designer gown, honey blonde hair flowing,
+    dramatic studio lighting with multiple lights, luxury venue background,
+    professional photoshoot, 8k resolution, high fashion editorial banner
+  seed: 2219001
+
+Zara_Chen_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, zara chen full body luxury fashion pose,
+    26 years old, wearing designer gown, standing at luxury venue,
+    city lights or exotic background, sophisticated lighting, 8k resolution,
+    cosmopolitan luxury banner
+  seed: 2219013
+
+Sofia_Rossi_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, sofia rossi full body mediterranean elegance pose,
+    29 years old, wearing flowing designer dress, standing at tuscan villa,
+    vineyard and rolling hills background, golden hour lighting,
+    8k resolution, romantic luxury banner
+  seed: 2219015
+
+# Athletic & Fitness Banners (16:9)
+Takumi_Endou_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, takumi endou full body tactical warrior pose,
+    31 years old, wearing complete tactical gear, dramatic outdoor lighting,
+    desert or mountain background, action movie poster style, 8k resolution,
+    military action banner photography
+  seed: 2219002
+
+Kai_Morita_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, kai morita full body wilderness survival pose,
+    33 years old, rugged outdoor setting, dramatic natural lighting,
+    mountain or forest background, survivalist aesthetic, 8k resolution,
+    rugged adventure banner photography
+  seed: 2219006
+
+Natsuki_Taniguchi_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, natsuki taniguchi full body racing driver pose,
+    28 years old, wearing racing suit, standing next to race car,
+    race track background, dramatic motorsport lighting, 8k resolution,
+    motorsport action banner
+  seed: 2219009
+
+# Cultural & Lifestyle Banners (16:9)
+Rio_Mizuno_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, rio mizuno full body tropical beach pose,
+    23 years old, wearing elegant resort wear, standing at infinity pool,
+    dramatic sunset tropical background, luxury resort setting,
+    professional travel photography, 8k resolution, vacation paradise banner
+  seed: 2219003
+
+Mateo_Garcia_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, mateo garcia full body latino cultural pose,
+    27 years old, wearing casual colorful latin american clothing,
+    authentic cultural setting like market or kitchen, warm natural lighting,
+    8k resolution, warm cultural banner
+  seed: 2219016
+
+Aya_Tomita_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, aya tomita full body cozy aesthetic pose,
+    19 years old, wearing cute casual clothes, cozy bedroom or study setting,
+    warm ambient lighting, fairy lights and stuffed animals visible,
+    kawaii aesthetic photography, 8k resolution, cute lifestyle banner
+  seed: 2219007
+
+# Mature & Elegant Banners (16:9)
+Chiyo_Sasaki_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, chiyo sasaki full body traditional japanese pose,
+    65 years old, wearing formal silk kimono, serene japanese garden setting,
+    soft natural lighting, traditional architectural background,
+    cultural heritage photography, 8k resolution, elegant traditional banner
+  seed: 2219005
+
+Minato_Sakamoto_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, minato sakamoto full body academic pose,
+    34 years old, wearing tailored suit, standing in grand library or lecture hall,
+    warm intellectual lighting, books or chalkboard visible, 8k resolution,
+    scholarly professional banner
+  seed: 2219010
+
+Victor_Williams_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, victor williams full body executive pose,
+    38 years old, wearing premium suit, standing in modern corporate office,
+    city view through glass windows, confident leadership expression,
+    8k resolution, corporate leadership banner
+  seed: 2219014
+
+# Cosplay & Anime Banners (16:9)
+Luna_Tsukino_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, luna tsukino full body fantasy character pose,
+    21 years old, wearing elaborate fantasy costume with wings,
+    magical enchanted forest background, dramatic fantasy lighting,
+    8k resolution, magical fantasy banner photography
+  seed: 2219011
+
+Kaito_Shirakawa_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, kaito shirakawa full body anime hero pose,
+    25 years old, dynamic anime action pose, dramatic anime background,
+    energy effects and speed lines, bold anime colors, 8k resolution,
+    shonen anime banner photography
+  seed: 2219012
+
+Jin_Kawasaki_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, jin kawasaki full body cyberpunk warrior pose,
+    26 years old, wearing complete cyberpunk costume with LED accessories,
+    dramatic neon city background at night, futuristic dystopian setting,
+    cinematic lighting, 8k resolution, cyberpunk banner photography
+  seed: 2219004
+
+Shota_Hayashi_Fantia_Banner:
+  platform: Fantia
+  category: banner
+  prompt: |
+    masterpiece, best quality, shota hayashi full body streetwear fashion pose,
+    22 years old, wearing trendy designer outfit, urban city street background,
+    stylish street photography, 8k resolution, fashion influencer banner
+  seed: 2219008

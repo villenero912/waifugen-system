@@ -1,0 +1,503 @@
+{
+  "version": "2.0.0",
+  "last_updated": "2026-01-22",
+  "pack_name": "ELITE_8_OPTIMIZED_REELS",
+  "description": "Optimized configuration for 4 daily reels with A2E Pro/Max and GPU rental support for maximum avatar realism",
+  
+  "a2e_subscription": {
+    "current_plan": "pro",
+    "recommended_plan": "max",
+    "upgrade_cost_monthly": 40.0,
+    "daily_credits_pro": 60,
+    "daily_credits_max": 90,
+    "monthly_credits_pro": 1800,
+    "monthly_credits_max": 2700,
+    "total_monthly_credits_pro": 3600,
+    "total_monthly_credits_max": 5400,
+    "cost_per_credit_pro": 0.011,
+    "cost_per_credit_max": 0.009
+  },
+  
+  "daily_reels_requirements": {
+    "target_reels_per_day": 4,
+    "video_duration_seconds": 15,
+    "resolution_preferred": "1080p",
+    "resolution_economical": "720p",
+    "model_preferred": "wan_2.5",
+    "model_economical": "seedance_1.5_pro",
+    "credits_per_reel_1080p": 90,
+    "credits_per_reel_720p": 60,
+    "total_daily_credits_1080p": 360,
+    "total_daily_credits_720p": 240,
+    "total_monthly_credits_1080p": 10800,
+    "total_monthly_credits_720p": 7200
+  },
+  
+  "cost_analysis": {
+    "pro_plan_with_topups": {
+      "monthly_subscription": 9.9,
+      "credits_from_subscription": 3600,
+      "credits_needed": 7200,
+      "topup_credits_needed": 3600,
+      "topup_cost": 39.8,
+      "total_monthly_cost": 49.7,
+      "cost_per_reel": 0.069
+    },
+    "max_plan_with_topups": {
+      "monthly_subscription": 49.0,
+      "credits_from_subscription": 5400,
+      "credits_needed": 7200,
+      "topup_credits_needed": 1800,
+      "topup_cost": 19.9,
+      "total_monthly_cost": 68.9,
+      "cost_per_reel": 0.096,
+      "benefits": ["90 bonus daily vs 60", "2700 monthly vs 1800", "High priority processing", "200 custom avatars vs 50"]
+    },
+    "gpu_rental_alternative": {
+      "monthly_subscription": 0,
+      "gpu_hourly_rate": 0.69,
+      "estimated_hours_monthly": 40,
+      "total_monthly_cost": 27.6,
+      "cost_per_reel": 0.038,
+      "benefits": ["Unlimited generation", "Maximum quality control", "No credit limits", "Custom model training"],
+      "tradeoffs": ["Technical setup required", "Maintenance overhead", "No priority support"]
+    }
+  },
+  
+  "characters": {
+    "miyuki_sakura": {
+      "id": 1,
+      "name": "Miyuki Sakura",
+      "trigger_word": "miysak_v1",
+      "age": 22,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "priority": "high",
+      "reels_per_week": 7,
+      
+      "appearance": {
+        "base_description": "Japanese woman with soft features, elegant style",
+        "avatar_quality": "max",
+        "face_consistency": 0.98,
+        "detail_level": "high",
+        "rendering_settings": {
+          "model": "wan_2.5",
+          "resolution": "1080p",
+          "fps": 30,
+          "motion_bucket": 127,
+          "cfg_scale": 1.5,
+          "num_frames": 16
+        }
+      },
+      
+      "content_config": {
+        "daily_reel": {
+          "enabled": true,
+          "model": "seedance_1.5_pro",
+          "resolution": "720p",
+          "credits_per_video": 60,
+          "priority": "normal",
+          "optimization": "cost_effective"
+        },
+        "weekly_premium": {
+          "enabled": true,
+          "model": "wan_2.5",
+          "resolution": "1080p",
+          "credits_per_video": 90,
+          "priority": "high",
+          "optimization": "quality"
+        }
+      },
+      
+      "voice_settings": {
+        "provider": "a2e",
+        "clone_quality": "high",
+        "credits_per_10s": 1,
+        "emotion_range": ["happy", "cute", "energetic"],
+        "pitch_adjustment": 0
+      }
+    },
+    
+    "airi_neo": {
+      "id": 10,
+      "name": "Airi Neo",
+      "trigger_word": "airineo_fusion",
+      "age": 24,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "priority": "high",
+      "reels_per_week": 7,
+      
+      "appearance": {
+        "base_description": "Cyborg Japanese woman with cyber-kimono and heterochromia",
+        "avatar_quality": "max",
+        "face_consistency": 0.98,
+        "detail_level": "high",
+        "rendering_settings": {
+          "model": "wan_2.5",
+          "resolution": "1080p",
+          "fps": 30,
+          "motion_bucket": 127,
+          "cfg_scale": 1.5,
+          "num_frames": 16
+        }
+      },
+      
+      "content_config": {
+        "daily_reel": {
+          "enabled": true,
+          "model": "seedance_1.5_pro",
+          "resolution": "720p",
+          "credits_per_video": 60,
+          "priority": "normal",
+          "optimization": "cost_effective"
+        },
+        "weekly_premium": {
+          "enabled": true,
+          "model": "wan_2.5",
+          "resolution": "1080p",
+          "credits_per_video": 90,
+          "priority": "high",
+          "optimization": "quality"
+        }
+      },
+      
+      "voice_settings": {
+        "provider": "a2e",
+        "clone_quality": "high",
+        "credits_per_10s": 1,
+        "emotion_range": ["energetic", "cyber", "futuristic"],
+        "pitch_adjustment": 2
+      }
+    },
+    
+    "hana_nakamura": {
+      "id": 16,
+      "name": "Hana Nakamura",
+      "trigger_word": "hannak_v1",
+      "age": 22,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "priority": "highest",
+      "reels_per_week": 7,
+      
+      "appearance": {
+        "base_description": "Japanese woman with floral spring aesthetic, ethereal beauty",
+        "avatar_quality": "max",
+        "face_consistency": 0.98,
+        "detail_level": "ultra",
+        "rendering_settings": {
+          "model": "wan_2.5",
+          "resolution": "1080p",
+          "fps": 30,
+          "motion_bucket": 127,
+          "cfg_scale": 1.5,
+          "num_frames": 16,
+          "enhance_details": true,
+          "skin_smoothing": "subtle",
+          "lighting_quality": "studio"
+        }
+      },
+      
+      "content_config": {
+        "daily_reel": {
+          "enabled": true,
+          "model": "wan_2.5",
+          "resolution": "1080p",
+          "credits_per_video": 90,
+          "priority": "high",
+          "optimization": "quality",
+          "special_note": "Use GPU rental for maximum emotional impact"
+        },
+        "special_content": {
+          "enabled": true,
+          "model": "gpu_custom",
+          "resolution": "4K",
+          "credits_per_video": "variable",
+          "priority": "urgent",
+          "optimization": "maximum_quality"
+        }
+      },
+      
+      "voice_settings": {
+        "provider": "minimax",
+        "clone_quality": "ultra",
+        "credits_per_10s": 2,
+        "emotion_range": ["romantic", "emotional", "soft"],
+        "pitch_adjustment": -1
+      }
+    },
+    
+    "aiko_hayashi": {
+      "id": 5,
+      "name": "Aiko Hayashi",
+      "trigger_word": "aikoch_v1",
+      "age": 24,
+      "gender": "female",
+      "nationality": "Japanese",
+      "hierarchy": "star",
+      "priority": "highest",
+      "reels_per_week": 7,
+      
+      "appearance": {
+        "base_description": "Japanese woman with minimalist style, elegant professional appearance",
+        "avatar_quality": "max",
+        "face_consistency": 0.98,
+        "detail_level": "ultra",
+        "rendering_settings": {
+          "model": "wan_2.5",
+          "resolution": "1080p",
+          "fps": 30,
+          "motion_bucket": 127,
+          "cfg_scale": 1.5,
+          "num_frames": 16,
+          "enhance_details": true,
+          "skin_smoothing": "subtle",
+          "lighting_quality": "professional"
+        }
+      },
+      
+      "content_config": {
+        "daily_reel": {
+          "enabled": true,
+          "model": "wan_2.5",
+          "resolution": "1080p",
+          "credits_per_video": 90,
+          "priority": "high",
+          "optimization": "quality"
+        },
+        "special_content": {
+          "enabled": true,
+          "model": "gpu_custom",
+          "resolution": "4K",
+          "priority": "urgent",
+          "optimization": "maximum_quality"
+        }
+      },
+      
+      "voice_settings": {
+        "provider": "elevenlabs",
+        "clone_quality": "ultra",
+        "credits_per_10s": 3,
+        "emotion_range": ["professional", "warm", "confident"],
+        "pitch_adjustment": 0
+      }
+    }
+  },
+  
+  "rendering_optimization": {
+    "general_settings": {
+      "default_model": "seedance_1.5_pro",
+      "default_resolution": "720p",
+      "default_duration": 15,
+      "default_fps": 30,
+      "motion_bucket_recommended": 127,
+      "cfg_scale_recommended": 1.5
+    },
+    
+    "quality_tiers": {
+      "economical": {
+        "model": "seedance_1.5_pro",
+        "resolution": "720p",
+        "credits_per_15s": 60,
+        "quality_score": 85,
+        "use_case": "daily_reels_cost_optimized"
+      },
+      "standard": {
+        "model": "wan_2.5",
+        "resolution": "720p",
+        "credits_per_15s": 75,
+        "quality_score": 92,
+        "use_case": "daily_reels_balanced"
+      },
+      "premium": {
+        "model": "wan_2.5",
+        "resolution": "1080p",
+        "credits_per_15s": 90,
+        "quality_score": 96,
+        "use_case": "featured_content"
+      },
+      "maximum": {
+        "model": "gpu_custom",
+        "resolution": "4K",
+        "credits_per_15s": "custom",
+        "quality_score": 100,
+        "use_case": "special_projects_campaigns"
+      }
+    },
+    
+    "avatar_realism_settings": {
+      "face_consistency_threshold": 0.95,
+      "lora_strength": 0.8,
+      "detail_enhancement": true,
+      "skin_texture_quality": "high",
+      "eye_detail_level": "maximum",
+      "hair_individual_strands": true,
+      "lighting_quality": "studio",
+      "post_processing": ["color_grading", "sharpness_enhance", "noise_reduction"]
+    },
+    
+    "gpu_rental_config": {
+      "enabled": true,
+      "provider": "runpod",
+      "gpu_type": "RTX_4090",
+      "hourly_rate": 0.69,
+      "container_image": "python:3.11-slim",
+      "minimum_billing_hours": 1,
+      "idle_timeout_minutes": 5,
+      "models_supported": ["stable_video_diffusion", "animatediff", "stable_cascade"],
+      "cost_per_hour_4090": 0.69,
+      "cost_per_hour_a100": 1.10,
+      "estimated_processing_time_15s": 180,
+      "recommended_gpu": "RTX_4090"
+    }
+  },
+  
+  "scheduling_strategy": {
+    "daily_allocation": {
+      "total_reels": 4,
+      "economical_quality": 2,
+      "premium_quality": 1,
+      "maximum_quality": 1,
+      "credits_budget": 300
+    },
+    
+    "weekly_distribution": {
+      "monday": {"reels": 4, "theme": "energetic_start"},
+      "tuesday": {"reels": 4, "theme": "midweek_motivation"},
+      "wednesday": {"reels": 4, "theme": "hump_day_vibes"},
+      "thursday": {"reels": 4, "theme": "pre_weekend_hype"},
+      "friday": {"reels": 4, "theme": "weekend_teaser"},
+      "saturday": {"reels": 4, "theme": "relaxed_content"},
+      "sunday": {"reels": 4, "theme": "prep_monday"}
+    },
+    
+    "posting_times": {
+      "slot_1": "08:00_JST",
+      "slot_2": "12:00_JST",
+      "slot_3": "18:00_JST",
+      "slot_4": "21:00_JST"
+    },
+    
+    "processing_queue": {
+      "priority_order": ["maximum_quality", "premium_quality", "economical_quality"],
+      "buffer_hours": 4,
+      "generation_advance_hours": 6,
+      "max_concurrent_generations": 2
+    }
+  },
+  
+  "credit_management": {
+    "daily_budget": {
+      "plan": "pro",
+      "base_credits": 60,
+      "allocated_for_reels": 240,
+      "buffer_credits": 60,
+      "total_needed": 300,
+      "shortfall": 240
+    },
+    
+    "topup_strategy": {
+      "frequency": "weekly",
+      "amount_credits": 1800,
+      "cost_usd": 19.9,
+      "timing": "Sunday_evening",
+      "provider": "a2e_credits"
+    },
+    
+    "optimization_tactics": {
+      "reuse_base_avatars": true,
+      "batch_generation": true,
+      "offpeak_processing": true,
+      "model_selection_optimization": true,
+      "cache_intermediate_results": true,
+      "parallel_queue_processing": true
+    },
+    
+    "emergency_protocol": {
+      "low_credits_threshold": 100,
+      "fallback_model": "seedance_1.5_pro",
+      "fallback_resolution": "480p",
+      "credits_per_15s_fallback": 35,
+      "notify_before_ depletion": true
+    }
+  },
+  
+  "upgrade_recommendations": {
+    "current_status": {
+      "plan": "pro",
+      "daily_credits": 60,
+      "monthly_credits": 3600,
+      "sufficient_for": "2 reels/day at 720p"
+    },
+    
+    "upgrade_to_max": {
+      "additional_monthly_cost": 39.1,
+      "additional_daily_credits": 30,
+      "additional_monthly_credits": 1800,
+      "sufficient_for": "3 reels/day at 720p + 1 at 1080p",
+      "roi_factors": [
+        "High priority reduces wait times by ~60%",
+        "200 custom avatars vs 50",
+        "Better quality output with priority rendering"
+      ],
+      "recommendation": "recommended_if_budget_allows"
+    },
+    
+    "add_gpu_rental": {
+      "monthly_cost": 27.6,
+      "setup_effort": "medium",
+      "benefits": [
+        "Unlimited generation capacity",
+        "Maximum avatar realism possible",
+        "Custom model training for unique avatars",
+        "No credit consumption for API calls",
+        "Full control over rendering parameters"
+      ],
+      "technical_requirements": [
+        "GPU rental account (RunPod/Modal)",
+        "Docker setup for containerized processing",
+        "Model weights for Stable Video Diffusion/AnimateDiff",
+        "Maintenance and monitoring scripts"
+      ],
+      "recommendation": "recommended_for_maximum_quality_scaling"
+    },
+    
+    "hybrid_strategy": {
+      "description": "Use Max plan for daily reels + GPU for special content",
+      "monthly_cost": 49.0 + 27.6,
+      "daily_reels_quality": "1080p via Max priority",
+      "special_content_quality": "4K via GPU rental",
+      "credits_needed_monthly": 5400,
+      "gpu_usage_hours": 10,
+      "total_monthly_investment": 76.6,
+      "recommendation": "optimal_for_quality_and_scale"
+    }
+  },
+  
+  "output_settings": {
+    "aspect_ratios": {
+      "tiktok": "9:16",
+      "instagram_reels": "9:16",
+      "youtube_shorts": "9:16",
+      "instagram_feed": "1:1",
+      "facebook": "1:1"
+    },
+    
+    "format_settings": {
+      "container": "mp4",
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "bitrate_recommended": "8M",
+      "fps_standard": 30
+    },
+    
+    "naming_convention": {
+      "pattern": "{character}_{content_type}_{date}_{index}",
+      "example": "miyuki_sakura_daily_2026-01-22_01"
+    }
+  }
+}

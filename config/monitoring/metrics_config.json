@@ -1,0 +1,15 @@
+{
+    "enabled": true,
+    "collection_interval": 60,
+    "storage_path": "data/metrics.db",
+    "retention_days": 30,
+    "export_prometheus": true,
+    "prometheus_port": 9090,
+    "prometheus_path": "/metrics",
+    "track_cpu": true,
+    "track_memory": true,
+    "track_disk": true,
+    "track_network": true,
+    "track_production": true,
+    "track_proxy": true
+}
