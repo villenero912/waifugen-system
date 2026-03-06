@@ -3,11 +3,23 @@
     "phase": "Phase 2",
     "launch_date": "2026-02-01",
     "description": "Expansion of ELITE 8 AI Video Generation System to international markets with localized content strategies",
-    
     "target_countries": [
-        "US", "JP", "BR", "DE", "GB", "FR", "ES", "IT", "AU", "CA", "MX", "AR", "CO", "KR", "NL"
+        "US",
+        "JP",
+        "BR",
+        "DE",
+        "GB",
+        "FR",
+        "ES",
+        "IT",
+        "AU",
+        "CA",
+        "MX",
+        "AR",
+        "CO",
+        "KR",
+        "NL"
     ],
-    
     "priority_countries": [
         {
             "code": "US",
@@ -45,9 +57,7 @@
             "justification": "English-speaking, strong convention scene, growing market"
         }
     ],
-    
     "total_budget_monthly_usd": 1000.0,
-    
     "budget_allocation": {
         "US": 250.0,
         "JP": 200.0,
@@ -56,7 +66,6 @@
         "GB": 150.0,
         "RESERVE": 100.0
     },
-    
     "rollout_schedule": {
         "week_1_2": "US market launch",
         "week_3_4": "Japan market launch",
@@ -64,7 +73,6 @@
         "week_7_8": "Germany and UK launch",
         "week_9_12": "Optimization and expansion to Tier 2 countries"
     },
-    
     "kpi_targets": {
         "impressions_monthly": 5000000,
         "engagement_rate": 5.0,
@@ -74,14 +82,12 @@
         "roas_target": 4.0,
         "content_published_monthly": 500
     },
-    
     "expansion_triggers": [
         "Engagement rate > 5%",
         "ROAS > 3.0",
         "Follower growth > 500/month",
         "Content performance above average"
     ],
-    
     "content_strategy": {
         "localization_level": "full",
         "character_names_localized": true,
@@ -89,37 +95,238 @@
         "cultural_sensitivity_check": true,
         "holiday_calendar_integration": true
     },
-    
     "platform_focus_by_region": {
-        "north_america": ["tiktok", "instagram", "youtube_shorts"],
-        "europe": ["instagram", "tiktok", "youtube"],
-        "asia_pacific": ["youtube", "tiktok", "twitter"],
-        "latin_america": ["tiktok", "instagram", "youtube_shorts"]
+        "north_america": [
+            "tiktok",
+            "instagram",
+            "youtube_shorts"
+        ],
+        "europe": [
+            "instagram",
+            "tiktok",
+            "youtube"
+        ],
+        "asia_pacific": [
+            "youtube",
+            "tiktok",
+            "twitter"
+        ],
+        "latin_america": [
+            "tiktok",
+            "instagram",
+            "youtube_shorts"
+        ]
     },
-    
     "compliance_requirements": {
-        "gdpr_countries": ["DE", "GB", "FR", "ES", "IT", "NL"],
-        "age_verification_required": ["US", "BR", "DE", "GB"],
+        "gdpr_countries": [
+            "DE",
+            "GB",
+            "FR",
+            "ES",
+            "IT",
+            "NL"
+        ],
+        "age_verification_required": [
+            "US",
+            "BR",
+            "DE",
+            "GB"
+        ],
         "data_retention_default_days": 365,
         "content_moderation_all": true
     },
-    
     "localization_settings": {
         "default_language": "en",
-        "supported_languages": ["en", "ja", "pt", "de", "es", "fr", "it", "ko"],
+        "supported_languages": [
+            "en",
+            "ja",
+            "pt",
+            "de",
+            "es",
+            "fr",
+            "it",
+            "ko"
+        ],
         "auto_translate": false,
         "manual_review": true,
         "character_localization": true
     },
-    
     "reporting": {
         "frequency": "weekly",
-        "metrics": ["impressions", "engagements", "followers", "conversions", "revenue"],
+        "metrics": [
+            "impressions",
+            "engagements",
+            "followers",
+            "conversions",
+            "revenue"
+        ],
         "segmentation": "by_country",
         "alerts": {
             "engagement_drop": 20,
             "roas_below_target": 2.0,
             "budget_warning": 80
         }
+    },
+    "sales_platforms": {
+        "gumroad": {
+            "enabled": true,
+            "api_env_var": "GUMROAD_ACCESS_TOKEN",
+            "pricing_by_level": {
+                "level_4": {
+                    "label": "Softcore Basic",
+                    "pack_usd": 15.0
+                },
+                "level_6": {
+                    "label": "Premium Mid-NSFW",
+                    "pack_usd": 25.0
+                },
+                "level_8": {
+                    "label": "VIP Explicit",
+                    "pack_usd": 40.0
+                },
+                "level_10": {
+                    "label": "Custom PPV",
+                    "pack_usd": 99.0,
+                    "ppv_range": [
+                        50,
+                        500
+                    ]
+                }
+            }
+        },
+        "patreon": {
+            "enabled": true,
+            "api_env_var": "PATREON_ACCESS_TOKEN",
+            "campaign_id_env_var": "PATREON_CAMPAIGN_ID",
+            "type": "suscripcion",
+            "levels": [
+                4,
+                6,
+                8
+            ],
+            "tiers": {
+                "public": {
+                    "nsfw_levels": [
+                        0,
+                        2
+                    ],
+                    "monthly_usd": 0
+                },
+                "basic_nsfw": {
+                    "nsfw_levels": [
+                        4
+                    ],
+                    "monthly_usd": 9.99
+                },
+                "premium_nsfw": {
+                    "nsfw_levels": [
+                        6
+                    ],
+                    "monthly_usd": 24.99
+                },
+                "vip_nsfw": {
+                    "nsfw_levels": [
+                        8,
+                        10
+                    ],
+                    "monthly_usd": 49.99
+                }
+            }
+        },
+        "fansly": {
+            "enabled": true,
+            "api_env_var": "FANSLY_AUTH_TOKEN",
+            "type": "suscripcion_ppv",
+            "levels": [
+                4,
+                8,
+                10
+            ],
+            "notes": "Token de sesión extraído del navegador. Nivel 10 se publica como PPV."
+        },
+        "fanvue": {
+            "enabled": true,
+            "api_env_var": "FANVUE_API_KEY",
+            "type": "suscripcion_ppv",
+            "levels": [
+                6,
+                8,
+                10
+            ],
+            "notes": "AI-friendly. Nivel 10 va al vault de pago."
+        },
+        "itchio": {
+            "enabled": true,
+            "api_env_var": "ITCHIO_API_KEY",
+            "type": "descargable",
+            "levels": [
+                8,
+                10
+            ],
+            "notes": "Packs descargables .zip/.mp4. Ideal para nivel 10 PPV empaquetado."
+        },
+        "level_platform_routing": {
+            "0": [],
+            "2": [],
+            "4": [
+                "gumroad",
+                "patreon",
+                "fansly"
+            ],
+            "6": [
+                "gumroad",
+                "patreon",
+                "fanvue"
+            ],
+            "8": [
+                "gumroad",
+                "patreon",
+                "fansly",
+                "fanvue"
+            ],
+            "10": [
+                "gumroad",
+                "itchio",
+                "fansly"
+            ]
+        },
+        "funnel_escalation_path": [
+            {
+                "week": "1",
+                "level": 0,
+                "platform": "tiktok/instagram",
+                "goal": "awareness"
+            },
+            {
+                "week": "2-3",
+                "level": 2,
+                "platform": "telegram/line",
+                "goal": "interest"
+            },
+            {
+                "week": "4-6",
+                "level": 4,
+                "platform": "gumroad+patreon",
+                "goal": "first_purchase"
+            },
+            {
+                "week": "7-10",
+                "level": 6,
+                "platform": "gumroad+patreon",
+                "goal": "upsell_premium"
+            },
+            {
+                "week": "11+",
+                "level": 8,
+                "platform": "gumroad+patreon",
+                "goal": "vip_revenue"
+            },
+            {
+                "week": "ongoing",
+                "level": 10,
+                "platform": "gumroad+dm",
+                "goal": "ppv_custom"
+            }
+        ]
     }
 }

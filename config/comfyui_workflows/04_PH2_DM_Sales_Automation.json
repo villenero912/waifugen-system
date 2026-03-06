@@ -1,425 +1,551 @@
 {
-    "name": "FASE 2 - Automated DM & Language-Aware Engagement",
-    "nodes": [
-        {
-            "parameters": {
-                "httpMethod": "POST",
-                "path": "social-webhook",
-                "options": {}
-            },
-            "id": "webhook-social",
-            "name": "Webhook (New Comment/DM)",
-            "type": "n8n-nodes-base.webhook",
-            "typeVersion": 1.1,
-            "position": [
-                200,
-                400
-            ]
-        },
-        {
-            "parameters": {
-                "method": "POST",
-                "url": "http://ollama:11434/api/generate",
-                "sendBody": true,
-                "bodyParameters": {
-                    "parameters": [
-                        {
-                            "name": "model",
-                            "value": "tinyllama"
-                        },
-                        {
-                            "name": "prompt",
-                            "value": "=Analyze the following message and detect the language. Respond ONLY with the language code (e.g., 'en', 'ja', 'es', 'pt', 'de', 'fr').\n\nMessage: {{ $json.body.message || $json.body.comment_text }}"
-                        },
-                        {
-                            "name": "stream",
-                            "value": false
-                        }
-                    ]
-                },
-                "options": {}
-            },
-            "id": "detect-language-ollama",
-            "name": "Detect Language (Ollama)",
-            "type": "n8n-nodes-base.httpRequest",
-            "typeVersion": 4.2,
-            "position": [
-                400,
-                400
-            ]
-        },
-        {
-            "parameters": {
-                "operation": "executeQuery",
-                "query": "=SELECT * FROM characters WHERE id = {{ $json.body.character_id || 1 }} LIMIT 1",
-                "options": {}
-            },
-            "id": "get-character-phase2",
-            "name": "Get Character Persona",
-            "type": "n8n-nodes-base.postgres",
-            "typeVersion": 2.4,
-            "position": [
-                600,
-                400
-            ],
-            "credentials": {
-                "postgres": {
-                    "id": "waifugen_postgres",
-                    "name": "WaifuGen PostgreSQL"
-                }
-            }
-        },
-        {
-            "parameters": {
-                "jsCode": "const lang = $('Detect Language (Ollama)').item.json.response.trim().toLowerCase();\nconst character = $('Get Character Persona').item.json;\nconst interactionType = $json.body.type || 'welcome'; // welcome, engagement, upsell\n\n// Persona behavior based on the config\nconst personaTemplates = {\n  'miyuki_sakura': {\n    'younger_sister': {\n        'en': 'Hi! Thanks for reaching out! I\\'m so happy to talk to you! 😊',\n        'ja': 'こんにちは！メッセージありがとうございます！お話しできてとても嬉しいです！✨',\n        'es': '¡Hola! ¡Gracias por escribirme! ¡Estoy muy feliz de hablar contigo! 💕'\n    }\n  },\n  'aiko_hayashi': {\n    'boss_authority': {\n        'en': 'Welcome to my office. I hope you\\'ve been productive today. 💼',\n        'ja': '私のオフィスへようこそ。今日の仕事は順調ですか？💼',\n        'es': 'Bienvenido a mi oficina. Espero que hayas sido productivo hoy. 💼'\n    }\n  }\n};\n\nconst characterPersonaTemplate = personaTemplates[character.id] || personaTemplates['miyuki_sakura'];\nconst personaMode = character.persona_mode || 'younger_sister';\nconst responseTemplate = characterPersonaTemplate[personaMode][lang] || characterPersonaTemplate[personaMode]['en'];\n\nreturn {\n  detected_lang: lang,\n  response_text: responseTemplate,\n  character_id: character.id,\n  trigger_word: character.trigger_word,\n  follower_username: $json.body.username,\n  nsfw_level: $json.body.subscriber_tier === 'premium' ? 4 : 0\n};"
-            },
-            "id": "prepare-response",
-            "name": "Prepare Persona Response",
-            "type": "n8n-nodes-base.code",
-            "typeVersion": 2,
-            "position": [
-                800,
-                400
-            ]
-        },
-        {
-            "parameters": {
-                "method": "POST",
-                "url": "https://api.replicate.com/v1/predictions",
-                "authentication": "genericCredentialType",
-                "genericAuthType": "httpHeaderAuth",
-                "sendBody": true,
-                "bodyParameters": {
-                    "parameters": [
-                        {
-                            "name": "version",
-                            "value": "da77403487f90cbd56bcc580f124c6e9196b6bf09d8d6467362f6bcc1b90f488"
-                        },
-                        {
-                            "name": "input",
-                            "value": "={{ { 'prompt': $json.trigger_word + ', ' + $('Get Character Persona').item.json.appearance.base_description + ', looking at camera, high detail, masterpiece, 8k, bokeh background', 'negative_prompt': 'nsfw, low quality, blurry', 'width': 1024, 'height': 1024, 'num_inference_steps': 30, 'guidance_scale': 7.5 } }}"
-                        }
-                    ]
-                },
-                "options": {}
-            },
-            "id": "gen-personalized-image",
-            "name": "Generate Personalized Image (Replicate)",
-            "type": "n8n-nodes-base.httpRequest",
-            "typeVersion": 4.2,
-            "position": [
-                1000,
-                300
-            ],
-            "credentials": {
-                "httpHeaderAuth": {
-                    "id": "replicate_api_token",
-                    "name": "Replicate API Token"
-                }
-            }
-        },
-        {
-            "parameters": {
-                "operation": "executeQuery",
-                "query": "INSERT INTO dm_messages (message_id, subscriber_id, platform, message_content, status, created_at)\nVALUES (md5(random()::text || clock_timestamp()::text)::uuid, $1, 'instagram', $2, 'pending_approval', NOW())\nRETURNING message_id",
-                "options": {},
-                "additionalFields": {
-                    "queryParameters": "={{ JSON.stringify([$json.follower_username, $json.response_text]) }}"
-                }
-            },
-            "id": "save-dm-proposal",
-            "name": "Save DM Proposal",
-            "type": "n8n-nodes-base.postgres",
-            "typeVersion": 2.4,
-            "position": [
-                1200,
-                300
-            ],
-            "credentials": {
-                "postgres": {
-                    "id": "waifugen_postgres",
-                    "name": "WaifuGen PostgreSQL"
-                }
-            }
-        },
-        {
-            "parameters": {
-                "method": "POST",
-                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendPhoto",
-                "sendBody": true,
-                "bodyParameters": {
-                    "parameters": [
-                        {
-                            "name": "chat_id",
-                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
-                        },
-                        {
-                            "name": "photo",
-                            "value": "={{ $('Generate Personalized Image (Replicate)').item.json.output[0] }}"
-                        },
-                        {
-                            "name": "caption",
-                            "value": "=🤖 *Phase 2 Auto-Response Proposal*\n\n👤 *Follower:* {{ $('Prepare Persona Response').item.json.follower_username }}\n🌍 *Lang/Context:* {{ $('Prepare Persona Response').item.json.detected_lang }}\n📊 *Segment:* {{ $('Prepare Persona Response').item.json.nsfw_level > 0 ? 'Premium/NSFW' : 'Standard/SFW' }}\n\n💬 *Proposed Message:* \n_{{ $('Prepare Persona Response').item.json.response_text }}_\n\n⚠️ *Action Required:* Approve to send."
-                        },
-                        {
-                            "name": "reply_markup",
-                            "value": "={{ JSON.stringify({ \"inline_keyboard\": [[ { \"text\": \"✅ Send Message\", \"callback_data\": \"approve_dm_\" + $json.message_id, \"url\": ($env.WEBHOOK_URL || 'http://n8n:5678') + \"/webhook/exec-dm-job?id=\" + $json.message_id }, { \"text\": \"❌ Reject\", \"callback_data\": \"reject_dm_\" + $json.message_id } ]] }) }}"
-                        },
-                        {
-                            "name": "parse_mode",
-                            "value": "Markdown"
-                        }
-                    ]
-                },
-                "options": {}
-            },
-            "id": "notify-admin",
-            "name": "Admin Notification & Preview",
-            "type": "n8n-nodes-base.httpRequest",
-            "typeVersion": 4.2,
-            "position": [
-                1400,
-                300
-            ]
-        },
-        {
-            "parameters": {
-                "httpMethod": "GET",
-                "path": "exec-dm-job",
-                "options": {}
-            },
-            "id": "webhook-dm-approve",
-            "name": "Webhook (Approve DM)",
-            "type": "n8n-nodes-base.webhook",
-            "typeVersion": 1.1,
-            "position": [
-                200,
-                150
-            ]
-        },
-        {
-            "parameters": {
-                "operation": "executeQuery",
-                "query": "=UPDATE dm_messages SET status = 'approved' WHERE message_id = '{{ $json.query.id }}' RETURNING *",
-                "options": {}
-            },
-            "id": "update-dm-status",
-            "name": "Update DM Status DB",
-            "type": "n8n-nodes-base.postgres",
-            "typeVersion": 2.4,
-            "position": [
-                400,
-                150
-            ],
-            "credentials": {
-                "postgres": {
-                    "id": "waifugen_postgres",
-                    "name": "WaifuGen PostgreSQL"
-                }
-            }
-        },
-        {
-            "parameters": {
-                "jsCode": "return {\n  status: \"success\",\n  message: \"DM approved and marked for sending\",\n  dm_details: $input.item.json\n};"
-            },
-            "id": "finalize-dm",
-            "name": "Finalize DM Approval",
-            "type": "n8n-nodes-base.code",
-            "typeVersion": 2,
-            "position": [
-                600,
-                150
-            ]
-        },
-        {
-            "parameters": {
-                "method": "POST",
-                "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
-                "sendBody": true,
-                "bodyParameters": {
-                    "parameters": [
-                        {
-                            "name": "chat_id",
-                            "value": "={{ $env.TELEGRAM_ADMIN_CHAT_ID }}"
-                        },
-                        {
-                            "name": "text",
-                            "value": "=✅ <b>DM Approved and Sent</b>\n\nID: {{ $json.dm_details.message_id }}\nRecipient: {{ $json.dm_details.subscriber_id }}\nContent: <i>{{ $json.dm_details.message_content }}</i>"
-                        },
-                        {
-                            "name": "parse_mode",
-                            "value": "HTML"
-                        }
-                    ]
-                },
-                "options": {}
-            },
-            "id": "notify-dm-success",
-            "name": "Notify DM Success",
-            "type": "n8n-nodes-base.httpRequest",
-            "typeVersion": 4.2,
-            "position": [
-                800,
-                150
-            ]
-        },
-        {
-            "parameters": {
-                "httpMethod": "GET",
-                "path": "reject-dm-job",
-                "options": {}
-            },
-            "id": "webhook-dm-reject",
-            "name": "Webhook (Reject DM)",
-            "type": "n8n-nodes-base.webhook",
-            "typeVersion": 1.1,
-            "position": [
-                200,
-                0
-            ]
-        },
-        {
-            "parameters": {
-                "operation": "executeQuery",
-                "query": "=UPDATE dm_messages SET status = 'rejected' WHERE message_id = '{{ $json.query.id }}'",
-                "options": {}
-            },
-            "id": "update-dm-reject",
-            "name": "Update DM Status Reject",
-            "type": "n8n-nodes-base.postgres",
-            "typeVersion": 2.4,
-            "position": [
-                400,
-                0
-            ],
-            "credentials": {
-                "postgres": {
-                    "id": "waifugen_postgres",
-                    "name": "WaifuGen PostgreSQL"
-                }
-            }
-        }
-    ],
-    "connections": {
-        "Webhook (New Comment/DM)": {
-            "main": [
-                [
-                    {
-                        "node": "Detect Language (Ollama)",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Detect Language (Ollama)": {
-            "main": [
-                [
-                    {
-                        "node": "Get Character Persona",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Get Character Persona": {
-            "main": [
-                [
-                    {
-                        "node": "Prepare Persona Response",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Prepare Persona Response": {
-            "main": [
-                [
-                    {
-                        "node": "Generate Personalized Image (Replicate)",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Generate Personalized Image (Replicate)": {
-            "main": [
-                [
-                    {
-                        "node": "Save DM Proposal",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Save DM Proposal": {
-            "main": [
-                [
-                    {
-                        "node": "Admin Notification & Preview",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Webhook (Approve DM)": {
-            "main": [
-                [
-                    {
-                        "node": "Update DM Status DB",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Update DM Status DB": {
-            "main": [
-                [
-                    {
-                        "node": "Finalize DM Approval",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Finalize DM Approval": {
-            "main": [
-                [
-                    {
-                        "node": "Notify DM Success",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Webhook (Reject DM)": {
-            "main": [
-                [
-                    {
-                        "node": "Update DM Status Reject",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        }
+  "name": "FASE 2 - Automated DM & Language-Aware Engagement + Sales API (v2)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "social-webhook",
+        "options": {}
+      },
+      "id": "webhook-social",
+      "name": "Webhook (New Comment/DM)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        200,
+        400
+      ]
     },
-    "settings": {
-        "executionOrder": "v1",
-        "saveManualExecutions": true,
-        "saveExecutionProgress": true,
-        "callerPolicy": "workflowsFromSameOwner"
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ollama:11434/api/generate",
+        "sendBody": true,
+        "options": {
+          "timeout": 30000
+        },
+        "jsonBody": "{\"model\": \"tinyllama\", \"prompt\": \"=Analyze the following message and detect the language. Respond ONLY with the language code (e.g., 'en', 'ja', 'es', 'pt', 'de', 'fr').\\n\\nMessage: {{ $json.body.message || $json.body.comment_text }}\", \"stream\": false}",
+        "specifyBody": "json",
+        "jsonParameters": false
+      },
+      "id": "detect-language-ollama",
+      "name": "Detect Language (Ollama)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        400,
+        400
+      ]
     },
-    "staticData": null,
-    "meta": {
-        "instanceId": "waifugen_production"
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT * FROM characters WHERE id = {{ $json.body.character_id || 1 }} LIMIT 1",
+        "options": {}
+      },
+      "id": "get-character-phase2",
+      "name": "Get Character Persona",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        600,
+        400
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "waifugen_postgres",
+          "name": "WaifuGen PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const lang = $('Detect Language (Ollama)').item.json.response.trim().toLowerCase();\nconst character = $('Get Character Persona').item.json;\nconst interactionType = $json.body.type || 'welcome';\nconst nsfw_level = $json.body.subscriber_tier === 'vip' ? 8\n  : $json.body.subscriber_tier === 'premium' ? 6\n  : $json.body.subscriber_tier === 'basic' ? 4 : 0;\n\n// Embudo de ingeniería social basado en nivel\nconst funnelCTA = {\n  0:  { cta: '😊 Sígueme para más contenido gratis',        platform: 'free' },\n  2:  { cta: '🔞 Preview exclusivo → Telegram',              platform: 'telegram' },\n  4:  { cta: '💕 Pack completo $15 → Gumroad + Fansly',      platform: 'gumroad+fansly' },\n  6:  { cta: '🔥 VIP Pack $25 → Gumroad + Fanvue',           platform: 'gumroad+fanvue' },\n  8:  { cta: '⭐ Colección VIP $40 → 4 plataformas',         platform: 'gumroad+patreon+fansly+fanvue' },\n  10: { cta: '🎯 Contenido custom PPV → DM directo',         platform: 'gumroad+itchio+fansly' }\n};\nconst funnel = funnelCTA[nsfw_level] || funnelCTA[0];\n\nconst personaTemplates = {\n  'miyuki_sakura': {\n    'younger_sister': {\n      'en': 'Hi! Thanks for reaching out! 😊',\n      'ja': 'こんにちは！メッセージありがとうございます！✨',\n      'es': '¡Hola! ¡Gracias por escribirme! 💕'\n    }\n  },\n  'aiko_hayashi': {\n    'boss_authority': {\n      'en': 'Welcome to my office. I hope you have been productive today. 💼',\n      'ja': '私のオフィスへようこそ。今日の仕事は順調ですか？💼',\n      'es': 'Bienvenido a mi oficina. Espero que hayas sido productivo hoy. 💼'\n    }\n  }\n};\n\nconst characterPersonaTemplate = personaTemplates[character.id] || personaTemplates['miyuki_sakura'];\nconst personaMode = character.persona_mode || 'younger_sister';\nconst responseTemplate = characterPersonaTemplate[personaMode]?.[lang]\n  || characterPersonaTemplate[personaMode]?.['en'] || '';\n\nreturn {\n  detected_lang: lang,\n  response_text: responseTemplate + '\\n\\n' + funnel.cta,\n  character_id: character.id,\n  trigger_word: character.trigger_word,\n  follower_username: $json.body.username,\n  nsfw_level,\n  funnel_platforms: funnel.platform,\n  interaction_type: interactionType\n};"
+      },
+      "id": "prepare-response",
+      "name": "Prepare Persona Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.replicate.com/v1/predictions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "options": {
+          "timeout": 30000
+        },
+        "jsonBody": "{\"version\": \"da77403487f90cbd56bcc580f124c6e9196b6bf09d8d6467362f6bcc1b90f488\", \"input\": \"={{ { 'prompt': $json.trigger_word + ', ' + $('Get Character Persona').item.json.appearance.base_description + ', looking at camera, high detail, masterpiece, 8k, bokeh background', 'negative_prompt': 'nsfw, low quality, blurry', 'width': 1024, 'height': 1024, 'num_inference_steps': 30, 'guidance_scale': 7.5 } }}\"}",
+        "specifyBody": "json",
+        "jsonParameters": false
+      },
+      "id": "gen-personalized-image",
+      "name": "Generate Personalized Image (Replicate)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1000,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "replicate_api_token",
+          "name": "Replicate API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO dm_messages (message_id, subscriber_id, platform, message_content, nsfw_level, funnel_platforms, status, created_at)\nVALUES (md5(random()::text || clock_timestamp()::text)::uuid, $1, 'instagram', $2, $3, $4, 'pending_approval', NOW())\nRETURNING message_id",
+        "options": {},
+        "additionalFields": {
+          "queryParameters": "={{ JSON.stringify([$json.follower_username, $json.response_text, $json.nsfw_level, $json.funnel_platforms]) }}"
+        }
+      },
+      "id": "save-dm-proposal",
+      "name": "Save DM Proposal",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        1200,
+        300
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "waifugen_postgres",
+          "name": "WaifuGen PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TELEGRAM_BOT_URL }}/sendPhoto",
+        "sendBody": true,
+        "options": {
+          "timeout": 30000
+        },
+        "jsonBody": "{\"chat_id\": \"={{ $env.TELEGRAM_ADMIN_CHAT_ID }}\", \"photo\": \"={{ $('Generate Personalized Image (Replicate)').item.json.output[0] }}\", \"caption\": \"=🤖 *Phase 2 Auto-Response Proposal*\\n\\n👤 *Follower:* {{ $('Prepare Persona Response').item.json.follower_username }}\\n🌍 *Lang:* {{ $('Prepare Persona Response').item.json.detected_lang }}\\n📊 *Nivel NSFW:* {{ $('Prepare Persona Response').item.json.nsfw_level }}\\n💰 *Plataformas embudo:* {{ $('Prepare Persona Response').item.json.funnel_platforms }}\\n\\n💬 *Mensaje propuesto:*\\n_{{ $('Prepare Persona Response').item.json.response_text }}_\\n\\n⚠️ *Acción requerida:* Aprobar para enviar + publicar en plataformas de venta.\", \"reply_markup\": \"={{ JSON.stringify({ \\\"inline_keyboard\\\": [[ { \\\"text\\\": \\\"✅ Enviar DM\\\", \\\"callback_data\\\": \\\"approve_dm_\\\" + $json.message_id, \\\"url\\\": ($env.WEBHOOK_URL || 'http://n8n:5678') + \\\"/webhook/exec-dm-job?id=\\\" + $json.message_id }, { \\\"text\\\": \\\"🛒 Publicar en APIs\\\", \\\"callback_data\\\": \\\"publish_sales_\\\" + $json.message_id, \\\"url\\\": ($env.WEBHOOK_URL || 'http://n8n:5678') + \\\"/webhook/exec-sales-publish?id=\\\" + $json.message_id }, { \\\"text\\\": \\\"❌ Rechazar\\\", \\\"callback_data\\\": \\\"reject_dm_\\\" + $json.message_id } ]] }) }}\", \"parse_mode\": \"Markdown\"}",
+        "specifyBody": "json",
+        "jsonParameters": false
+      },
+      "id": "notify-admin",
+      "name": "Admin Notification & Preview",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1400,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "exec-dm-job",
+        "options": {}
+      },
+      "id": "webhook-dm-approve",
+      "name": "Webhook (Approve DM)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        200,
+        150
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=UPDATE dm_messages SET status = 'approved' WHERE message_id = '{{ $json.query.id }}' RETURNING *",
+        "options": {}
+      },
+      "id": "update-dm-status",
+      "name": "Update DM Status DB",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        400,
+        150
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "waifugen_postgres",
+          "name": "WaifuGen PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  status: \"success\",\n  message: \"DM approved and marked for sending\",\n  dm_details: $input.item.json\n};"
+      },
+      "id": "finalize-dm",
+      "name": "Finalize DM Approval",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        150
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+        "sendBody": true,
+        "options": {
+          "timeout": 30000
+        },
+        "jsonBody": "{\"chat_id\": \"={{ $env.TELEGRAM_ADMIN_CHAT_ID }}\", \"text\": \"=✅ <b>DM Aprobado y Enviado</b>\\n\\nID: {{ $json.dm_details.message_id }}\\nDestinatario: {{ $json.dm_details.subscriber_id }}\\nContenido: <i>{{ $json.dm_details.message_content }}</i>\", \"parse_mode\": \"HTML\"}",
+        "specifyBody": "json",
+        "jsonParameters": false
+      },
+      "id": "notify-dm-success",
+      "name": "Notify DM Success",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        150
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "exec-sales-publish",
+        "options": {}
+      },
+      "id": "webhook-sales-publish",
+      "name": "Webhook (Publish to Sales APIs)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        200,
+        -150
+      ],
+      "notes": "Triggered from Telegram button — publica en Gumroad/Patreon/Fansly/Fanvue/itch.io según nsfw_level"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT * FROM dm_messages WHERE message_id = '{{ $json.query.id }}' LIMIT 1",
+        "options": {}
+      },
+      "id": "fetch-dm-for-sales",
+      "name": "Fetch DM for Sales",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        400,
+        -150
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "waifugen_postgres",
+          "name": "WaifuGen PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.WAIFUGEN_API_URL || 'http://waifugen_app:8000' }}/api/v1/sales/publish",
+        "sendBody": true,
+        "options": {
+          "timeout": 120000
+        },
+        "jsonBody": "={{ JSON.stringify({\n  character_id: $json.character_id || 'aiko_hayashi',\n  nsfw_level: $json.nsfw_level || 4,\n  video_file: $json.video_file || '',\n  platform_targets: ($json.funnel_platforms || 'gumroad').split('+'),\n  dry_run: false\n}) }}",
+        "specifyBody": "json",
+        "jsonParameters": false
+      },
+      "id": "call-sales-connector",
+      "name": "Call SalesConnector API (5 Plataformas)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        700,
+        -150
+      ],
+      "notes": "Llama al endpoint REST del SalesConnector. Publica en Gumroad+Patreon+Fansly+Fanvue+itch.io según nivel NSFW."
+    },
+    {
+      "parameters": {
+        "jsCode": "const result = $input.item.json;\nconst platforms = Object.keys(result).filter(k => result[k]?.ok);\nconst failed = Object.keys(result).filter(k => result[k] && !result[k]?.ok);\n\nreturn {\n  published_count: platforms.length,\n  published_platforms: platforms.join(', ') || 'ninguna',\n  failed_platforms: failed.join(', ') || 'ninguna',\n  summary: `✅ Publicado en: ${platforms.join(', ')}` + (failed.length ? `\\n❌ Fallido en: ${failed.join(', ')}` : ''),\n  raw_results: result\n};"
+      },
+      "id": "parse-sales-results",
+      "name": "Parse Sales Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        950,
+        -150
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE dm_messages SET status = 'published', sales_results = $1::jsonb WHERE message_id = '{{ $('Fetch DM for Sales').item.json.message_id }}'",
+        "options": {},
+        "additionalFields": {
+          "queryParameters": "={{ JSON.stringify([JSON.stringify($json.raw_results)]) }}"
+        }
+      },
+      "id": "update-sales-status",
+      "name": "Update Sales Status DB",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        1150,
+        -150
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "waifugen_postgres",
+          "name": "WaifuGen PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+        "sendBody": true,
+        "options": {
+          "timeout": 30000
+        },
+        "jsonBody": "{\"chat_id\": \"={{ $env.TELEGRAM_ADMIN_CHAT_ID }}\", \"text\": \"=🛒 <b>Publicación en Plataformas de Venta</b>\\n\\n{{ $('Parse Sales Results').item.json.summary }}\\n\\n📊 Plataformas OK: {{ $('Parse Sales Results').item.json.published_count }}\\n💰 Embudo activado para conversión.\", \"parse_mode\": \"HTML\"}",
+        "specifyBody": "json",
+        "jsonParameters": false
+      },
+      "id": "notify-sales-result",
+      "name": "Notify Sales Result",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1350,
+        -150
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "reject-dm-job",
+        "options": {}
+      },
+      "id": "webhook-dm-reject",
+      "name": "Webhook (Reject DM)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        200,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=UPDATE dm_messages SET status = 'rejected' WHERE message_id = '{{ $json.query.id }}'",
+        "options": {}
+      },
+      "id": "update-dm-reject",
+      "name": "Update DM Status Reject",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [
+        400,
+        0
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "waifugen_postgres",
+          "name": "WaifuGen PostgreSQL"
+        }
+      }
     }
+  ],
+  "connections": {
+    "Webhook (New Comment/DM)": {
+      "main": [
+        [
+          {
+            "node": "Detect Language (Ollama)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detect Language (Ollama)": {
+      "main": [
+        [
+          {
+            "node": "Get Character Persona",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Character Persona": {
+      "main": [
+        [
+          {
+            "node": "Prepare Persona Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Persona Response": {
+      "main": [
+        [
+          {
+            "node": "Generate Personalized Image (Replicate)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Personalized Image (Replicate)": {
+      "main": [
+        [
+          {
+            "node": "Save DM Proposal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save DM Proposal": {
+      "main": [
+        [
+          {
+            "node": "Admin Notification & Preview",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook (Approve DM)": {
+      "main": [
+        [
+          {
+            "node": "Update DM Status DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update DM Status DB": {
+      "main": [
+        [
+          {
+            "node": "Finalize DM Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finalize DM Approval": {
+      "main": [
+        [
+          {
+            "node": "Notify DM Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook (Publish to Sales APIs)": {
+      "main": [
+        [
+          {
+            "node": "Fetch DM for Sales",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch DM for Sales": {
+      "main": [
+        [
+          {
+            "node": "Call SalesConnector API (5 Plataformas)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call SalesConnector API (5 Plataformas)": {
+      "main": [
+        [
+          {
+            "node": "Parse Sales Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Sales Results": {
+      "main": [
+        [
+          {
+            "node": "Update Sales Status DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Sales Status DB": {
+      "main": [
+        [
+          {
+            "node": "Notify Sales Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook (Reject DM)": {
+      "main": [
+        [
+          {
+            "node": "Update DM Status Reject",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "meta": {
+    "instanceId": "waifugen_production",
+    "version": "2.0",
+    "updated": "2026-03-06"
+  }
 }

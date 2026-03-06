@@ -15,6 +15,7 @@ from processing.dataset_generator import DatasetGenerator
 from processing.lora_trainer_bridge import LoRATrainer
 from processing.pixelation_manager import PixelationManager
 from api.phase2_content_generator import Phase2ContentGenerator
+from api.sales_connector import SalesConnector
 
 # Configure logging
 logging.basicConfig(
@@ -82,13 +83,17 @@ class Phase2CompleteLifecycle:
             logger.info("✅ No se requiere censura para la región objetivo.")
             return video_path
 
-    async def run_step_5_metadata(self, final_video):
-        logger.info("📄 PASO 5: Generación de Metadatos para Subida Stealth")
+    async def run_step_5_metadata(self, final_video, nsfw_level: int = 8):
+        logger.info("📄 PASO 5: Generación de Metadatos para Venta")
         metadata = {
             "character": self.character_id,
             "region": self.target_region,
             "video_file": str(final_video),
-            "platform_targets": ["xvideos", "onlyfans", "fantia" if self.config["is_asian"] else "fansly"],
+            "nsfw_level": nsfw_level,
+            # Plataformas de venta con API — prioridad Gumroad + Patreon
+            "platform_targets": ["gumroad", "patreon"],
+            # Plataformas stealth (sin API) — subida manual/Playwright
+            "stealth_targets": ["fantia"] if self.config["is_asian"] else ["xvideos"],
             "tags": ["4k", "realistic", "waifu", self.character_id],
             "proxy_requirement": "Residencial JP" if self.target_region == "JP" else "Global"
         }
@@ -98,19 +103,44 @@ class Phase2CompleteLifecycle:
         logger.info(f"✅ Manifiesto de subida listo en {meta_path}")
         return meta_path
 
-    async def execute(self):
+    async def run_step_6_publish(self, manifest_path, dry_run: bool = False):
+        logger.info("🛒 PASO 6: Publicación Automática en Plataformas de Venta")
+        connector = SalesConnector()
+        try:
+            results = await connector.publish_from_manifest(
+                str(manifest_path), dry_run=dry_run
+            )
+            if results.get("gumroad", {}).get("ok"):
+                logger.info("✅ Gumroad: producto publicado")
+            if results.get("patreon", {}).get("ok"):
+                logger.info("✅ Patreon: post publicado")
+            return results
+        finally:
+            await connector.close()
+
+    async def execute(self, nsfw_level: int = 8, dry_run_sales: bool = False):
         print(f"\n🚀 EJECUTANDO PIPELINE FASE 2: {self.character_id.upper()}\n" + "="*50)
         
         dataset = await self.run_step_1_dataset()
         lora = await self.run_step_2_training(dataset)
         video_raw = await self.run_step_3_production(lora)
         video_final = await self.run_step_4_compliance(video_raw)
-        manifest = await self.run_step_5_metadata(video_final)
+        manifest = await self.run_step_5_metadata(video_final, nsfw_level=nsfw_level)
+        sales = await self.run_step_6_publish(manifest, dry_run=dry_run_sales)
         
-        print("="*50 + f"\n✨ CICLO COMPLETADO EXITOSAMENTE\n📁 Resultado final: {video_final}\n🌍 Listo para distribución global.")
+        print(
+            "="*50 +
+            f"\n✨ CICLO COMPLETADO EXITOSAMENTE\n"
+            f"📁 Resultado final: {video_final}\n"
+            f"💰 Ventas: Gumroad={sales.get('gumroad',{}).get('ok','N/A')} | "
+            f"Patreon={sales.get('patreon',{}).get('ok','N/A')}\n"
+            f"🌍 Listo para distribución global."
+        )
 
 if __name__ == "__main__":
     char = sys.argv[1] if len(sys.argv) > 1 else "aiko_hayashi"
     region = sys.argv[2] if len(sys.argv) > 2 else "JP"
+    level = int(sys.argv[3]) if len(sys.argv) > 3 else 8
+    dry = "--dry-run" in sys.argv
     pipeline = Phase2CompleteLifecycle(char, region)
-    asyncio.run(pipeline.execute())
+    asyncio.run(pipeline.execute(nsfw_level=level, dry_run_sales=dry))
