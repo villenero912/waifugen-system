@@ -180,14 +180,15 @@ class SocialMediaClient(ABC):
     
     def _load_config(self) -> Dict[str, Any]:
         """Load platform configuration"""
-        if self.config_path is None:
-            config_path = self._get_default_config_path()
+        path = self.config_path
+        if path is None:
+            path = self._get_default_config_path()
         
         try:
-            with open(config_path, 'r') as f:
+            with open(path, 'r') as f:
                 return json.load(f)
         except FileNotFoundError:
-            logger.warning(f"Config not found at {config_path}, using defaults")
+            logger.warning(f"Config not found at {path}, using defaults")
             return self._get_default_config()
     
     def _get_default_config_path(self) -> str:

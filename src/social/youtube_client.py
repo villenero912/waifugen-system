@@ -703,7 +703,7 @@ class YouTubeClient(SocialMediaClient):
             logger.error(f"Failed to get channel videos: {e}")
             return []
     
-    async def delete_video(self, video_id: str) -> bool:
+    async def delete_post(self, video_id: str) -> bool:
         """
         Delete a YouTube video
         

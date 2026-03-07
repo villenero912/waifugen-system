@@ -119,6 +119,10 @@ class ProxyManager:
         
         logger.info(f"IPRoyal Proxy Manager initialized (enabled: {self.enabled})")
     
+    async def initialize(self):
+        """Async initialization (placeholder for compatibility)"""
+        pass
+    
     def _load_config(self) -> Dict[str, Any]:
         """Load IPRoyal configuration"""
         try:
