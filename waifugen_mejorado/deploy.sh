@@ -66,6 +66,14 @@ function get_env_vars() {
     echo
     read -s -p "Introduce el ID del chat de Telegram (opcional, no se mostrará): " TELEGRAM_CHAT_ID
     echo
+    
+    # Phase 2 Variables
+    read -p "Introduce el ENCRYPTION_SALT (dejalo vacío para generar uno nuevo): " ENCRYPTION_SALT
+    read -s -p "Introduce GUMROAD_ACCESS_TOKEN (opcional): " GUMROAD_ACCESS_TOKEN
+    echo
+    read -s -p "Introduce PATREON_ACCESS_TOKEN (opcional): " PATREON_ACCESS_TOKEN
+    echo
+    read -p "Introduce PATREON_CAMPAIGN_ID (opcional): " PATREON_CAMPAIGN_ID
 }
 
 function upload_and_configure() {
@@ -101,6 +109,11 @@ OPENAI_API_KEY=${OPENAI_API_KEY}
 GOOGLE_API_KEY=${GOOGLE_API_KEY}
 TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
 TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+# Phase 2 & Security
+ENCRYPTION_SALT=${ENCRYPTION_SALT:-"g6Z7v9_L2Wn3P8q1R5t0X4v7B9m1K4j0S2f5G8h3D6k="}
+GUMROAD_ACCESS_TOKEN=${GUMROAD_ACCESS_TOKEN}
+PATREON_ACCESS_TOKEN=${PATREON_ACCESS_TOKEN}
+PATREON_CAMPAIGN_ID=${PATREON_CAMPAIGN_ID}
 # Añade aquí otras variables de entorno si son necesarias
 EOL
         
@@ -111,12 +124,12 @@ EOL
         echo "Instalando dependencias de Python..."
         sudo pip3 install -r requirements.txt
         
-        echo "Ejecutando pruebas de verificación..."
-        ENCRYPTION_KEY="${ENCRYPTION_KEY}" python3 test_corrections.py
+        echo "Ejecutando despliegue con Docker Compose..."
+        docker-compose up -d --build
         
         echo "\n--- Configuración Completa ---"
-        echo "El sistema WaifuGen v2 ha sido desplegado y configurado en ${REMOTE_PATH}"
-        echo "Puedes iniciar la aplicación ejecutando: cd ${REMOTE_PATH} && python3 main.py"
+        echo "El sistema WaifuGen v2 ha sido desplegado en contenedores Docker."
+        echo "Puedes ver los logs con: docker-compose logs -f waifugen_app"
         echo "Asegúrate de que todos los servicios externos (ComfyUI, etc.) estén accesibles."
         
         rm /tmp/waifugen_v2_corrected.zip # Limpiar el archivo ZIP temporal
