@@ -10,6 +10,8 @@ services:
       - DATABASE_URL=postgresql://waifugen_user:${POSTGRES_PASSWORD}@waifugen_postgres:5432/waifugen_db
       - REDIS_URL=redis://waifugen_redis:6379/0
       - OLLAMA_HOST=http://waifugen_ollama:11434
+      - METRICS_ENABLED=true
+      - PROMETHEUS_PORT=9090
     volumes:
       - ./logs:/app/logs
       - ./output:/app/output
@@ -95,6 +97,35 @@ services:
     depends_on:
       - waifugen_app
       - waifugen_n8n
+      - waifugen_grafana
+    networks:
+      - waifugen_network
+
+  waifugen_prometheus:
+    image: prom/prometheus:latest
+    container_name: waifugen_prometheus
+    restart: always
+    volumes:
+      - ./config/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    networks:
+      - waifugen_network
+
+  waifugen_grafana:
+    image: grafana/grafana:latest
+    container_name: waifugen_grafana
+    restart: always
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - waifugen_prometheus
     networks:
       - waifugen_network
 
@@ -105,3 +136,5 @@ networks:
 volumes:
   postgres_data:
   ollama_data:
+  prometheus_data:
+  grafana_data:
