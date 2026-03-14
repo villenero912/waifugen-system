@@ -20,6 +20,8 @@ from .proxy_manager import (
     ProxyCredentials,
     ProxyStats,
     BudgetAlert,
+    SmartProxyRouter,
+    quick_proxy_request,
     check_proxy_status
 )
 
@@ -42,5 +44,7 @@ __all__ = [
     "ProxyCredentials",
     "ProxyStats",
     "BudgetAlert",
+    "SmartProxyRouter",
+    "quick_proxy_request",
     "check_proxy_status"
 ]

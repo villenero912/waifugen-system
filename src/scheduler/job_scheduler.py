@@ -308,7 +308,8 @@ class JobScheduler:
                     if not task.enabled:
                         continue
                     
-                    if task.next_run and datetime.now() >= task.next_run:
+                    tz = pytz.timezone(task.timezone)
+                    if task.next_run and datetime.now(tz) >= task.next_run:
                         await self._execute_task(task)
                         
                         # Calculate next run
@@ -346,7 +347,8 @@ class JobScheduler:
                 else:
                     await self._default_handler(task)
                 
-                task.last_run = datetime.now()
+                tz = pytz.timezone(task.timezone)
+                task.last_run = datetime.now(tz)
                 logger.info(f"Task {task.task_type.value} completed")
             
             except Exception as e:
@@ -598,7 +600,8 @@ class JobScheduler:
     
     def get_upcoming_tasks(self, hours: int = 24) -> List[Dict[str, Any]]:
         """Get upcoming scheduled tasks"""
-        now = datetime.now()
+        tz = pytz.timezone(self.config.get("default_timezone", "Asia/Tokyo"))
+        now = datetime.now(tz)
         cutoff = now + timedelta(hours=hours)
         
         tasks = []

@@ -239,45 +239,26 @@ class SocialMediaManager:
         
         results = {}
 
-        async def post_with_retry(platform: PlatformType, max_retries: int = 3) -> PostResult:
-            """Post to a single platform with exponential backoff retry."""
-            if platform not in self.clients:
-                logger.warning(f"Client not available for {platform.value}")
-                return PostResult(success=False, error_message="Client not available", platform=platform.value)
-
-            client = self.clients[platform]
-            adapted_caption, adapted_tags = self.adapt_content(caption, tags, character, platform)
-            config = self._get_platform_config(platform)
-
-            for attempt in range(max_retries):
-                try:
-                    result = await client.upload_video(asset, adapted_caption, adapted_tags, config)
-                    if result.success:
-                        logger.info(f"Posted to {platform.value}: {result.post_id}")
-                        return result
-                    else:
-                        wait = 2 ** attempt * 30  # 30s, 60s, 120s
-                        logger.warning(f"Failed to post to {platform.value} (attempt {attempt+1}/{max_retries}): {result.error_message}. Retrying in {wait}s...")
-                        if attempt < max_retries - 1:
-                            await asyncio.sleep(wait)
-                except Exception as e:
-                    wait = 2 ** attempt * 30
-                    logger.error(f"Error posting to {platform.value} (attempt {attempt+1}/{max_retries}): {e}. Retrying in {wait}s...")
-                    if attempt < max_retries - 1:
-                        await asyncio.sleep(wait)
-
-            logger.error(f"All {max_retries} attempts failed for {platform.value}")
-            return PostResult(success=False, error_message=f"Failed after {max_retries} attempts", platform=platform.value)
-
-        # Post to all platforms in PARALLEL
-        tasks = [post_with_retry(platform) for platform in platforms if platform in self.clients]
-        platform_results = await asyncio.gather(*tasks, return_exceptions=True)
-
-        for platform, result in zip([p for p in platforms if p in self.clients], platform_results):
-            if isinstance(result, Exception):
-                results[platform] = PostResult(success=False, error_message=str(result), platform=platform.value)
-            else:
-                results[platform] = result
+        # Prepare platform data (adapted caption, tags and config)
+        platform_data = {}
+        for platform in platforms:
+            if platform in self.clients:
+                adapted_caption, adapted_tags = self.adapt_content(caption, tags, character, platform)
+                config = self._get_platform_config(platform)
+                platform_data[platform] = {
+                    "caption": adapted_caption,
+                    "tags": adapted_tags,
+                    "config": config
+                }
+        
+        # Delegate to MultiPlatformPoster
+        results = await self.poster.post_to_all(
+            asset=asset,
+            caption=caption,
+            tags=tags,
+            platforms=platforms,
+            platform_data=platform_data
+        )
 
         # Legacy error handling below kept for compatibility
         if False:

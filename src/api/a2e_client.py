@@ -320,16 +320,16 @@ class A2EClient:
     - Integration with optimization configuration
     """
     
-    BASE_URL = "https://api.a2e.ai/api/v1"
+    BASE_URL = "https://api.a2e.ai/v1"
     
     # Supported models with their endpoints
     MODEL_ENDPOINTS = {
-        A2EModelType.SEEDANCE_1_5_PRO: "/video/generate",
-        A2EModelType.SEEDANCE_1_5_PRO_1080P: "/video/generate",
-        A2EModelType.WAN_2_5: "/video/generate",
-        A2EModelType.WAN_2_5_720P: "/video/generate",
-        A2EModelType.WAN_2_5_480P: "/video/generate",
-        A2EModelType.WAN_2_6: "/video/generate",
+        A2EModelType.SEEDANCE_1_5_PRO: "/generate/seedance",
+        A2EModelType.SEEDANCE_1_5_PRO_1080P: "/generate/seedance-hd",
+        A2EModelType.WAN_2_5: "/generate/wan",
+        A2EModelType.WAN_2_5_720P: "/generate/wan-hd",
+        A2EModelType.WAN_2_5_480P: "/generate/wan-sd",
+        A2EModelType.WAN_2_6: "/generate/wan-2.6",
     }
     
     def __init__(self, config_path: str = None):
@@ -393,9 +393,16 @@ class A2EClient:
     
     def _get_headers(self) -> Dict[str, str]:
         """Generate authentication headers"""
+        timestamp = str(int(time.time()))
+        nonce = secrets.token_hex(8)
+        
         return {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
+            "X-API-Key": self.api_key,
+            "X-Timestamp": timestamp,
+            "X-Nonce": nonce,
+            "X-Client-Version": "2.0.0",
             "X-Platform": "elite-8-system"
         }
     
@@ -590,29 +597,6 @@ class A2EClient:
             last_updated=datetime.now()
         )
     
-    async def send_tts(self, text: str) -> str:
-        """
-        Convert text to audio URL using A2E TTS service
-        
-        Args:
-            text: The script text to convert
-            
-        Returns:
-            The audio URL (audioSrc)
-        """
-        logger.info(f"Generating TTS for: {text[:30]}...")
-        
-        def _fetch_tts():
-            return self._make_request("POST", "/video/send_tts", {"msg": text})
-        
-        data = await self._retry_with_backoff(_fetch_tts)
-        audio_src = data.get("data", {}).get("audioSrc")
-        
-        if not audio_src:
-            raise A2EApiError("TTS failed: No audioSrc returned", error_code="TTS_FAILED")
-            
-        return audio_src
-
     async def get_credit_usage_history(self, days: int = 30) -> List[Dict]:
         """Get credit usage history for specified days"""
         logger.info(f"Fetching credit usage history for {days} days")
@@ -623,13 +607,12 @@ class A2EClient:
         data = await self._retry_with_backoff(_fetch_history)
         return data.get("usage", [])
     
-    async def generate_video(self, config: GenerationConfig, audio_url: Optional[str] = None) -> GenerationResult:
+    async def generate_video(self, config: GenerationConfig) -> GenerationResult:
         """
         Generate a video using the A2E API
         
         Args:
             config: GenerationConfig with all generation parameters
-            audio_url: Optional pre-generated audio URL (e.g. from Piper)
             
         Returns:
             GenerationResult with job information
@@ -649,21 +632,14 @@ class A2EClient:
                 retry_recommended=False
             )
         
-        # 1. Obtain audio source (direct URL or via A2E TTS)
-        if audio_url:
-            audio_src = audio_url
-            logger.info("Using provided external audio URL")
-        else:
-            audio_src = await self.send_tts(config.prompt)
-        
-        # 2. Build the generation payload with audioSrc
-        payload = self._build_generation_payload(config, audio_src)
+        # Build the generation payload
+        payload = self._build_generation_payload(config)
         
         # Make the API call
         def _submit_generation():
             return self._make_request(
                 "POST",
-                self.MODEL_ENDPOINTS.get(config.model, "/video/generate"),
+                self.MODEL_ENDPOINTS.get(config.model, "/generate/seedance"),
                 data=payload
             )
         
@@ -671,8 +647,7 @@ class A2EClient:
             response = await self._retry_with_backoff(_submit_generation)
             
             # Create job tracking object
-            # Note: _id is used in the new API
-            job_id = response.get("data", {}).get("_id", response.get("id", "unknown"))
+            job_id = response.get("job_id", response.get("id", "unknown"))
             
             job = GenerationJob(
                 job_id=job_id,
@@ -701,19 +676,35 @@ class A2EClient:
                 fallback_model=fallback
             )
     
-    def _build_generation_payload(self, config: GenerationConfig, audio_src: str) -> Dict[str, Any]:
+    def _build_generation_payload(self, config: GenerationConfig) -> Dict[str, Any]:
         """Build the API payload for video generation"""
         resolution = config.resolution.value
         
         payload = {
-            "title": f"Viral Reel {int(time.time())}",
-            "anchor_id": "1", # Numeric anchor_id required
-            "anchor_type": 1,
-            "audioSrc": audio_src,
-            "resolution": 1080,
-            "back_id": 1,
-            "isCaptionEnabled": True
+            "prompt": config.prompt,
+            "negative_prompt": config.negative_prompt or "blurry, low quality, distorted face, artifacts, static, unnatural",
+            "duration": config.duration_seconds,
+            "resolution": {
+                "width": resolution["width"],
+                "height": resolution["height"]
+            },
+            "fps": config.fps,
+            "num_frames": config.num_frames,
+            "cfg_scale": config.cfg_scale,
+            "motion_bucket": config.motion_bucket,
+            "lora_strength": config.lora_strength,
+            "quality": config.avatar_quality,
+            "priority": config.priority,
+            "face_consistency_threshold": config.face_consistency_threshold
         }
+        
+        # Add character trigger if specified
+        if config.character_trigger:
+            payload["character_trigger"] = config.character_trigger
+        
+        # Add style if specified
+        if config.style:
+            payload["style_preset"] = config.style
         
         return payload
     
@@ -741,10 +732,9 @@ class A2EClient:
         logger.debug(f"Checking status for job {job_id}")
         
         def _check_status():
-            return self._make_request("POST", "/video/awsResult", {"_id": job_id})
+            return self._make_request("GET", f"/jobs/{job_id}")
         
-        response_data = await self._retry_with_backoff(_check_status)
-        data = response_data.get("data", {})
+        data = await self._retry_with_backoff(_check_status)
         
         # Update existing job or create new one
         if job_id in self.active_jobs:

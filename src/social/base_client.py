@@ -393,7 +393,7 @@ class SocialMediaClient(ABC):
     
     @abstractmethod
     async def upload_video(self, asset: MediaAsset, caption: str, 
-                          tags: List[str] = None) -> PostResult:
+                          tags: List[str] = None, config: Any = None) -> PostResult:
         """Upload a video to the platform"""
         pass
     
@@ -455,16 +455,19 @@ class MultiPlatformPoster:
         asset: MediaAsset,
         caption: str,
         tags: List[str] = None,
-        platforms: List[PlatformType] = None
+        platforms: List[PlatformType] = None,
+        platform_data: Dict[PlatformType, Dict[str, Any]] = None
     ) -> Dict[PlatformType, PostResult]:
         """
         Post content to multiple platforms simultaneously
         
         Args:
             asset: Media asset to post
-            caption: Caption for the post
-            tags: List of tags/labels
+            caption: Default caption for the post
+            tags: Default list of tags/labels
             platforms: List of platforms to post to (None = all)
+            platform_data: Optional overrides for each platform:
+                          {PlatformType: {"caption": str, "tags": List[str], "config": Any}}
             
         Returns:
             Dictionary of platform -> PostResult
@@ -479,7 +482,14 @@ class MultiPlatformPoster:
         for platform in platforms:
             if platform in self.clients:
                 client = self.clients[platform]
-                tasks.append(self._post_with_client(client, asset, caption, tags))
+                
+                # Get platform-specific overrides
+                p_data = platform_data.get(platform, {}) if platform_data else {}
+                p_caption = p_data.get("caption", caption)
+                p_tags = p_data.get("tags", tags)
+                p_config = p_data.get("config")
+                
+                tasks.append(self._post_with_client(client, asset, p_caption, p_tags, p_config))
         
         if tasks:
             platform_results = await asyncio.gather(*tasks, return_exceptions=True)
@@ -502,11 +512,12 @@ class MultiPlatformPoster:
         client: SocialMediaClient,
         asset: MediaAsset,
         caption: str,
-        tags: List[str]
+        tags: List[str],
+        config: Any = None
     ) -> PostResult:
         """Post to a single client with retry logic"""
         try:
-            return await client.upload_video(asset, caption, tags)
+            return await client.upload_video(asset, caption, tags, config)
         except SocialMediaError as e:
             logger.error(f"Failed to post to {client.platform.value}: {e.message}")
             return PostResult(
