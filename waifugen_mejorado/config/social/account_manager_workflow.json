@@ -1,0 +1,680 @@
+{
+  "name": "09 - Account Manager [42 Accounts: 7 Characters × 6 Platforms]",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 0,6,12,18 * * *"
+            }
+          ]
+        }
+      },
+      "id": "64f2c619-3014-40c7-ba28-a156859cc3dc",
+      "name": "Viral Schedule (Prime Times)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [-736, 512]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM characters WHERE active = true ORDER BY RANDOM() LIMIT 1;",
+        "options": {}
+      },
+      "id": "33fb6e0f-281b-4180-bc44-7b53f5e6a0ef",
+      "name": "Select Character (DB)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [-512, 512],
+      "credentials": {
+        "postgres": { "id": "gvfjFzuZGjvYxuxC", "name": "Postgres account" }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ollama:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"model\": \"llama3.2\", \"prompt\": \"=Create a viral 30-sec script and caption for character '{{ $json.name }}'. Style: {{ $json.style }}. Personality: {{ $json.personality }}. Trigger word: {{ $json.trigger_word }}. Output JSON with keys 'script' (plain text story) and 'caption' (social media post text, no objects).\", \"stream\": false, \"format\": \"json\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "6d56f13a-3239-4001-abc8-a359c2ee8fbb",
+      "name": "Engineering Viral Script",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [-288, 512]
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawResponse = $('Engineering Viral Script').item.json.response;\nconst char = $('Select Character (DB)').item.json;\n\nconst jsonMatch = rawResponse.match(/\\{.*\\}/s);\nif (!jsonMatch) throw new Error(\"AI didn't return valid JSON script.\");\nlet response;\ntry {\n  response = JSON.parse(jsonMatch[0]);\n} catch(e) {\n  throw new Error(\"JSON parse failed: \" + e.message);\n}\n\nreturn {\n  script: response.script,\n  caption: response.caption,\n  avatar: char.name,\n  voice: char.voice_model || 'en_US-amy-medium',\n  lora_strength: parseFloat(char.lora_strength) || 0.8,\n  trigger: char.trigger_word\n};"
+      },
+      "id": "25f0ee20-4f56-4f91-bc7f-71e6deb2f764",
+      "name": "Character Intel",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-64, 512]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.a2e.ai/api/v1/video/send_tts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"msg\": \"={{ $node[\\\"Character Intel\\\"].json.script }}\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "b4c2c1c8-b80b-429c-9499-819cdeb133ef",
+      "name": "A2E: Generate TTS",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [160, 304]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.a2e.ai/api/v1/video/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"title\": \"=Viral Reel {{ $now.format('X') }}\", \"anchor_id\": \"1\", \"anchor_type\": \"1\", \"audioSrc\": \"={{ $node[\\\"A2E: Generate TTS\\\"].json.data.audioSrc }}\", \"resolution\": \"1080\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "43f76916-c495-4ce4-bd6b-0fa2985af45c",
+      "name": "A2E: Submit Job",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [384, 304]
+    },
+    {
+      "parameters": { "amount": 20 },
+      "id": "2e1cbf5b-8690-4453-a302-c47bfd52f49b",
+      "name": "Wait (20s)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [608, 304],
+      "webhookId": "bda2f8a4-a506-4e7b-8dde-f58919c3a603"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.a2e.ai/api/v1/video/awsResult",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"_id\": \"={{ $node[\\\"A2E: Submit Job\\\"].json.data._id }}\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "13e834ee-2de3-444d-9ec9-86a8001830bc",
+      "name": "A2E: Check Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [832, 224]
+    },
+    {
+      "parameters": {
+        "jsCode": "const status = $('A2E: Check Status').item.json.status;\nconst retry_count = ($input.item.json._retry_count || 0) + 1;\nif (status === 'completed') {\n  return { ready: true, status: 'completed', video_url: $('A2E: Check Status').item.json.video_url, _retry_count: retry_count };\n} else if (retry_count < 15) {\n  return { ready: false, status: status, _retry_count: retry_count };\n} else {\n  throw new Error(\"A2E Job timed out.\");\n}"
+      },
+      "id": "1eedf300-3694-4699-ab6e-a1f946b202d4",
+      "name": "Analyze Status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1056, 224]
+    },
+    {
+      "parameters": {
+        "conditions": { "boolean": [{ "value1": "={{ $json.ready }}", "value2": true }] }
+      },
+      "id": "239a16c8-810d-4e47-951a-bd28ed4e233f",
+      "name": "Video Ready?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1280, 304]
+    },
+    {
+      "parameters": { "url": "={{ $json.video_url }}", "options": { "timeout": 30000 } },
+      "id": "e4673117-f9a4-4fdd-b044-aea26d22fe12",
+      "name": "Download Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1504, 304]
+    },
+    {
+      "parameters": {
+        "url": "http://piper:5000/",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "text", "value": "={{ $json.script }}" },
+            { "name": "model", "value": "={{ $json.voice }}" }
+          ]
+        },
+        "options": { "timeout": 30000 }
+      },
+      "id": "243d2ca1-52d4-465c-96bb-928df239d482",
+      "name": "Generate Voice (Piper)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1504, 512]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.replicate.com/v1/predictions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"version\": \"b58ad9361ad284ea41c6d36e2f69f2378939c085295c96b7972d73f1d3e8e169\", \"input\": \"={ \\\"prompt\\\": \\\"{{ $json.style }} beat\\\", \\\"duration\\\": 30 }\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "7d0d6b40-f9e1-47c1-b914-024d018166b2",
+      "name": "Submit Music",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [832, 752]
+    },
+    {
+      "parameters": { "amount": 10 },
+      "id": "9a5366ed-0f4e-417b-97a6-960a6478c1d1",
+      "name": "Wait (10s)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [1056, 752],
+      "webhookId": "ac989571-a562-43b7-9581-8ce0aabd2a2a"
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"Submit Music\"].json.urls.get }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": { "timeout": 30000 }
+      },
+      "id": "aea9103c-84d4-43ca-885f-c9f40502bd77",
+      "name": "Check Music",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1280, 688]
+    },
+    {
+      "parameters": {
+        "conditions": { "string": [{ "value1": "={{ $json.status }}", "value2": "succeeded" }] }
+      },
+      "id": "0d6749f0-bd33-4870-9fd5-ceba7cd1b03e",
+      "name": "Music Ready?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1504, 752]
+    },
+    {
+      "parameters": { "url": "={{ $json.output }}", "options": { "timeout": 30000 } },
+      "id": "6ac5b45f-60d2-4d54-83cf-7ed534288b9c",
+      "name": "Download Music",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1728, 752]
+    },
+    {
+      "parameters": {
+        "jsCode": "return { binary: { video: $node[\"Download Video\"].binary.data, audio: $node[\"Generate Voice (Piper)\"].binary.data }, json: { avatar: $node[\"Character Intel\"].json.avatar, script: $node[\"Character Intel\"].json.script } };"
+      },
+      "id": "49417b2e-6ad4-400d-a01f-be7de541e61e",
+      "name": "Merge: Vid + Vox",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1728, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "return { binary: { video: $input.item.binary.video, audio: $input.item.binary.audio, music: $node[\"Download Music\"].binary.data }, json: { ...$input.item.json } };"
+      },
+      "id": "096917f7-35a5-43bb-a5e1-1c946521a0c5",
+      "name": "Merge + Music",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1952, 544]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://karaoke:8001/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "options": { "timeout": 30000 }
+      },
+      "id": "9aa4d7d5-dc50-4df1-9a30-f824cdc5f75f",
+      "name": "Karaoke Studio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [2176, 544]
+    },
+    {
+      "parameters": {
+        "fileName": "=/data/assets/output/reels/viral_{{ $now.format('X') }}.mp4",
+        "options": {}
+      },
+      "id": "a17690b5-4505-4abe-9095-f9faa7500a6e",
+      "name": "Save to Disk",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [2400, 544]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO reels (character_id, video_url, status, created_at) VALUES ($1, $2, 'pending', NOW()) RETURNING id;",
+        "options": {}
+      },
+      "id": "7c4c192a-8178-4d72-a044-f564763f52a6",
+      "name": "Save Pending Reel",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [2624, 544],
+      "credentials": {
+        "postgres": { "id": "gvfjFzuZGjvYxuxC", "name": "Postgres account" }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendDocument",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "options": { "timeout": 30000 }
+      },
+      "id": "76e4c4fe-ce31-4921-b098-3d5bf483d95f",
+      "name": "Telegram Preview & Approval",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [2848, 544]
+    },
+    {
+      "parameters": { "path": "approve-viral-reel", "options": {} },
+      "id": "30dd1b62-b67a-4bc2-bf59-3f670f7c8fc0",
+      "name": "Webhook (Approve Viral)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [-736, 0],
+      "webhookId": "ba844946-dbfa-4f4a-98d7-167bdf57cefb"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE reels SET status = 'published', published_at = NOW() WHERE id = $1 RETURNING *;",
+        "options": {}
+      },
+      "id": "885acd47-78de-42a2-9e8d-67b3f7cee5d8",
+      "name": "Publish to Reels (W4)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [-512, 0],
+      "credentials": {
+        "postgres": { "id": "gvfjFzuZGjvYxuxC", "name": "Postgres account" }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"chat_id\": \"={{ $env.TELEGRAM_ADMIN_CHAT_ID }}\", \"text\": \"=✅ *Reel Publicado con Éxito*\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "090023c6-2083-493e-bd1d-d41d33e7275f",
+      "name": "Notify Success",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [-288, 0]
+    },
+    {
+      "parameters": { "path": "publish-reel", "options": {} },
+      "id": "0c7b858f-2557-4396-b5c5-11bfc1bd732b",
+      "name": "Webhook (Approve Reel)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [-736, 2048],
+      "webhookId": "6865e0e1-7e81-4970-bc3a-4097b204802f"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT r.*, c.name as character_name, c.personality FROM reels r JOIN characters c ON r.character_id = c.id WHERE r.id = $1 LIMIT 1",
+        "options": {}
+      },
+      "id": "5fade3d6-42bc-4b23-8a89-5b721066376d",
+      "name": "Get Reel + Character",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [-512, 2048],
+      "credentials": {
+        "postgres": { "id": "gvfjFzuZGjvYxuxC", "name": "Postgres account" }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT platform, account_username, account_id, access_token, refresh_token, extra_config FROM social_accounts WHERE character_id = $1 AND is_active = true ORDER BY platform",
+        "options": {}
+      },
+      "id": "377640c3-67bd-4e2b-a6dd-154e49fc91d8",
+      "name": "Get Character Accounts (All 6 Platforms)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [-288, 2048],
+      "credentials": {
+        "postgres": { "id": "gvfjFzuZGjvYxuxC", "name": "Postgres account" }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const reel = $('Get Reel + Character').item.json; const accounts = $input.all().map(i => i.json); const accMap = {}; for (const acc of accounts) { accMap[acc.platform] = acc; } return { reel_id: reel.id, character_id: reel.character_id, character_name: reel.character_name, personality: reel.personality, video_url: reel.video_url, accounts: accMap };"
+      },
+      "id": "553dc716-9ccd-407c-ab2d-bc9b680f8f14",
+      "name": "Map Accounts by Platform",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-64, 2048]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ollama:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"model\": \"llama3.2\", \"prompt\": \"=Generate platform-optimized captions for character '{{ $json.character_name }}'...\", \"stream\": false, \"format\": \"json\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "ddd0640c-9ae5-4831-b89d-d17af25a6f97",
+      "name": "Generate Captions per Platform (Ollama)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [160, 1952]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://thumbnail-service:5000/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"video_url\": \"={{ $('Get Reel + Character').item.json.video_url }}\", \"character_name\": \"={{ $('Get Reel + Character').item.json.character_name }}\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "31ae52d4-e0b4-435f-8b9b-30dae1a3d46e",
+      "name": "Generate Thumbnail",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [160, 2144]
+    },
+    {
+      "parameters": { "mode": "waitForAll", "options": {} },
+      "id": "133fcd53-b7be-4096-b076-3cae22786a34",
+      "name": "Merge Captions + Thumbnail",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [384, 2048]
+    },
+    {
+      "parameters": {
+        "jsCode": "const dist = $('Map Accounts by Platform').item.json; const captionRaw = $('Generate Captions per Platform (Ollama)').item.json.response; const thumbnailUrl = $('Generate Thumbnail').item.json.thumbnail_url || null; return { ...dist, captions: JSON.parse(captionRaw), thumbnail_url: thumbnailUrl };"
+      },
+      "id": "2bd16b20-eb61-4e36-bbf1-09b22d6fc632",
+      "name": "Prepare Final Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [608, 2048]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://platform-poster:8080/api/tiktok/upload",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"video_url\": \"={{ $json.video_url }}\", \"caption\": \"={{ $json.captions.tiktok }}\", \"account_id\": \"={{ $json.accounts.tiktok.account_id }}\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "740f0f4f-56b0-4200-9d66-0f1f5b3c4e5f",
+      "name": "Post → TikTok",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [832, 1568]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://platform-poster:8080/api/instagram/upload",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"video_url\": \"={{ $json.video_url }}\", \"caption\": \"={{ $json.captions.instagram }}\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "35c34350-f85a-44e7-8a9f-4aad1f3ef100",
+      "name": "Post → Instagram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [832, 1760]
+    },
+    {
+      "parameters": { "mode": "waitForAll", "options": {} },
+      "id": "4c786229-24fd-4dc7-b6e5-4ead201fefcf",
+      "name": "Merge All Platform Results",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [1056, 1664]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE reels SET status = 'published', published_at = NOW() WHERE id = $1;",
+        "options": {}
+      },
+      "id": "757235c2-e41a-44c5-b20d-6b8d1d57d28c",
+      "name": "Update DB (Reel + Account Stats)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1280, 1664],
+      "credentials": {
+        "postgres": { "id": "gvfjFzuZGjvYxuxC", "name": "Postgres account" }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"chat_id\": \"={{ $env.TELEGRAM_ADMIN_CHAT_ID }}\", \"text\": \"=✅ Reel Publicado\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "e88a9c37-d27b-42ed-8f2f-fceef57817b8",
+      "name": "Notify Success (Telegram)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1504, 1664]
+    },
+    {
+      "parameters": { "rule": { "interval": [{ "field": "minutes" }] } },
+      "id": "d5873964-8a75-474c-8cac-96f20ea62d12",
+      "name": "Trigger Every 5 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [-736, 3264]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM social_comments WHERE replied = false LIMIT 20",
+        "options": {}
+      },
+      "id": "588279ca-a370-4abf-b00d-ff24efec3953",
+      "name": "Get Unanswered Comments (Last 30min)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [-512, 3264],
+      "credentials": {
+        "postgres": { "id": "gvfjFzuZGjvYxuxC", "name": "Postgres account" }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": { "string": [{ "value1": "={{ $json.comment_id }}", "operation": "isNotEmpty" }] }
+      },
+      "id": "631c8820-f261-4cec-ac32-fd2d58d3b602",
+      "name": "Check If Comments Exist",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [-288, 3264]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ollama:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"model\": \"tinyllama\", \"prompt\": \"=Sentiment of: {{ $json.comment_text }}\", \"stream\": false}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "4ccd661e-98e3-43d3-ba06-57ff54eb46de",
+      "name": "Analyze Comment Sentiment (Ollama)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-64, 3264]
+    },
+    {
+      "parameters": {
+        "jsCode": "const contexts = { 'Miyuki Sakura': { signature_phrases: ['Thank you!💕'] }, 'Hana Nakamura': { signature_phrases: ['Sending love🌸'] }, 'Airi Neo': { signature_phrases: ['Cyber love!⚡'] }, 'Aiko Hayashi': { signature_phrases: ['I appreciate that💼'] }, 'Rio Mizuno': { signature_phrases: ['Aloha!🌊'] }, 'Chiyo Sasaki': { signature_phrases: ['日本の調べを🏮'] }, 'Mika Sweet': { signature_phrases: ['Sugar sweet!🍭'] } }; return { ...$json, character_context: contexts[$json.character_name] || contexts['Miyuki Sakura'] };"
+      },
+      "id": "f134b684-b432-4c36-a462-78ce4e023246",
+      "name": "Process Character Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [160, 3264]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ollama:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"model\": \"tinyllama\", \"prompt\": \"=Reply as {{ $json.character_name }}\", \"stream\": false}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "0fd802b6-14ed-477c-ad56-55b0c8c41710",
+      "name": "Generate Reply (Ollama with Character Context)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [384, 3264]
+    },
+    {
+      "parameters": {
+        "jsCode": "return { ...$json, reply_text: $json.response.trim() };"
+      },
+      "id": "59a4ac27-162e-4f69-999b-da7466377c8d",
+      "name": "Sanitize Reply Text",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [608, 3264]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://platform-poster:8080/api/{{ $json.platform }}/comment-reply",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"reply_text\": \"={{ $json.reply_text }}\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "a2f65805-546f-4f8e-9870-1594120425a6",
+      "name": "Post Reply to Platform",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [832, 3264]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO social_replies (comment_id, reply_text) VALUES ($1, $2);",
+        "options": {}
+      },
+      "id": "d22e1741-17c4-44c6-8811-6ab9d6ebfa07",
+      "name": "Save Reply to Database",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1056, 3264],
+      "credentials": {
+        "postgres": { "id": "gvfjFzuZGjvYxuxC", "name": "Postgres account" }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TELEGRAM_BOT_URL }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"chat_id\": \"={{ $env.TELEGRAM_ADMIN_CHAT_ID }}\", \"text\": \"=💬 Reply sent\"}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "cfcf1cff-cae6-4a6f-b67b-0029da25bb36",
+      "name": "Notify Admin via Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1280, 3264]
+    }
+  ],
+  "connections": {
+    "Viral Schedule (Prime Times)": { "main": [[{ "node": "Select Character (DB)", "type": "main", "index": 0 }]] },
+    "Select Character (DB)": { "main": [[{ "node": "Engineering Viral Script", "type": "main", "index": 0 }]] },
+    "Engineering Viral Script)": { "main": [[{ "node": "Character Intel", "type": "main", "index": 0 }]] },
+    "Character Intel": { "main": [[{ "node": "A2E: Generate TTS", "type": "main", "index": 0 }, { "node": "Generate Voice (Piper)", "type": "main", "index": 0 }, { "node": "Submit Music", "type": "main", "index": 0 }]] },
+    "A2E: Generate TTS": { "main": [[{ "node": "A2E: Submit Job", "type": "main", "index": 0 }]] },
+    "A2E: Submit Job": { "main": [[{ "node": "Wait (20s)", "type": "main", "index": 0 }]] },
+    "Wait (20s)": { "main": [[{ "node": "A2E: Check Status", "type": "main", "index": 0 }]] },
+    "A2E: Check Status": { "main": [[{ "node": "Analyze Status", "type": "main", "index": 0 }]] },
+    "Analyze Status": { "main": [[{ "node": "Video Ready?", "type": "main", "index": 0 }]] },
+    "Video Ready?": { "main": [[{ "node": "Download Video", "type": "main", "index": 0 }], [{ "node": "Wait (20s)", "type": "main", "index": 0 }]] },
+    "Download Video": { "main": [[{ "node": "Merge: Vid + Vox", "type": "main", "index": 0 }]] },
+    "Generate Voice (Piper)": { "main": [[{ "node": "Merge: Vid + Vox", "type": "main", "index": 0 }]] },
+    "Submit Music": { "main": [[{ "node": "Wait (10s)", "type": "main", "index": 0 }]] },
+    "Wait (10s)": { "main": [[{ "node": "Check Music", "type": "main", "index": 0 }]] },
+    "Check Music": { "main": [[{ "node": "Music Ready?", "type": "main", "index": 0 }]] },
+    "Music Ready?": { "main": [[{ "node": "Download Music", "type": "main", "index": 0 }], [{ "node": "Wait (10s)", "type": "main", "index": 0 }]] },
+    "Download Music": { "main": [[{ "node": "Merge + Music", "type": "main", "index": 0 }]] },
+    "Merge: Vid + Vox": { "main": [[{ "node": "Merge + Music", "type": "main", "index": 0 }]] },
+    "Merge + Music": { "main": [[{ "node": "Karaoke Studio", "type": "main", "index": 0 }]] },
+    "Karaoke Studio": { "main": [[{ "node": "Save to Disk", "type": "main", "index": 0 }]] },
+    "Save to Disk": { "main": [[{ "node": "Save Pending Reel", "type": "main", "index": 0 }]] },
+    "Save Pending Reel": { "main": [[{ "node": "Telegram Preview & Approval", "type": "main", "index": 0 }]] },
+    "Webhook (Approve Viral)": { "main": [[{ "node": "Publish to Reels (W4)", "type": "main", "index": 0 }]] },
+    "Publish to Reels (W4)": { "main": [[{ "node": "Notify Success", "type": "main", "index": 0 }]] },
+    "Webhook (Approve Reel)": { "main": [[{ "node": "Get Reel + Character", "type": "main", "index": 0 }]] },
+    "Get Reel + Character": { "main": [[{ "node": "Get Character Accounts (All 6 Platforms)", "type": "main", "index": 0 }]] },
+    "Get Character Accounts (All 6 Platforms)": { "main": [[{ "node": "Map Accounts by Platform", "type": "main", "index": 0 }]] },
+    "Map Accounts by Platform": { "main": [[{ "node": "Generate Captions per Platform (Ollama)", "type": "main", "index": 0 }, { "node": "Generate Thumbnail", "type": "main", "index": 0 }]] },
+    "Generate Captions per Platform (Ollama)": { "main": [[{ "node": "Merge Captions + Thumbnail", "type": "main", "index": 0 }]] },
+    "Generate Thumbnail": { "main": [[{ "node": "Merge Captions + Thumbnail", "type": "main", "index": 1 }]] },
+    "Merge Captions + Thumbnail": { "main": [[{ "node": "Prepare Final Payload", "type": "main", "index": 0 }]] },
+    "Prepare Final Payload": { "main": [[{ "node": "Post → TikTok", "type": "main", "index": 0 }, { "node": "Post → Instagram", "type": "main", "index": 0 }]] },
+    "Post → TikTok": { "main": [[{ "node": "Merge All Platform Results", "type": "main", "index": 0 }]] },
+    "Post → Instagram": { "main": [[{ "node": "Merge All Platform Results", "type": "main", "index": 1 }]] },
+    "Merge All Platform Results": { "main": [[{ "node": "Update DB (Reel + Account Stats)", "type": "main", "index": 0 }]] },
+    "Update DB (Reel + Account Stats)": { "main": [[{ "node": "Notify Success (Telegram)", "type": "main", "index": 0 }]] },
+    "Trigger Every 5 Minutes": { "main": [[{ "node": "Get Unanswered Comments (Last 30min)", "type": "main", "index": 0 }]] },
+    "Get Unanswered Comments (Last 30min)": { "main": [[{ "node": "Check If Comments Exist", "type": "main", "index": 0 }]] },
+    "Check If Comments Exist": { "main": [[{ "node": "Analyze Comment Sentiment (Ollama)", "type": "main", "index": 0 }]] },
+    "Analyze Comment Sentiment (Ollama)": { "main": [[{ "node": "Process Character Context", "type": "main", "index": 0 }]] },
+    "Process Character Context": { "main": [[{ "node": "Generate Reply (Ollama with Character Context)", "type": "main", "index": 0 }]] },
+    "Generate Reply (Ollama with Character Context)": { "main": [[{ "node": "Sanitize Reply Text", "type": "main", "index": 0 }]] },
+    "Sanitize Reply Text": { "main": [[{ "node": "Post Reply to Platform", "type": "main", "index": 0 }]] },
+    "Post Reply to Platform": { "main": [[{ "node": "Save Reply to Database", "type": "main", "index": 0 }]] },
+    "Save Reply to Database": { "main": [[{ "node": "Notify Admin via Telegram", "type": "main", "index": 0 }]] }
+  }
+}
