@@ -1,33 +1,12 @@
-# docker-compose.yml
 version: '3.8'
-
 services:
   waifugen_app:
     build: .
     container_name: waifugen_app
     restart: always
-    environment:
-      - DATABASE_URL=postgresql://waifugen_user:${POSTGRES_PASSWORD}@waifugen_postgres:5432/waifugen_db
-      - REDIS_URL=redis://waifugen_redis:6379/0
-      - OLLAMA_HOST=http://waifugen_ollama:11434
-      - METRICS_ENABLED=true
-      - PROMETHEUS_PORT=9090
-    volumes:
-      - ./logs:/app/logs
-      - ./output:/app/output
-      - ./assets:/app/assets
-      - ./data:/app/data
-      - ./models:/app/models
-      - ./config:/app/config
-    env_file:
-      - .env
+    env_file: .env
     ports:
       - "8000:8000"
-    depends_on:
-      waifugen_postgres:
-        condition: service_healthy
-      waifugen_redis:
-        condition: service_started
     networks:
       - waifugen_network
 
@@ -37,15 +16,8 @@ services:
     restart: always
     environment:
       POSTGRES_USER: waifugen_user
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: waifugen_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U waifugen_user -d waifugen_db" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      POSTGRES_PASSWORD: waifugen_db_password_2026
+      POSTGRES_DB: waifugen_prod
     networks:
       - waifugen_network
 
@@ -53,25 +25,26 @@ services:
     image: redis:alpine
     container_name: waifugen_redis
     restart: always
+    command: redis-server --requirepass oQInt0uucVZVLgl2PnlZs7WkaCJmTyA4LB0Zj_1h
     networks:
       - waifugen_network
 
   waifugen_n8n:
-    image: n8nio/n8n:latest
+    image: docker.n8n.io/n8nio/n8n:latest
     container_name: waifugen_n8n
     restart: always
     environment:
       - DB_TYPE=postgresdb
-      - DB_POSTGRESDB_DATABASE=waifugen_db
+      - DB_POSTGRESDB_DATABASE=waifugen_prod
       - DB_POSTGRESDB_HOST=waifugen_postgres
       - DB_POSTGRESDB_PORT=5432
       - DB_POSTGRESDB_USER=waifugen_user
-      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_POSTGRESDB_PASSWORD=waifugen_db_password_2026
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://waifugen.io/
     ports:
       - "5678:5678"
-    depends_on:
-      waifugen_postgres:
-        condition: service_healthy
     networks:
       - waifugen_network
 
@@ -79,25 +52,6 @@ services:
     image: ollama/ollama:latest
     container_name: waifugen_ollama
     restart: always
-    volumes:
-      - ollama_data:/root/.ollama
-    networks:
-      - waifugen_network
-
-  waifugen_nginx:
-    image: nginx:alpine
-    container_name: waifugen_nginx
-    restart: always
-    ports:
-      - "443:443"
-      - "80:80"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/ssl:/etc/nginx/ssl
-    depends_on:
-      - waifugen_app
-      - waifugen_n8n
-      - waifugen_grafana
     networks:
       - waifugen_network
 
@@ -105,14 +59,6 @@ services:
     image: prom/prometheus:latest
     container_name: waifugen_prometheus
     restart: always
-    volumes:
-      - ./config/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
     networks:
       - waifugen_network
 
@@ -120,21 +66,22 @@ services:
     image: grafana/grafana:latest
     container_name: waifugen_grafana
     restart: always
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
-    volumes:
-      - grafana_data:/var/lib/grafana
-    depends_on:
-      - waifugen_prometheus
     networks:
       - waifugen_network
+
+  platform_poster:
+    build: .
+    container_name: platform_poster
+    restart: always
+    env_file: .env
+    command: python src/api/platform_poster_api.py
+    ports:
+      - "8080:8080"
+    networks:
+      waifugen_network:
+        aliases:
+          - platform-poster
 
 networks:
   waifugen_network:
     driver: bridge
-
-volumes:
-  postgres_data:
-  ollama_data:
-  prometheus_data:
-  grafana_data:
